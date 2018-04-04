@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java基础 源码," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概述String Class 表示的是字符串。在Java中所有的字符串，例如 “abc” 都是实现了String这个类的实例。String是常量的，在创建之后它们的值是不可以进行改变的。但是在字符缓冲区是可以进行改变的。因为字符串对象是不可以改变的，所以它们可以被共享。例如： 1String str = &amp;quot;abc&amp;quot;; 等同于： 12char[] data = &amp;#123;&amp;ap">
+<meta name="keywords" content="Java基础 源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础---阅读源码（String）">
+<meta property="og:url" content="http://yoursite.com/2018/04/04/Java基础-阅读源码（String）/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="概述String Class 表示的是字符串。在Java中所有的字符串，例如 “abc” 都是实现了String这个类的实例。String是常量的，在创建之后它们的值是不可以进行改变的。但是在字符缓冲区是可以进行改变的。因为字符串对象是不可以改变的，所以它们可以被共享。例如： 1String str = &amp;quot;abc&amp;quot;; 等同于： 12char[] data = &amp;#123;&amp;ap">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-04T13:49:34.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础---阅读源码（String）">
+<meta name="twitter:description" content="概述String Class 表示的是字符串。在Java中所有的字符串，例如 “abc” 都是实现了String这个类的实例。String是常量的，在创建之后它们的值是不可以进行改变的。但是在字符缓冲区是可以进行改变的。因为字符串对象是不可以改变的，所以它们可以被共享。例如： 1String str = &amp;quot;abc&amp;quot;; 等同于： 12char[] data = &amp;#123;&amp;ap">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/04/Java基础-阅读源码（String）/"/>
+
+
+
+
+
+  <title>Java基础---阅读源码（String） | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知识的荒原</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/04/Java基础-阅读源码（String）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础---阅读源码（String）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-04T21:46:43+08:00">
+                2018-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p><code>String Class</code> 表示的是字符串。在Java中所有的字符串，例如 <code>“abc”</code> 都是实现了String这个类的实例。<br><code>String</code>是常量的，在创建之后它们的值是不可以进行改变的。但是在字符缓冲区是可以进行改变的。因为字符串对象是不可以改变的，所以它们可以被共享。例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String str = &quot;abc&quot;;</span><br></pre></td></tr></table></figure>
+<p>等同于：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">char[] data = &#123;&apos;a&apos;,&apos;b&apos;,&apos;c&apos;&#125;;</span><br><span class="line">String str = new String(data);</span><br></pre></td></tr></table></figure>
+<p>下面是关于如何使用<code>String</code>的例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;abc&quot;);</span><br><span class="line">String cde = &quot;cde&quot;;</span><br><span class="line">System.out.println(&quot;abc&quot; + cde);</span><br><span class="line">String c = &quot;abc&quot;.substring(2,3);</span><br><span class="line">String d = cde.substring(1,2);</span><br></pre></td></tr></table></figure>
+<p><code>String</code>的方法包含了检查序列的每个字符、比较字符串、查找字符串、获得子字符串、复制字符串并进行大小写转化。<br>Java中提供了对<code>String</code>的<code>+</code>运算符的支持、将其他对象转化成字符串。<code>String</code>的连接是通过<code>StringBuilder/Stringbuffer</code>及其append方法实现的。字符串的转化是通过<code>toString</code>方法实现的。<strong>String表示一个字符串通过UTF-16(unicode)格式</strong></p>
+<a id="more"></a>
+<h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final class More ...String implements java.io.Serializable, Comparable&lt;String&gt;, CharSequence &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>从上面可以看出来<code>String</code>是被<code>final</code>修饰的，所以是不可以更改的，同时还可以看出<code>String</code>实现了<code>Serializable</code>,<code>Comparable</code>,<code>CharSequence</code>接口。</p>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private final char value[];</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>final</code> 修饰,表示不可以更改。例如<code>String s = &quot;a&quot;,s = &quot;a&quot;</code>,这种情况下s的值并没有修改，只是修改了s的引用、同时可以知道<strong>String的底层是数组实现的。</strong></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private int hash;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>缓存string的hash code，默认为0</p>
+</blockquote>
+<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><ol>
+<li>使用字符数组、字符串进行构造</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(char value[], int offset, int count) &#123;</span><br><span class="line">         if (offset &lt; 0) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(offset);</span><br><span class="line">         &#125;</span><br><span class="line">         if (count &lt; 0) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(count);</span><br><span class="line">         &#125;</span><br><span class="line">         // Note: offset or count might be near -1&gt;&gt;&gt;1.</span><br><span class="line">         if (offset &gt; value.length - count) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(offset + count);</span><br><span class="line">         &#125;</span><br><span class="line">         this.value = Arrays.copyOfRange(value, offset, offset+count);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(char value[]) &#123;</span><br><span class="line">         this.value = Arrays.copyOf(value, value.length);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>String的底层是采用字符数组进行实现的，所以我们可以使用一个字符数组来进行创建一个String，当时用字符数组构建Stirng的时候，会使用到<code>Arrays.copyOf</code>和<code>Arrays.copyOfRange</code>方法，也可以使用字符数组中的某一连续部分进行构建，传入起始和结束即可。这两方法会将原来数组中的内容复制到新创建的<code>String</code>中。或者我们使用一个String类型来进行构建String的时候，会将<code>原String</code>的<code>value</code>和<code>hash</code>这两个属性值赋值给<code>新String</code>。</p>
+<ol>
+<li>使用字节数组构造String</li>
+</ol>
+<p>我们知道String的底层是采用字符数组<code>char[]</code>实现的,字符数组是使用<code>unicode</code>来进行存储的。当采用字节数组来构造String的时候，将字节数组进行解码为字符数组，进而就可以构造新的String。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(byte bytes[], Charset charset) &#123;</span><br><span class="line">         this(bytes, 0, bytes.length, charset);</span><br><span class="line">         &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(char value[], int offset, int count) &#123;</span><br><span class="line">         if (offset &lt; 0) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(offset);</span><br><span class="line">         &#125;</span><br><span class="line">         if (count &lt; 0) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(count);</span><br><span class="line">         &#125;</span><br><span class="line">         // Note: offset or count might be near -1&gt;&gt;&gt;1.</span><br><span class="line">         if (offset &gt; value.length - count) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(offset + count);</span><br><span class="line">         &#125;</span><br><span class="line">         this.value = Arrays.copyOfRange(value, offset, offset+count);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>……</p>
+<ol>
+<li>使用<code>StringBuffer</code> 和 <code>StringBuider</code>构造一个<code>String</code></li>
+</ol>
+<ul>
+<li>StringBuffer</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(StringBuffer buffer) &#123;</span><br><span class="line">         synchronized(buffer) &#123;</span><br><span class="line">             this.value = Arrays.copyOf(buffer.getValue(), buffer.length());</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p><code>StringBuffer</code>中使用了<code>Sychronized</code>,所以效率要低一些。但是是线程安全的。</p>
+<ul>
+<li>StringBuilder</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public More ...String(StringBuilder builder) &#123;</span><br><span class="line">         this.value = Arrays.copyOf(builder.getValue(), builder.length());</span><br><span class="line">     &#125;</span><br><span class="line"> </span><br><span class="line">     /*</span><br><span class="line">     * Package private constructor which shares value array for speed.</span><br><span class="line">     * this constructor is always expected to be called with share==true.</span><br><span class="line">     * a separate constructor is needed because we already have a public</span><br><span class="line">     * String(char[]) constructor that makes a copy of the given char[].</span><br><span class="line">     */</span><br><span class="line">     More ...String(char[] value, boolean share) &#123;</span><br><span class="line">         // assert share : &quot;unshared not supported&quot;;</span><br><span class="line">         this.value = value;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h1 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h1><ol>
+<li>charAt(int)</li>
+<li>compareTo(String)/compareToIgnoreCase(String)</li>
+<li>concat(String)</li>
+<li>contains(CharSequence)</li>
+<li>endsWith(String)</li>
+<li>equals(Object)</li>
+<li>indexOf(…)</li>
+<li>isEmpty()</li>
+<li>length()</li>
+<li>spilt()</li>
+<li>subStirng(int/int,int)</li>
+<li>toCharArray()</li>
+<li>trim()</li>
+</ol>
+<hr>
+<p>charAt(int)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public char More ...charAt(int index) &#123;</span><br><span class="line">         if ((index &lt; 0) || (index &gt;= value.length)) &#123;</span><br><span class="line">             throw new StringIndexOutOfBoundsException(index);</span><br><span class="line">         &#125;</span><br><span class="line">         return value[index];</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure></p>
+<p>compareTo(String)/compareToIgnoreCase(String)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public int More ...compareTo(String anotherString) &#123;</span><br><span class="line">        int len1 = value.length;</span><br><span class="line">        int len2 = anotherString.value.length;</span><br><span class="line">        int lim = Math.min(len1, len2);</span><br><span class="line">        char v1[] = value;</span><br><span class="line">        char v2[] = anotherString.value;</span><br><span class="line"></span><br><span class="line">        int k = 0;</span><br><span class="line">        while (k &lt; lim) &#123;</span><br><span class="line">            char c1 = v1[k];</span><br><span class="line">            char c2 = v2[k];</span><br><span class="line">            if (c1 != c2) &#123;</span><br><span class="line">                return c1 - c2;</span><br><span class="line">            &#125;</span><br><span class="line">            k++;</span><br><span class="line">        &#125;</span><br><span class="line">        return len1 - len2;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>concat(String)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public String More ...concat(String str) &#123;</span><br><span class="line">        int otherLen = str.length();</span><br><span class="line">        if (otherLen == 0) &#123;</span><br><span class="line">            return this;</span><br><span class="line">        &#125;</span><br><span class="line">        int len = value.length;</span><br><span class="line">        char buf[] = Arrays.copyOf(value, len + otherLen);</span><br><span class="line">        str.getChars(buf, len);</span><br><span class="line">        return new String(buf, true);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&quot;cares&quot;.concat(&quot;s&quot;) returns &quot;caress&quot;;</span><br><span class="line"> &quot;to&quot;.concat(&quot;get&quot;).concat(&quot;her&quot;) returns &quot;together&quot;;</span><br></pre></td></tr></table></figure>
+<p>contains(CharSequence)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean More ...contains(CharSequence s) &#123;</span><br><span class="line">        return indexOf(s.toString()) &gt; -1;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>endsWith(String)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean More ...endsWith(String suffix) &#123;</span><br><span class="line">        return startsWith(suffix, value.length - suffix.value.length);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>equals(Object)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public boolean More ...equals(Object anObject) &#123;</span><br><span class="line">         if (this == anObject) &#123;</span><br><span class="line">             return true;</span><br><span class="line">         &#125;</span><br><span class="line">         if (anObject instanceof String) &#123;</span><br><span class="line">             String anotherString = (String)anObject;</span><br><span class="line">             int n = value.length;</span><br><span class="line">             if (n == anotherString.value.length) &#123;</span><br><span class="line">                 char v1[] = value;</span><br><span class="line">                 char v2[] = anotherString.value;</span><br><span class="line">                 int i = 0;</span><br><span class="line">                 while (n-- != 0) &#123;</span><br><span class="line">                     if (v1[i] != v2[i])</span><br><span class="line">                         return false;</span><br><span class="line">                     i++;</span><br><span class="line">                 &#125;</span><br><span class="line">                 return true;</span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">         return false;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>首先<code>if (this == anObject)</code>进行判断要比较的对象和当前对象是不是同一个对象，如果是就直接返回true，如果不是在继续进行比较。<code>anObject instanceof String</code>如果要比较的对象不是<code>String</code>类型的话，直接返回false,如果是的话，再进行比较长度是否相等，相等则一个一个的比较值是否相等，不相等的话直接返回false.</p>
+<p>indexOf(…)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public int More ...indexOf(int ch, int fromIndex) &#123;</span><br><span class="line">        final int max = value.length;</span><br><span class="line">        if (fromIndex &lt; 0) &#123;</span><br><span class="line">            fromIndex = 0;</span><br><span class="line">        &#125; else if (fromIndex &gt;= max) &#123;</span><br><span class="line">            // Note: fromIndex might be near -1&gt;&gt;&gt;1.</span><br><span class="line">            return -1;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (ch &lt; Character.MIN_SUPPLEMENTARY_CODE_POINT) &#123;</span><br><span class="line">            // handle most cases here (ch is a BMP code point or a</span><br><span class="line">            // negative value (invalid code point))</span><br><span class="line">            final char[] value = this.value;</span><br><span class="line">            for (int i = fromIndex; i &lt; max; i++) &#123;</span><br><span class="line">                if (value[i] == ch) &#123;</span><br><span class="line">                    return i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return -1;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            return indexOfSupplementary(ch, fromIndex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>首先查找的索引和string的长度进行对比，大于则返回-1，否则从头开始进行查找，直到游标等于索引值。索引值&lt;0，设置为==0.</p>
+<p>isEmpty()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public boolean More ...isEmpty() &#123;</span><br><span class="line">         return value.length == 0;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>length()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public int More ...length() &#123;</span><br><span class="line">         return value.length;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<p>spilt()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">public String[] More ...split(String regex, int limit) &#123;</span><br><span class="line">        /* fastpath if the regex is a</span><br><span class="line">         (1)one-char String and this character is not one of the</span><br><span class="line">            RegEx&apos;s meta characters &quot;.$|()[&#123;^?*+\\&quot;, or</span><br><span class="line">         (2)two-char String and the first char is the backslash and</span><br><span class="line">            the second is not the ascii digit or ascii letter.</span><br><span class="line">         */</span><br><span class="line">        char ch = 0;</span><br><span class="line">        if (((regex.value.length == 1 &amp;&amp;</span><br><span class="line">             &quot;.$|()[&#123;^?*+\\&quot;.indexOf(ch = regex.charAt(0)) == -1) ||</span><br><span class="line">             (regex.length() == 2 &amp;&amp;</span><br><span class="line">              regex.charAt(0) == &apos;\\&apos; &amp;&amp;</span><br><span class="line">              (((ch = regex.charAt(1))-&apos;0&apos;)|(&apos;9&apos;-ch)) &lt; 0 &amp;&amp;</span><br><span class="line">              ((ch-&apos;a&apos;)|(&apos;z&apos;-ch)) &lt; 0 &amp;&amp;</span><br><span class="line">              ((ch-&apos;A&apos;)|(&apos;Z&apos;-ch)) &lt; 0)) &amp;&amp;</span><br><span class="line">            (ch &lt; Character.MIN_HIGH_SURROGATE ||</span><br><span class="line">             ch &gt; Character.MAX_LOW_SURROGATE))</span><br><span class="line">        &#123;</span><br><span class="line">            int off = 0;</span><br><span class="line">            int next = 0;</span><br><span class="line">            boolean limited = limit &gt; 0;</span><br><span class="line">            ArrayList&lt;String&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">            while ((next = indexOf(ch, off)) != -1) &#123;</span><br><span class="line">                if (!limited || list.size() &lt; limit - 1) &#123;</span><br><span class="line">                    list.add(substring(off, next));</span><br><span class="line">                    off = next + 1;</span><br><span class="line">                &#125; else &#123;    // last one</span><br><span class="line">                    //assert (list.size() == limit - 1);</span><br><span class="line">                    list.add(substring(off, value.length));</span><br><span class="line">                    off = value.length;</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            // If no match was found, return this</span><br><span class="line">            if (off == 0)</span><br><span class="line">                return new String[]&#123;this&#125;;</span><br><span class="line"></span><br><span class="line">            // Add remaining segment</span><br><span class="line">            if (!limited || list.size() &lt; limit)</span><br><span class="line">                list.add(substring(off, value.length));</span><br><span class="line"></span><br><span class="line">            // Construct result</span><br><span class="line">            int resultSize = list.size();</span><br><span class="line">            if (limit == 0) &#123;</span><br><span class="line">                while (resultSize &gt; 0 &amp;&amp; list.get(resultSize - 1).length() == 0) &#123;</span><br><span class="line">                    resultSize--;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            String[] result = new String[resultSize];</span><br><span class="line">            return list.subList(0, resultSize).toArray(result);</span><br><span class="line">        &#125;</span><br><span class="line">        return Pattern.compile(regex).split(this, limit);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>涉及到正则表达式比较复杂</p>
+<p>subStirng(int/int,int)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public String More ...substring(int beginIndex, int endIndex) &#123;</span><br><span class="line">        if (beginIndex &lt; 0) &#123;</span><br><span class="line">            throw new StringIndexOutOfBoundsException(beginIndex);</span><br><span class="line">        &#125;</span><br><span class="line">        if (endIndex &gt; value.length) &#123;</span><br><span class="line">            throw new StringIndexOutOfBoundsException(endIndex);</span><br><span class="line">        &#125;</span><br><span class="line">        int subLen = endIndex - beginIndex;</span><br><span class="line">        if (subLen &lt; 0) &#123;</span><br><span class="line">            throw new StringIndexOutOfBoundsException(subLen);</span><br><span class="line">        &#125;</span><br><span class="line">        return ((beginIndex == 0) &amp;&amp; (endIndex == value.length)) ? this</span><br><span class="line">                : new String(value, beginIndex, subLen);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>考虑边界问题，以及起始和终止的大小，之后返回string</p>
+<p>toCharArray()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public char[] More ...toCharArray() &#123;</span><br><span class="line">    // Cannot use Arrays.copyOf because of class initialization order issues</span><br><span class="line">    char result[] = new char[value.length];</span><br><span class="line">    System.arraycopy(value, 0, result, 0, value.length);</span><br><span class="line">    return result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用arraycopy进行复制，因为类的初始化问题所以不采用Arrays。copyOf</p>
+<p>trim()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public String More ...trim() &#123;</span><br><span class="line">        int len = value.length;</span><br><span class="line">        int st = 0;</span><br><span class="line">        char[] val = value;    /* avoid getfield opcode */</span><br><span class="line"></span><br><span class="line">        while ((st &lt; len) &amp;&amp; (val[st] &lt;= &apos; &apos;)) &#123;</span><br><span class="line">            st++;</span><br><span class="line">        &#125;</span><br><span class="line">        while ((st &lt; len) &amp;&amp; (val[len - 1] &lt;= &apos; &apos;)) &#123;</span><br><span class="line">            len--;</span><br><span class="line">        &#125;</span><br><span class="line">        return ((st &gt; 0) || (len &lt; value.length)) ? substring(st, len) : this;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>去除首尾空格</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://www.hollischuang.com/archives/99" target="_blank" rel="noopener">http://www.hollischuang.com/archives/99</a><br><a href="http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/lang/String.java#String" target="_blank" rel="noopener">http://grepcode.com/file/repository.grepcode.com/java/root/jdk/openjdk/8u40-b25/java/lang/String.java#String</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础-源码/" rel="tag"># Java基础 源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/20/json解析的三种方式/" rel="next" title="json解析的三种方式">
+                <i class="fa fa-chevron-left"></i> json解析的三种方式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">2.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性"><span class="nav-number">3.</span> <span class="nav-text">属性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构造方法"><span class="nav-number">4.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他方法"><span class="nav-number">5.</span> <span class="nav-text">其他方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
