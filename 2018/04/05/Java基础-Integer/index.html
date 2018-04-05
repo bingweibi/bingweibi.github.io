@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java基础 Integer," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="定义Integer类将Java中的原始类型int的值包装在对象中。Integer类型的对象包含一个int类型的字段。 Integer类提供将int与string互相转换的方法，另外还提供有用在的处理int型时的常量和方法。 1public final class More ...Integer extends Number implements Comparable&amp;lt;Integer&amp;gt;">
+<meta name="keywords" content="Java基础 Integer">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/01/20/hello-world/index.html">
+<meta property="og:title" content="Java基础---Integer">
+<meta property="og:url" content="http://yoursite.com/2018/04/05/Java基础-Integer/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="定义Integer类将Java中的原始类型int的值包装在对象中。Integer类型的对象包含一个int类型的字段。 Integer类提供将int与string互相转换的方法，另外还提供有用在的处理int型时的常量和方法。 1public final class More ...Integer extends Number implements Comparable&amp;lt;Integer&amp;gt;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-20T09:12:35.053Z">
+<meta property="og:updated_time" content="2018-04-05T14:29:03.103Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Java基础---Integer">
+<meta name="twitter:description" content="定义Integer类将Java中的原始类型int的值包装在对象中。Integer类型的对象包含一个int类型的字段。 Integer类提供将int与string互相转换的方法，另外还提供有用在的处理int型时的常量和方法。 1public final class More ...Integer extends Number implements Comparable&amp;lt;Integer&amp;gt;">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/20/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/05/Java基础-Integer/"/>
 
 
 
 
 
-  <title>Hello World | Wakaka</title>
+  <title>Java基础---Integer | Wakaka</title>
   
 
 
@@ -237,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/20/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/Java基础-Integer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wakaka">
@@ -254,7 +255,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Java基础---Integer</h1>
         
 
         <div class="post-meta">
@@ -266,8 +267,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T17:12:35+08:00">
-                2018-01-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T22:28:22+08:00">
+                2018-04-05
               </time>
             
 
@@ -304,15 +305,28 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><code>Integer</code>类将Java中的原始类型<code>int</code>的值包装在对象中。Integer类型的对象包含一个int类型的字段。</p>
+<p><code>Integer</code>类提供将<code>int</code>与<code>string</code>互相转换的方法，另外还提供有用在的处理int型时的常量和方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public final class More ...Integer extends Number implements Comparable&lt;Integer&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>final修饰，不能被继承</li>
+<li>继承Number</li>
+<li>实现Comparable，可以利用comparable to进行比较(同类型之间)</li>
+</ol>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><h2 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">private final int value;</span><br><span class="line">private static final long serialVersionUID = 1360826667806852920L;</span><br></pre></td></tr></table></figure>
+<h2 id="公有属性"><a href="#公有属性" class="headerlink" title="公有属性"></a>公有属性</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public static final int   MAX_VALUE = 0x7fffffff;</span><br><span class="line">public static final int   MIN_VALUE = 0x80000000;</span><br><span class="line">public static final Class&lt;Integer&gt;  TYPE = (Class&lt;Integer&gt;) Class.getPrimitiveClass(&quot;int&quot;);</span><br><span class="line">public static final int SIZE = 32;</span><br><span class="line">public static final int BYTES = SIZE / Byte.SIZE;</span><br></pre></td></tr></table></figure>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//表示指定的 int 值</span><br><span class="line">public More ...Integer(int value) &#123;</span><br><span class="line">         this.value = value;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//表示指定的 string 值,利用parseInt</span><br><span class="line">public More ...Integer(String s) throws NumberFormatException &#123;</span><br><span class="line">         this.value = parseInt(s, 10);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="byteValue-…"><a href="#byteValue-…" class="headerlink" title="byteValue()…"></a>byteValue()…</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//Integer转化为byte返回</span><br><span class="line">public byte More ...byteValue() &#123;</span><br><span class="line">         return (byte)value;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//返带符号回十进制的数值并作为字符串返回</span><br><span class="line">public String More ...toString() &#123;</span><br><span class="line">         return toString(value);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="hashcode"><a href="#hashcode" class="headerlink" title="hashcode()"></a>hashcode()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public int More ...hashCode() &#123;</span><br><span class="line">         return Integer.hashCode(value);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//与指定类型进行比较</span><br><span class="line">public boolean More ...equals(Object obj) &#123;</span><br><span class="line">         if (obj instanceof Integer) &#123;</span><br><span class="line">             return value == ((Integer)obj).intValue();</span><br><span class="line">         &#125;</span><br><span class="line">         return false;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="…"><a href="#…" class="headerlink" title="…"></a>…</h2><h1 id="Integer-和-int-的关系"><a href="#Integer-和-int-的关系" class="headerlink" title="Integer 和 int 的关系"></a>Integer 和 int 的关系</h1><ol>
+<li>int是java提供的8种基本类型之一。Java为每个原始类型提供了封装类，Integer是java为int提供的封装类。</li>
+<li>int的默认值是0，Integer的默认值是null</li>
+<li>两者都可以表示一个数值</li>
+<li>两者不可以互用，因为它们是两种不同的数据类型。</li>
+</ol>
 
       
     </div>
@@ -328,6 +342,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础-Integer/" rel="tag"># Java基础 Integer</a>
+          
+        </div>
+      
 
       
       
@@ -337,15 +357,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/04/05/Java基础-String相关/" rel="next" title="Java基础---String相关">
+                <i class="fa fa-chevron-left"></i> Java基础---String相关
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/20/android-notes/" rel="prev" title="android notes">
-                android notes <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -470,7 +490,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#定义"><span class="nav-number">1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#属性"><span class="nav-number">2.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#私有属性"><span class="nav-number">2.1.</span> <span class="nav-text">私有属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#公有属性"><span class="nav-number">2.2.</span> <span class="nav-text">公有属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法"><span class="nav-number">3.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#构造方法"><span class="nav-number">3.1.</span> <span class="nav-text">构造方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#byteValue-…"><span class="nav-number">3.2.</span> <span class="nav-text">byteValue()…</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#toString-NaN"><span class="nav-number">3.3.</span> <span class="nav-text">toString()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hashcode"><span class="nav-number">3.4.</span> <span class="nav-text">hashcode()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#equals"><span class="nav-number">3.5.</span> <span class="nav-text">equals()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#…"><span class="nav-number">3.6.</span> <span class="nav-text">…</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Integer-和-int-的关系"><span class="nav-number">4.</span> <span class="nav-text">Integer 和 int 的关系</span></a></li></ol></div>
             
 
           </div>
