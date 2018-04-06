@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="排序算法 算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="排序种类 最优时间复杂度 平均时间复杂度 最坏时间复杂度 稳定性     快速排序 nlogn nlogn n^2 稳定   冒泡排序 n n^2 n^2 稳定   插入排序 n n^2 n^2 稳定   归并排序 n nlogn nlogn 稳定   选择排序 n^2 n^2 n^2 不稳定   希尔排序 n  nlog^2n 不稳定   堆排序 nlogn nlogn nlogn 不稳定">
+<meta name="keywords" content="排序算法 算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="经典排序">
+<meta property="og:url" content="http://yoursite.com/2018/04/06/经典排序/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="排序种类 最优时间复杂度 平均时间复杂度 最坏时间复杂度 稳定性     快速排序 nlogn nlogn n^2 稳定   冒泡排序 n n^2 n^2 稳定   插入排序 n n^2 n^2 稳定   归并排序 n nlogn nlogn 稳定   选择排序 n^2 n^2 n^2 不稳定   希尔排序 n  nlog^2n 不稳定   堆排序 nlogn nlogn nlogn 不稳定">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Bubble_sort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Selection_sort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Insertion_sort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/shellsort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Merge-sort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/quicksort.gif">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/heapsort.gif">
+<meta property="og:updated_time" content="2018-04-06T09:13:27.739Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="经典排序">
+<meta name="twitter:description" content="排序种类 最优时间复杂度 平均时间复杂度 最坏时间复杂度 稳定性     快速排序 nlogn nlogn n^2 稳定   冒泡排序 n n^2 n^2 稳定   插入排序 n n^2 n^2 稳定   归并排序 n nlogn nlogn 稳定   选择排序 n^2 n^2 n^2 不稳定   希尔排序 n  nlog^2n 不稳定   堆排序 nlogn nlogn nlogn 不稳定">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/Bubble_sort.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/06/经典排序/"/>
+
+
+
+
+
+  <title>经典排序 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知识的荒原</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/06/经典排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">经典排序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-06T17:12:50+08:00">
+                2018-04-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <table>
+<thead>
+<tr>
+<th style="text-align:center">排序种类</th>
+<th style="text-align:center">最优时间复杂度</th>
+<th style="text-align:center">平均时间复杂度</th>
+<th style="text-align:center">最坏时间复杂度</th>
+<th style="text-align:center">稳定性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">快速排序</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">冒泡排序</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">插入排序</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">归并排序</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">选择排序</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">n^2</td>
+<td style="text-align:center">不稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">希尔排序</td>
+<td style="text-align:center">n</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">nlog^2n</td>
+<td style="text-align:center">不稳定</td>
+</tr>
+<tr>
+<td style="text-align:center">堆排序</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">nlogn</td>
+<td style="text-align:center">不稳定</td>
+</tr>
+</tbody>
+</table>
+<h1 id="稳定性判断"><a href="#稳定性判断" class="headerlink" title="稳定性判断"></a>稳定性判断</h1><p>如果在一个待排序的序列中，存在2个相等的数，在排序后这2个数的相对位置保持不变，那么该排序算法是稳定的；否则是不稳定的。</p>
+<a id="more"></a>
+<h1 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/Bubble_sort.gif" alt=""></center>
+
+<h2 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>比较相邻的元素。 如果第一个比第二个大，就交换他们两个。</li>
+<li>对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对。</li>
+<li>在这一点，最后的元素应该会是最大的数。</li>
+<li>针对所有的元素重复以上的步骤，除了最后一个。</li>
+<li>持续每次对越来越少的元素重复上面的步骤，直到没有任何一对数字需要比较。</li>
+</ul>
+<p>通俗理解：冒泡就是生活中理解的冒泡，一个数与它相邻的数进行比较，从下往上遍历一次之后最下面的数就是最大的，再次遍历时从倒数第二个开始遍历，依次进行下去…</p>
+<h3 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class MaoPao &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] unSort = &#123;2,5,6,4,1,3,8,7,9&#125;;</span><br><span class="line">        int min;</span><br><span class="line">        for (int i= unSort.length-1;i&gt;=0;i--)&#123;</span><br><span class="line">            for (int j=0;j&lt;i;j++)&#123;</span><br><span class="line">                if (unSort[j]&gt;unSort[j+1])&#123;</span><br><span class="line">                    int temp = unSort[j];</span><br><span class="line">                    unSort[j] = unSort[j+1];</span><br><span class="line">                    unSort[j+1] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/Selection_sort.gif" alt=""></center>
+
+<h2 id="基本思想-1"><a href="#基本思想-1" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，</li>
+<li>然后，再从剩余未排序元素中继续寻找最小（大）元素，</li>
+<li>然后放到已排序序列的末尾。</li>
+<li>以此类推，直到所有元素均排序完毕。</li>
+</ul>
+<p>通俗理解：两次for循环，外循环与内循环中的全部比较选出最大或最小</p>
+<h3 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class SelectorSort &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] unSort = &#123;2,5,6,4,1,3,8,7,9&#125;;</span><br><span class="line">        for (int i=0;i &lt; unSort.length;i++)&#123;</span><br><span class="line">            for (int j = i+1;j&lt;unSort.length;j++)&#123;</span><br><span class="line">                if (unSort[i]&gt;unSort[j])&#123;</span><br><span class="line">                    int temp = unSort[i];</span><br><span class="line">                    unSort[i] = unSort[j];</span><br><span class="line">                    unSort[j] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/Insertion_sort.gif" alt=""></center>
+
+<h2 id="基本思想-2"><a href="#基本思想-2" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>从第一个元素开始，该元素可以认为已经被排序</li>
+<li>取出下一个元素，在已经排序的元素序列中从后向前扫描</li>
+<li>如果该元素（已排序）大于取出的元素，将该元素移到下一位置</li>
+<li>重复步骤3，直到找到已排序的元素小于或者等于新元素的位置</li>
+<li>将新元素插入到该位置后</li>
+<li>重复步骤2~5</li>
+</ul>
+<p>通俗理解：顺序排队中进行插队的行为</p>
+<h3 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class InsertSort &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] unSort = &#123;2,5,6,4,1,3,8,7,9&#125;;</span><br><span class="line">        for (int i=0;i&lt;unSort.length-1;i++)&#123;</span><br><span class="line">            for (int j=0;j&lt;=i;j++)&#123;</span><br><span class="line">                if (unSort[i+1]&lt;unSort[j])&#123;</span><br><span class="line">                    int temp = unSort[i+1];</span><br><span class="line">                    unSort[i+1] = unSort[j];</span><br><span class="line">                    unSort[j] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/shellsort.gif" alt=""></center>
+
+<h2 id="基本思想-3"><a href="#基本思想-3" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>确定步长</li>
+<li>在步长内进行排序</li>
+<li>缩小步长，进行排序</li>
+<li>直至步长为1</li>
+</ul>
+<p>通俗理解：确定步长为x，依次比较0,0+x,0+2x….,1,1+x,2+x….再次缩小步长直至为1</p>
+<h3 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class ShellSort &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int[] unSort = &#123;2,5,6,4,1,3,8,7,9&#125;;</span><br><span class="line">        int gap =1,len = unSort.length;</span><br><span class="line">        while (gap&lt;len/3)&#123;</span><br><span class="line">            gap = gap * 3 +1;</span><br><span class="line">        &#125;</span><br><span class="line">        for (; gap&gt;0; gap/=3)&#123;</span><br><span class="line">            for (int i=gap;i&lt;len;i++)&#123;</span><br><span class="line">                for (int j=i-gap;j&gt;=0 &amp;&amp; unSort[j]&gt;unSort[j+gap];j-=gap)&#123;</span><br><span class="line">                    int temp = unSort[j];</span><br><span class="line">                    unSort[j] = unSort[j+gap];</span><br><span class="line">                    unSort[j+gap] = temp;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/Merge-sort.gif" alt=""></center>
+
+<h2 id="基本思想-4"><a href="#基本思想-4" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>先递归</li>
+<li>后合并</li>
+</ul>
+<p>通俗理解：</p>
+<h3 id="代码实现-4"><a href="#代码实现-4" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">public class MergeSort &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        int a[] = &#123; 51, 46, 20, 18, 65, 97, 82, 30, 77, 50 &#125;;</span><br><span class="line">        mergeSort(a, 0, a.length - 1);</span><br><span class="line">        System.out.println(&quot;排序结果：&quot; + Arrays.toString(a));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void mergeSort(int[] a, int low, int high) &#123;</span><br><span class="line">        int mid = (low + high) / 2;</span><br><span class="line">        if (low &lt; high) &#123;</span><br><span class="line">            // 左边</span><br><span class="line">            mergeSort(a, low, mid);</span><br><span class="line">            // 右边</span><br><span class="line">            mergeSort(a, mid + 1, high);</span><br><span class="line">            // 左右归并</span><br><span class="line">            merge(a, low, mid, high);</span><br><span class="line">            System.out.println(Arrays.toString(a));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    private static void merge(int[] a, int low, int mid, int high) &#123;</span><br><span class="line"></span><br><span class="line">        //辅助数组</span><br><span class="line">        int[] temp = new int[high - low + 1];</span><br><span class="line">        // 左指针</span><br><span class="line">        int i = low;</span><br><span class="line">        // 右指针</span><br><span class="line">        int j = mid + 1;</span><br><span class="line">        int k = 0;</span><br><span class="line">        // 把较小的数先移到新数组中</span><br><span class="line">        while (i &lt;= mid &amp;&amp; j &lt;= high) &#123;</span><br><span class="line">            if (a[i] &lt; a[j]) &#123;</span><br><span class="line">                temp[k++] = a[i++];</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                temp[k++] = a[j++];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 把左边剩余的数移入数组</span><br><span class="line">        while (i &lt;= mid) &#123;</span><br><span class="line">            temp[k++] = a[i++];</span><br><span class="line">        &#125;</span><br><span class="line">        // 把右边边剩余的数移入数组</span><br><span class="line">        while (j &lt;= high) &#123;</span><br><span class="line">            temp[k++] = a[j++];</span><br><span class="line">        &#125;</span><br><span class="line">        // 把新数组中的数覆盖nums数组</span><br><span class="line">        System.arraycopy(temp, 0, a, 0 + low, temp.length);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/quicksort.gif" alt=""></center>
+
+<h2 id="基本思想-5"><a href="#基本思想-5" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>从数列中挑出一个元素，称为”基准”（pivot），</li>
+<li>重新排序数列，所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准后面（相同的数可以到任何一边）。在这个分区结束之后，该基准就处于数列的中间位置。这个称为分区（partition）操作。</li>
+<li>递归地（recursively）把小于基准值元素的子数列和大于基准值元素的子数列排序。</li>
+</ul>
+<h3 id="代码实现-5"><a href="#代码实现-5" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">public class QuickSort &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        int[] unSort = &#123;2,5,6,4,1,3,8,7,9&#125;;</span><br><span class="line">        int low = 0,high = unSort.length-1;</span><br><span class="line">        int[] nums = qSort(unSort,low,high);</span><br><span class="line">        for (int anUnSort : nums) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static int[] qSort(int[] unSort, int low, int high) &#123;</span><br><span class="line"></span><br><span class="line">        int flag = unSort[low];</span><br><span class="line">        int i= low,j= high;</span><br><span class="line">        while (i &lt;= j)&#123;</span><br><span class="line">            while (unSort[i] &lt; flag)&#123;</span><br><span class="line">                i++;</span><br><span class="line">            &#125;</span><br><span class="line">            while (unSort[j] &gt; flag)&#123;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            if (i &lt;= j)&#123;</span><br><span class="line">                int temp = unSort[i];</span><br><span class="line">                unSort[i] = unSort[j];</span><br><span class="line">                unSort[j] = temp;</span><br><span class="line">                i++;</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">//        for (int anUnSort : unSort) &#123;</span><br><span class="line">//            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">//        &#125;</span><br><span class="line">//        System.out.println();</span><br><span class="line"></span><br><span class="line">        if (low &lt; j)&#123;</span><br><span class="line">            qSort(unSort,low,j);</span><br><span class="line">        &#125;</span><br><span class="line">        if (i&lt;high)&#123;</span><br><span class="line">            qSort(unSort,i,high);</span><br><span class="line">        &#125;</span><br><span class="line">        return unSort;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/heapsort.gif" alt=""></center>
+
+<h2 id="基本思想-6"><a href="#基本思想-6" class="headerlink" title="基本思想"></a>基本思想</h2><ul>
+<li>最大堆调整（Max_Heapify）：将堆的末端子节点作调整，使得子节点永远小于父节点</li>
+<li>创建最大堆（Build_Max_Heap）：将堆所有数据重新排序</li>
+<li>堆排序（HeapSort）：移除位在第一个数据的根节点，并做最大堆调整的递归运算</li>
+</ul>
+<h3 id="代码实现-6"><a href="#代码实现-6" class="headerlink" title="代码实现"></a>代码实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">public class HeapSort &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        int[] unSort = &#123;2, 5, 6, 4, 1, 3, 8, 7, 9&#125;;</span><br><span class="line">        //进行对堆调整</span><br><span class="line">        heapSort(unSort,unSort.length);</span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void heapSort(int[] unSort, int length) &#123;</span><br><span class="line"></span><br><span class="line">        int len = length-1;</span><br><span class="line">        //找出最大值，并置于堆顶</span><br><span class="line">        for (int i = len/2-1;i &gt;= 0;i--)&#123;</span><br><span class="line">            heapAdjust(unSort,i,len);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //最大值已排序</span><br><span class="line">        while (len &gt;= 0)&#123;</span><br><span class="line">            swap(unSort,0,len);</span><br><span class="line">            len--;</span><br><span class="line">            heapAdjust(unSort,0,len);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void heapAdjust(int[] unSort, int i, int length) &#123;</span><br><span class="line"></span><br><span class="line">        int left,right,j;</span><br><span class="line">        while ((left = i*2+1) &lt;= length)&#123;</span><br><span class="line">            right = left+1;</span><br><span class="line">            j=left;</span><br><span class="line">            if(j &lt; length &amp;&amp; unSort[right] &gt; unSort[left])&#123;</span><br><span class="line">                j++;</span><br><span class="line">            &#125;</span><br><span class="line">            if (unSort[i] &lt; unSort[j])&#123;</span><br><span class="line">                swap(unSort,j,i);</span><br><span class="line">            &#125;else &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">            i=j;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static void swap(int[] unSort,int min, int max) &#123;</span><br><span class="line">        int temp = unSort[min];</span><br><span class="line">        unSort[min] = unSort[max];</span><br><span class="line">        unSort[max] = temp;</span><br><span class="line">        for (int anUnSort : unSort) &#123;</span><br><span class="line">            System.out.print(anUnSort + &quot; &quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/排序算法-算法/" rel="tag"># 排序算法 算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/06/Java小知识-一/" rel="next" title="Java小知识(一)">
+                <i class="fa fa-chevron-left"></i> Java小知识(一)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#稳定性判断"><span class="nav-number">1.</span> <span class="nav-text">稳定性判断</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#冒泡排序"><span class="nav-number">2.</span> <span class="nav-text">冒泡排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想"><span class="nav-number">2.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现"><span class="nav-number">2.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#选择排序"><span class="nav-number">3.</span> <span class="nav-text">选择排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-1"><span class="nav-number">3.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-1"><span class="nav-number">3.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#插入排序"><span class="nav-number">4.</span> <span class="nav-text">插入排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-2"><span class="nav-number">4.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-2"><span class="nav-number">4.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#希尔排序"><span class="nav-number">5.</span> <span class="nav-text">希尔排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-3"><span class="nav-number">5.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-3"><span class="nav-number">5.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#归并排序"><span class="nav-number">6.</span> <span class="nav-text">归并排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-4"><span class="nav-number">6.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-4"><span class="nav-number">6.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速排序"><span class="nav-number">7.</span> <span class="nav-text">快速排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-5"><span class="nav-number">7.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-5"><span class="nav-number">7.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#堆排序"><span class="nav-number">8.</span> <span class="nav-text">堆排序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本思想-6"><span class="nav-number">8.1.</span> <span class="nav-text">基本思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现-6"><span class="nav-number">8.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
