@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="剑指offer," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="题目描述输入一个链表，从尾到头打印链表每个节点的值。 解题思路 遍历给出的链表，直至结尾 将每次遍历的结果放在栈中 便利完成后，将栈中保存的链表节点pop出来 完成输出  编码实现1234567891011121314151617181920212223242526272829/***    public class ListNode &amp;#123;*        int val;*">
-<meta name="keywords" content="剑指offer">
+<meta name="description" content="介绍 Android四大组件(Activity、Service、BroadcastReceiver、Content Provider) Android使用栈来对Activity来进行管理，所有的Activity会按照启动顺序排序进入一个叫做返回栈的里面。 Android中activity有四种启动模式standard、singleTop、singleTask、singleInstance  sta">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指offer---03">
-<meta property="og:url" content="http://yoursite.com/2018/04/12/剑指offer-03/index.html">
+<meta property="og:title" content="Android基础---Activity">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/Android基础-Activity/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="题目描述输入一个链表，从尾到头打印链表每个节点的值。 解题思路 遍历给出的链表，直至结尾 将每次遍历的结果放在栈中 便利完成后，将栈中保存的链表节点pop出来 完成输出  编码实现1234567891011121314151617181920212223242526272829/***    public class ListNode &amp;#123;*        int val;*">
+<meta property="og:description" content="介绍 Android四大组件(Activity、Service、BroadcastReceiver、Content Provider) Android使用栈来对Activity来进行管理，所有的Activity会按照启动顺序排序进入一个叫做返回栈的里面。 Android中activity有四种启动模式standard、singleTop、singleTask、singleInstance  sta">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-12T09:09:00.032Z">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:updated_time" content="2018-04-16T14:38:51.848Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑指offer---03">
-<meta name="twitter:description" content="题目描述输入一个链表，从尾到头打印链表每个节点的值。 解题思路 遍历给出的链表，直至结尾 将每次遍历的结果放在栈中 便利完成后，将栈中保存的链表节点pop出来 完成输出  编码实现1234567891011121314151617181920212223242526272829/***    public class ListNode &amp;#123;*        int val;*">
+<meta name="twitter:title" content="Android基础---Activity">
+<meta name="twitter:description" content="介绍 Android四大组件(Activity、Service、BroadcastReceiver、Content Provider) Android使用栈来对Activity来进行管理，所有的Activity会按照启动顺序排序进入一个叫做返回栈的里面。 Android中activity有四种启动模式standard、singleTop、singleTask、singleInstance  sta">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/12/剑指offer-03/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/16/Android基础-Activity/"/>
 
 
 
 
 
-  <title>剑指offer---03 | Wakaka</title>
+  <title>Android基础---Activity | Wakaka</title>
   
 
 
@@ -238,7 +240,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/剑指offer-03/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/Android基础-Activity/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wakaka">
@@ -255,7 +257,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">剑指offer---03</h1>
+          <h1 class="post-title" itemprop="name headline">Android基础---Activity</h1>
         
 
         <div class="post-meta">
@@ -267,8 +269,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T17:08:31+08:00">
-                2018-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T22:37:51+08:00">
+                2018-04-16
               </time>
             
 
@@ -305,14 +307,52 @@
       
 
       
-        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>输入一个链表，从尾到头打印链表每个节点的值。</p>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><ol>
-<li>遍历给出的链表，直至结尾</li>
-<li>将每次遍历的结果放在栈中</li>
-<li>便利完成后，将栈中保存的链表节点pop出来</li>
-<li>完成输出</li>
+        <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><ol>
+<li>Android四大组件(Activity、Service、BroadcastReceiver、Content Provider)</li>
+<li>Android使用栈来对Activity来进行管理，所有的Activity会按照启动顺序排序进入一个叫做返回栈的里面。</li>
+<li><p>Android中activity有四种启动模式standard、singleTop、singleTask、singleInstance</p>
+<ul>
+<li>standard:默认模式，每当新建一个activity的时候就会将这个activity压入返回栈中</li>
+<li>singleTop:如果新建一个Activity A，但是现在发现返回栈的栈顶就是Activity A，那么就直接使用栈顶的Activity A，不用新键</li>
+<li>singleTask:如果现在新建一个Activity A，但是发现返回栈中出现了Activity A，那么就将返回栈中Activity A之上的所有Activity pop，且不用新建</li>
+<li>singleInstance:全局单例，无论是在哪一个返回栈中启动目标Activity，都只会创建一个目标Activity实例而且这个时候还会使用一个新键的任务栈装载这个Activity的实例<a id="more"></a>
+</li>
+</ul>
+</li>
+<li><p>Activity生命周期<br><center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center></p>
+<ul>
+<li>当一个新的Activity启动的时候，依次调用onCreate–&gt;onStart–&gt;onResume,进入可见状态</li>
+<li>当该Activity被覆盖的时候(如：锁屏或者被新的Activity覆盖的时候)就会调用onPause</li>
+<li>用户再返回到原Activity就会进入onResume;或者用户就进入到另一个Activity的话，这个时候就调用OnStop,并且保存信息和状态；再或者系统内存不足，拥有更高权限的应用需要内存，那么这个Activity的进程就可能会被，调用onPause,onStop，要想重新打开的话就得重新创建</li>
+<li>用户返回到onStop状态的Activity（重新可见），就会调用onRestart–&gt;onStart–&gt;onResume,重新运行</li>
+<li>在Activity结束或者系统杀死之前会调用onDestory释放占用的资源</li>
+</ul>
+</li>
+<li>Activity使用onSaveInstanceState方法来保存自己的状态和信息，以便回收后重建时恢复数据</li>
 </ol>
-<h1 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*    public class ListNode &#123;</span><br><span class="line">*        int val;</span><br><span class="line">*        ListNode next = null;</span><br><span class="line">*</span><br><span class="line">*        ListNode(int val) &#123;</span><br><span class="line">*            this.val = val;</span><br><span class="line">*        &#125;</span><br><span class="line">*    &#125;</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line">import java.util.Stack;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public ArrayList&lt;Integer&gt; printListFromTailToHead(ListNode listNode) &#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        ListNode head = listNode;</span><br><span class="line">        Stack stack = new Stack();</span><br><span class="line">        while (head != null)&#123;</span><br><span class="line">            stack.push(head.val);</span><br><span class="line">            head = head.next;</span><br><span class="line">        &#125;</span><br><span class="line">        while (!stack.empty())&#123;</span><br><span class="line">            list.add((Integer) stack.pop());</span><br><span class="line">        &#125;</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Intent-Filter"><a href="#Intent-Filter" class="headerlink" title="Intent Filter"></a>Intent Filter</h1><p>Android中的三大组件(Activity、Service、BroadcastReceiver)是通过intent传递消息的。</p>
+<h2 id="Intent-Fliter的三大属性"><a href="#Intent-Fliter的三大属性" class="headerlink" title="Intent Fliter的三大属性"></a>Intent Fliter的三大属性</h2><ol>
+<li>Action<br>一个Intent Filter可以包含多个Action，Action列表用于标示Activity能接收的“动作”，<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;intent-filter &gt; </span><br><span class="line"> &lt;action android:name=&quot;android.intent.action.MAIN&quot; /&gt; </span><br><span class="line"> &lt;action android:name=&quot;com.scu.amazing7Action&quot; /&gt; </span><br><span class="line">……</span><br><span class="line"> &lt;/intent-filter&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>在代码中可以使用下面语句来启动Intent对象：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent i=new Intent(); </span><br><span class="line">i.setAction(&quot;com.scu.amazing7Action&quot;);</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>URL<br>在intent filter中，通过节点匹配外部数据，也就是通过URI携带外部数据给目标组件<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;data android:mimeType=&quot;mimeType&quot; </span><br><span class="line">	android:scheme=&quot;scheme&quot; </span><br><span class="line">	 android:host=&quot;host&quot;</span><br><span class="line">	 android:port=&quot;port&quot; </span><br><span class="line">	 android:path=&quot;path&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>只有data的所有属性全部匹配成功的时候URI数据才会匹配成功</p>
+<ol>
+<li>Category<br>为组件顶一个类别列表，当Intent中包含这个类别列表中的所有项目时才会匹配成功<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;intent-filter . . . &gt;</span><br><span class="line">   &lt;action android:name=&quot;code android.intent.action.MAIN&quot; /&gt;</span><br><span class="line">   &lt;category android:name=&quot;code　android.intent.category.LAUNCHER&quot; /&gt;</span><br><span class="line">&lt;/intent-filter&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Intent-Filter匹配过程"><a href="#Intent-Filter匹配过程" class="headerlink" title="Intent Filter匹配过程"></a>Intent Filter匹配过程</h2><ol>
+<li>加载所有的Intent Filter列表</li>
+<li>去掉action匹配失败的Intent Filter</li>
+<li>去掉URI匹配失败的Intent Filter</li>
+<li>去掉Category匹配失败的Intent Filter</li>
+<li>判断剩下的Intent Filter数目是否为0，为0 查找失败返回异常，大于0 按照优先级排序，返回最高优先级的Intent Filter</li>
+</ol>
+
       
     </div>
     
@@ -329,7 +369,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -342,8 +382,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/12/剑指offer-02/" rel="next" title="剑指offer---02">
-                <i class="fa fa-chevron-left"></i> 剑指offer---02
+              <a href="/2018/04/16/剑指offer-06/" rel="next" title="剑指offer---06">
+                <i class="fa fa-chevron-left"></i> 剑指offer---06
               </a>
             
           </div>
@@ -351,10 +391,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/12/java集合类-部分源码/" rel="prev" title="java集合类---部分源码">
-                java集合类---部分源码 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -479,7 +515,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码实现"><span class="nav-number">3.</span> <span class="nav-text">编码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Intent-Filter"><span class="nav-number">2.</span> <span class="nav-text">Intent Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-Fliter的三大属性"><span class="nav-number">2.1.</span> <span class="nav-text">Intent Fliter的三大属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent-Filter匹配过程"><span class="nav-number">2.2.</span> <span class="nav-text">Intent Filter匹配过程</span></a></li></ol></li></ol></div>
             
 
           </div>
