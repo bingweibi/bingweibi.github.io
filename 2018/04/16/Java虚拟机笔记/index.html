@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Wakaka">
 <meta property="og:description" content="内存模型程序计数器什么是程序计数器？当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。 作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等) 如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。  特点 线程私有，也就意味着生命周期随着">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-16T07:52:57.103Z">
+<meta property="og:updated_time" content="2018-04-16T07:56:13.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java虚拟机笔记">
 <meta name="twitter:description" content="内存模型程序计数器什么是程序计数器？当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。 作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等) 如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。  特点 线程私有，也就意味着生命周期随着">
@@ -314,6 +314,7 @@
 <li>线程私有，也就意味着生命周期随着线程创建而创建，死亡而死亡</li>
 <li>不会出现OOM的内存区域</li>
 </ol>
+<a id="more"></a>
 <h2 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h2><h3 id="什么是Java虚拟机栈？"><a href="#什么是Java虚拟机栈？" class="headerlink" title="什么是Java虚拟机栈？"></a>什么是Java虚拟机栈？</h3><p>描述Java方法执行过程的内存模型,</p>
 <h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>当一个方法即将运行的时候，Java虚拟机就会在Java虚拟机栈上开辟一块”栈帧”,里面包含着局部变量表、操作数栈、动态链接、方法出口等信息。</p>
 <h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
