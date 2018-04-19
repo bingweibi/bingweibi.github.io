@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java虚拟机," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java对象内存分配策略和垃圾收集器Java的内存管理主要是针对于对内存中的对象的分配和回收(堆和方法区) 垃圾收集算法判断哪些对象需要回收 引用计数法：每个对象都有一个计数器，当这个对象被一个变量或者另一个对象引用的时候，计数器加一；若该引用失效便计数器减一。当计数器为0的时候，就认为该对象是无效对象 缺点：很难解决对象之间互相循环引用的问题   可达性分析(主流)：所有和GC Roots直接或">
+<meta name="keywords" content="Java虚拟机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java虚拟机---垃圾收集器和内存分配策略">
+<meta property="og:url" content="http://yoursite.com/2018/04/19/Java虚拟机-垃圾收集器和内存分配策略/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="Java对象内存分配策略和垃圾收集器Java的内存管理主要是针对于对内存中的对象的分配和回收(堆和方法区) 垃圾收集算法判断哪些对象需要回收 引用计数法：每个对象都有一个计数器，当这个对象被一个变量或者另一个对象引用的时候，计数器加一；若该引用失效便计数器减一。当计数器为0的时候，就认为该对象是无效对象 缺点：很难解决对象之间互相循环引用的问题   可达性分析(主流)：所有和GC Roots直接或">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-19T12:05:38.954Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java虚拟机---垃圾收集器和内存分配策略">
+<meta name="twitter:description" content="Java对象内存分配策略和垃圾收集器Java的内存管理主要是针对于对内存中的对象的分配和回收(堆和方法区) 垃圾收集算法判断哪些对象需要回收 引用计数法：每个对象都有一个计数器，当这个对象被一个变量或者另一个对象引用的时候，计数器加一；若该引用失效便计数器减一。当计数器为0的时候，就认为该对象是无效对象 缺点：很难解决对象之间互相循环引用的问题   可达性分析(主流)：所有和GC Roots直接或">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/19/Java虚拟机-垃圾收集器和内存分配策略/"/>
+
+
+
+
+
+  <title>Java虚拟机---垃圾收集器和内存分配策略 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">知识的荒原</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/19/Java虚拟机-垃圾收集器和内存分配策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java虚拟机---垃圾收集器和内存分配策略</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T20:05:00+08:00">
+                2018-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java对象内存分配策略和垃圾收集器"><a href="#Java对象内存分配策略和垃圾收集器" class="headerlink" title="Java对象内存分配策略和垃圾收集器"></a>Java对象内存分配策略和垃圾收集器</h1><p>Java的内存管理主要是针对于对内存中的对象的分配和回收(堆和方法区)</p>
+<h2 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><h3 id="判断哪些对象需要回收"><a href="#判断哪些对象需要回收" class="headerlink" title="判断哪些对象需要回收"></a>判断哪些对象需要回收</h3><ol>
+<li>引用计数法：每个对象都有一个计数器，当这个对象被一个变量或者另一个对象引用的时候，计数器加一；若该引用失效便计数器减一。当计数器为0的时候，就认为该对象是无效对象<ul>
+<li>缺点：很难解决对象之间互相循环引用的问题</li>
+</ul>
+</li>
+<li>可达性分析(主流)：所有和GC Roots直接或间接相连的对象都是有效对象，和GC Roots没有引用链相连的对象就是无效对象</li>
+</ol>
+<p>可作为GC Roots对象的类别</p>
+<ul>
+<li>虚拟机栈(栈帧中的本地变量表)中引用的对象</li>
+<li>方法区中类静态属性引用的对象</li>
+<li>方法区中常量引用的对象</li>
+<li>本地方法栈JNI(Native 方法)引用的对象</li>
+</ul>
+<a id="more"></a>
+<h3 id="引用强弱"><a href="#引用强弱" class="headerlink" title="引用强弱"></a>引用强弱</h3><p>强引用&gt;软引用&gt;弱引用&gt;虚引用</p>
+<ol>
+<li>强引用：只要引用还在，那么垃圾收集器永远不会回收掉被引用的对象(<code>Object object = new Object()</code>)</li>
+<li>软引用：描述一些还有用但不是必需的对象。当第一次OOM之前，将会讲这些对象列进回收范围之中进行第二次回收。第二次内存还不足的话才会报OOM</li>
+<li>弱引用：描述非必需对象。生存至下一次垃圾回收之前，也就是垃圾回收时，必回收弱引用关联的对象</li>
+<li>虚引用：被回收时收到一个系统通知</li>
+</ol>
+<h3 id="回收无效对象的过程"><a href="#回收无效对象的过程" class="headerlink" title="回收无效对象的过程"></a>回收无效对象的过程</h3><ol>
+<li>判断对象是否覆盖了finalize()方法<ul>
+<li>覆盖，且该方法的finalize()方法没有执行，就会将finalize()方法扔到F-Queue队列中</li>
+<li>没有覆盖，直接释放对象内存</li>
+</ul>
+</li>
+<li>执行F-Queue队列中的finalize（）方法。如果出现耗时操作就会直接停止执行，将该对象清除</li>
+<li>对象重生或者死亡，在执行finalize的过程中，若有引用则重生，没有则清除</li>
+</ol>
+<h3 id="垃圾收集算法-1"><a href="#垃圾收集算法-1" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><ol>
+<li>标记-清除算法<ul>
+<li>标记需要被清除的对象</li>
+<li>标记完成后统一回收被标记的对象</li>
+<li>缺点：效率低、空间碎片多</li>
+</ul>
+</li>
+<li>复制算法(新生代)<ul>
+<li>可用区域分为大小相等的两块</li>
+<li>一块用完，存活对象放置另一块，清理已使用的一块</li>
+<li>优点：简单、高效。缺点：代价过高(只能每次使用原来的一半)</li>
+</ul>
+</li>
+<li>标记-整理算法(老年代)<ul>
+<li>先标记需要清理的对象</li>
+<li>所有存货对象向一端移动</li>
+<li>清理掉端边界以外的区域</li>
+</ul>
+</li>
+<li>分代收集算法(结合起来使用)</li>
+</ol>
+<h2 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h2><ol>
+<li>新生代<ul>
+<li>Serial、ParNew、Parallel Scavenge</li>
+</ul>
+</li>
+<li>老年代<ul>
+<li>CMS、Serial Old(MSC)、Parallel Old</li>
+</ul>
+</li>
+<li>G1</li>
+</ol>
+<ul>
+<li>Serial收集器<ol>
+<li>单线程收集器(只会使用一个CPU或者一条线程去完成垃圾收集器工作，更重要的是在进行垃圾收集工作的时候，必须暂停其他所有的工作线程，直至收集结束)</li>
+<li>复制算法</li>
+</ol>
+</li>
+<li>ParNew收集器<ol>
+<li>Serial收集器的多线程版本</li>
+<li>复制算法</li>
+</ol>
+</li>
+<li>Parallel Scavenge收集器<ol>
+<li>并行多线程收集器</li>
+<li>复制算法</li>
+<li>可控制的吞吐量</li>
+<li>适合后台计算不需要太多交互任务</li>
+</ol>
+</li>
+<li>Serial Old收集器<ol>
+<li>单线程收集器</li>
+<li>标记-整理算法</li>
+</ol>
+</li>
+<li>Parallel Old收集器<ol>
+<li>多线程收集器</li>
+<li>标记-整理算法</li>
+<li>注重吞吐量和CPU资源敏感</li>
+</ol>
+</li>
+<li>CMS收集器<ol>
+<li>标记-清除算法</li>
+<li>互联网或者B/S系统的服务端，重视响应速度</li>
+</ol>
+</li>
+<li>G1收集器<ol>
+<li>面向服务端</li>
+<li>并发</li>
+<li>分带手机算法</li>
+<li>…<h2 id="内存分配和回收策略"><a href="#内存分配和回收策略" class="headerlink" title="内存分配和回收策略"></a>内存分配和回收策略</h2></li>
+</ol>
+</li>
+</ul>
+<h3 id="对象优先在Eden区中分配"><a href="#对象优先在Eden区中分配" class="headerlink" title="对象优先在Eden区中分配"></a>对象优先在Eden区中分配</h3><ol>
+<li>堆中内存空间分为新生代和老年代</li>
+<li>新生代(复制算法)进一步分为Eden区域 survior from区域 survior to区域</li>
+<li>每次创建对象的时候，首先在Eden区进行分配。Eden区满则在 Survior from中分配，如果Survior from也满了，则启动分配担保，将这两区域的对象转移到老年代，重新再Eden区中分配新的对象</li>
+</ol>
+<h3 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h3><p>大对象：占用大量连续存储空间的对象</p>
+<h3 id="生命周期较长的对象进入老年代"><a href="#生命周期较长的对象进入老年代" class="headerlink" title="生命周期较长的对象进入老年代"></a>生命周期较长的对象进入老年代</h3><h3 id="相同年龄的对象内存超过Survior内存一半的对象进入老年代"><a href="#相同年龄的对象内存超过Survior内存一半的对象进入老年代" class="headerlink" title="相同年龄的对象内存超过Survior内存一半的对象进入老年代"></a>相同年龄的对象内存超过Survior内存一半的对象进入老年代</h3><h3 id="Minor-GC"><a href="#Minor-GC" class="headerlink" title="Minor GC"></a>Minor GC</h3><p>当Eden内存区域满了的时候，将Eden区域的内存碎片和Survior from区域的转移到Survior to 中</p>
+<h3 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h3><p>老年代的内存区域满了之后，全部的内存区域都进行GC</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java虚拟机/" rel="tag"># Java虚拟机</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/19/Java虚拟机-内存区域和对象创建过程/" rel="next" title="Java虚拟机---内存区域和对象创建过程">
+                <i class="fa fa-chevron-left"></i> Java虚拟机---内存区域和对象创建过程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java对象内存分配策略和垃圾收集器"><span class="nav-number">1.</span> <span class="nav-text">Java对象内存分配策略和垃圾收集器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">1.1.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断哪些对象需要回收"><span class="nav-number">1.1.1.</span> <span class="nav-text">判断哪些对象需要回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引用强弱"><span class="nav-number">1.1.2.</span> <span class="nav-text">引用强弱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回收无效对象的过程"><span class="nav-number">1.1.3.</span> <span class="nav-text">回收无效对象的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾收集算法-1"><span class="nav-number">1.1.4.</span> <span class="nav-text">垃圾收集算法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收器"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾回收器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存分配和回收策略"><span class="nav-number">1.3.</span> <span class="nav-text">内存分配和回收策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象优先在Eden区中分配"><span class="nav-number">1.3.1.</span> <span class="nav-text">对象优先在Eden区中分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大对象直接进入老年代"><span class="nav-number">1.3.2.</span> <span class="nav-text">大对象直接进入老年代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生命周期较长的对象进入老年代"><span class="nav-number">1.3.3.</span> <span class="nav-text">生命周期较长的对象进入老年代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相同年龄的对象内存超过Survior内存一半的对象进入老年代"><span class="nav-number">1.3.4.</span> <span class="nav-text">相同年龄的对象内存超过Survior内存一半的对象进入老年代</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minor-GC"><span class="nav-number">1.3.5.</span> <span class="nav-text">Minor GC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Full-GC"><span class="nav-number">1.3.6.</span> <span class="nav-text">Full GC</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
