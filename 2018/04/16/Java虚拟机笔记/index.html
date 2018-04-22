@@ -456,9 +456,9 @@
 <li>为已经在方法区中的类中的静态成员变量分配内存，类的静态成员变量也存储在方法区中</li>
 <li>为静态成员变量设置初始值，初始值为0，false，null等</li>
 </ol>
-<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static String name = &quot;柴毛毛&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> name = <span class="string">"柴毛毛"</span>;</span><br></pre></td></tr></table></figure></p>
 <p>在准备阶段，JVM会在方法区中为name分配内存空间，并赋上初始值null。 给name赋上”柴毛毛”是在初始化阶段完成的。</p>
-<p>例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static final String name = &quot;柴毛毛&quot;;</span><br></pre></td></tr></table></figure></p>
+<p>例：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> name = <span class="string">"柴毛毛"</span>;</span><br></pre></td></tr></table></figure></p>
 <p>被final修饰的常量如果有初始值，那么在编译阶段就会将初始值存入constantValue属性中，在准备阶段就将constantValue的值赋给该字段。</p>
 
       
@@ -591,7 +591,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/tags.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
