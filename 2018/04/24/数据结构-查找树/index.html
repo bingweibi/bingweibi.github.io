@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二叉查找树二叉树是一个空链接，或者是一个有左右两个链接的节点，每个链接都指向一颗子二叉树">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构---查找树">
+<meta property="og:url" content="http://yoursite.com/2018/04/24/数据结构-查找树/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="二叉查找树二叉树是一个空链接，或者是一个有左右两个链接的节点，每个链接都指向一颗子二叉树">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%A0%91.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91put%E6%93%8D%E4%BD%9C.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91deleteMin.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91delete%E6%93%8D%E4%BD%9C.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91%E6%8F%92%E5%85%A52-%E8%8A%82%E7%82%B9.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91%E6%8F%92%E5%85%A53-%E8%8A%82%E7%82%B9.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E5%B7%A6%E6%97%8B%E8%BD%AC%E8%BF%9E%E6%8E%A5.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E5%8F%B3%E6%97%8B%E8%BD%AC.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E9%A2%9C%E8%89%B2%E8%BD%AC%E5%8C%96.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.png">
+<meta property="og:updated_time" content="2018-04-24T10:22:41.022Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构---查找树">
+<meta name="twitter:description" content="二叉查找树二叉树是一个空链接，或者是一个有左右两个链接的节点，每个链接都指向一颗子二叉树">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%A0%91.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/24/数据结构-查找树/"/>
+
+
+
+
+
+  <title>数据结构---查找树 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/24/数据结构-查找树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">数据结构---查找树</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-24T18:21:25+08:00">
+                2018-04-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="二叉查找树"><a href="#二叉查找树" class="headerlink" title="二叉查找树"></a>二叉查找树</h1><p><strong>二叉树</strong>是一个空链接，或者是一个有左右两个链接的节点，每个链接都指向一颗子二叉树</p>
+<a id="more"></a>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%A0%91.png" alt=""></center>
+
+<p><strong>二叉查找树(BST)</strong>是一颗二叉树，并且每个节点的值都大于等于其左子树中的所有节点的值，小于等于右子树的所有节点的值</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt=""></center>
+
+<p>二叉查找树有一个重要的性质就是<em>它的中序遍历结果递增排序</em></p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86.png" alt=""></center>
+
+<h2 id="二叉查找树的数据结构"><a href="#二叉查找树的数据结构" class="headerlink" title="二叉查找树的数据结构"></a>二叉查找树的数据结构</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">BST&lt;Key</span> <span class="keyword">extends</span> <span class="title">Comparable&lt;Key&gt;</span>, <span class="title">Value&gt;</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Node</span> root;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">Key</span> key;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">Value</span> <span class="keyword">val</span>;</span><br><span class="line">        <span class="keyword">private</span> <span class="type">Node</span> left, right;</span><br><span class="line">        <span class="comment">// 以该节点为根的子树中节点总数</span></span><br><span class="line">        <span class="keyword">private</span> int <span class="type">N</span>;</span><br><span class="line"></span><br><span class="line">        public <span class="type">Node</span>(<span class="type">Key</span> key, <span class="type">Value</span> <span class="keyword">val</span>, int <span class="type">N</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.<span class="keyword">val</span> = <span class="keyword">val</span>;</span><br><span class="line">            <span class="keyword">this</span>.<span class="type">N</span> = <span class="type">N</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public int size() &#123;</span><br><span class="line">        <span class="keyword">return</span> size(root);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> int size(<span class="type">Node</span> x) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="literal">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">return</span> x.<span class="type">N</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="get"><a href="#get" class="headerlink" title="get()"></a>get()</h3><ol>
+<li>如果树是空的，则查找未命中</li>
+<li>如果被查找的键和根节点的键相等，查找命中</li>
+<li>否则递归地在子树中查找：如果被查找的键较小就在左子树中查找，较大就在右子树中查找</li>
+</ol>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Value <span class="built_in">get</span>(Key <span class="built_in">key</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">get</span>(root, <span class="built_in">key</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> Value <span class="built_in">get</span>(Node x, Key <span class="built_in">key</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="built_in">int</span> cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp == <span class="number">0</span>) <span class="keyword">return</span> x.val;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="built_in">get</span>(x.left, <span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">get</span>(x.right, <span class="built_in">key</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="put"><a href="#put" class="headerlink" title="put()"></a>put()</h3><p>当插入的键不存在于树中，需要创建一个新节点，并且更新上层节点的链接使得该节点正确链接到树中</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91put%E6%93%8D%E4%BD%9C.png" alt=""></center>
+
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> put(Key <span class="built_in">key</span>, Value val) &#123;</span><br><span class="line">    root = put(root, <span class="built_in">key</span>, val);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> Node put(Node x, Key <span class="built_in">key</span>, Value val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> Node(<span class="built_in">key</span>, val, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">int</span> cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp == <span class="number">0</span>) x.val = val;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) x.left = put(x.left, <span class="built_in">key</span>, val);</span><br><span class="line">    <span class="keyword">else</span> x.right = put(x.right, <span class="built_in">key</span>, val);</span><br><span class="line">    x.N = <span class="built_in">size</span>(x.left) + <span class="built_in">size</span>(x.right) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p>最好情况(完全二叉树):每条空链接和根节点的距离都是logN<br>最坏情况（单边）:树的高度为N</p>
+<h3 id="floor"><a href="#floor" class="headerlink" title="floor()"></a>floor()</h3><p>floor(key):小于等于key的最大值</p>
+<ol>
+<li>如果键小于根节点的键，那么floor(key)一定在左子树中</li>
+<li>如果键大于根节点的键，那么先判断右子树中是否存在floor(key)</li>
+<li>存在就找到，不存在就判断根节点</li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public <span class="built_in">Key</span> <span class="built_in">floor</span>(<span class="built_in">Key</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">    Node x = <span class="built_in">floor</span>(root, <span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="built_in">null</span>) <span class="keyword">return</span> <span class="built_in">null</span>;</span><br><span class="line">    <span class="keyword">return</span> x.<span class="built_in">key</span>;</span><br><span class="line">&#125;</span><br><span class="line">private Node <span class="built_in">floor</span>(Node x, <span class="built_in">Key</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="built_in">null</span>) <span class="keyword">return</span> <span class="built_in">null</span>;</span><br><span class="line">    int cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp == <span class="number">0</span>) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="built_in">floor</span>(x.left, <span class="built_in">key</span>);</span><br><span class="line">    Node t = <span class="built_in">floor</span>(x.right, <span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (t != <span class="built_in">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> t;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="rank"><a href="#rank" class="headerlink" title="rank()"></a>rank()</h3><ol>
+<li>如果键和根节点的值相等，返回左子树的节点数</li>
+<li>如果小于，递归计算在左子树中的排名</li>
+<li>如果大于，递归计算在右子树总的排名，并加上左子树的节点数和根节点</li>
+</ol>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public int <span class="built_in">rank</span>(<span class="built_in">Key</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">rank</span>(<span class="built_in">key</span>, root);</span><br><span class="line">&#125;</span><br><span class="line">private int <span class="built_in">rank</span>(<span class="built_in">Key</span> <span class="built_in">key</span>, Node x) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="built_in">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    int cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp == <span class="number">0</span>) <span class="keyword">return</span> size(x.left);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="built_in">rank</span>(<span class="built_in">key</span>, x.left);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">1</span> + size(x.left) + <span class="built_in">rank</span>(<span class="built_in">key</span>, x.right);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="min"><a href="#min" class="headerlink" title="min()"></a>min()</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Node min(Node x) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (x.left == <span class="literal">null</span>) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">return</span> min(x.left);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="deleteMin"><a href="#deleteMin" class="headerlink" title="deleteMin()"></a>deleteMin()</h3><center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91deleteMin.png" alt=""></center>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> void deleteMin() &#123;</span><br><span class="line">    root = deleteMin(root);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="type">Node</span> deleteMin(<span class="type">Node</span> x) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x.<span class="keyword">left</span> == null) <span class="keyword">return</span> x.<span class="keyword">right</span>;</span><br><span class="line">    x.<span class="keyword">left</span> = deleteMin(x.<span class="keyword">left</span>);</span><br><span class="line">    x.<span class="type">N</span> = size(x.<span class="keyword">left</span>) + size(x.<span class="keyword">right</span>) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="delete"><a href="#delete" class="headerlink" title="delete()"></a>delete()</h3><ol>
+<li>如果待删除的节点只有一个子树，那么只需要让指向待删除节点的链接指向唯一的子树即可</li>
+<li>否则，让右子树的最小节点替换该节点</li>
+</ol>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91delete%E6%93%8D%E4%BD%9C.png" alt=""></center>
+
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public void <span class="keyword">delete</span>(<span class="built_in">Key</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">    root = <span class="keyword">delete</span>(root, <span class="built_in">key</span>);</span><br><span class="line">&#125;</span><br><span class="line">private Node <span class="keyword">delete</span>(Node x, <span class="built_in">Key</span> <span class="built_in">key</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="built_in">null</span>) <span class="keyword">return</span> <span class="built_in">null</span>;</span><br><span class="line">    int cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) x.left = <span class="keyword">delete</span>(x.left, <span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>) x.right = <span class="keyword">delete</span>(x.right, <span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (x.right == <span class="built_in">null</span>) <span class="keyword">return</span> x.left;</span><br><span class="line">        <span class="keyword">if</span> (x.left == <span class="built_in">null</span>) <span class="keyword">return</span> x.right;</span><br><span class="line">        Node t = x;</span><br><span class="line">        x = min(t.right);</span><br><span class="line">        x.right = deleteMin(t.right);</span><br><span class="line">        x.left = t.left;</span><br><span class="line">    &#125;</span><br><span class="line">    x.N = size(x.left) + size(x.right) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="keys"><a href="#keys" class="headerlink" title="keys()"></a>keys()</h3><p>利用二叉查找树中序遍历的结果为递增的特点</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public Iterable&lt;Key&gt; keys(Key lo, Key hi) &#123;</span><br><span class="line">    Queue&lt;Key&gt;<span class="built_in"> queue </span>= new LinkedList&lt;&gt;();</span><br><span class="line">    keys(root, queue, lo, hi);</span><br><span class="line">    return queue;</span><br><span class="line">&#125;</span><br><span class="line">private void keys(Node x, Queue&lt;Key&gt; queue, Key lo, Key hi) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="literal">null</span>) return;</span><br><span class="line">    int cmpLo = lo.compareTo(x.key);</span><br><span class="line">    int cmpHi = hi.compareTo(x.key);</span><br><span class="line">    <span class="keyword">if</span> (cmpLo &lt; 0) keys(x.left, queue, lo, hi);</span><br><span class="line">    <span class="keyword">if</span> (cmpLo &lt;= 0 &amp;&amp; cmpHi &gt;= 0) queue.<span class="builtin-name">add</span>(x.key);</span><br><span class="line">    <span class="keyword">if</span> (cmpHi &gt; 0) keys(x.right, queue, lo, hi);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="2-3查找树"><a href="#2-3查找树" class="headerlink" title="2-3查找树"></a>2-3查找树</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt=""></center>
+
+<p>2-3查找树中引入了2-节点和3-节点，目的是为了让树平衡，一颗完美平衡的2-3查找树的所有空链接到根节点的距离应该是相同的</p>
+<h2 id="插入操作"><a href="#插入操作" class="headerlink" title="插入操作"></a>插入操作</h2><p>2-3查找树的插入操作与二叉查找树的插入操作有很大的区别，二叉查找树插入操作是先进行一次未命中的查找，然后再将节点插入对应的空连接上。<br>2-3查找树插入操作是将新节点插入到叶子节点上</p>
+<ol>
+<li>插入到2-节点上，那么直接将新节点和原来节点组成3-节点<center><img src="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91%E6%8F%92%E5%85%A52-%E8%8A%82%E7%82%B9.png" alt=""></center></li>
+<li>如果是插入到3-节点上，就会产生一个临时的4-节点 ，需要将4-节点分裂成3个2-节点，并将中间的2-节点移到上层节点中。如果上移操作产生临时4-节点则一直分裂上移，知道不存在临时4-节点</li>
+</ol>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/2-3%E6%9F%A5%E6%89%BE%E6%A0%91%E6%8F%92%E5%85%A53-%E8%8A%82%E7%82%B9.png" alt=""></center>
+
+<p>2-3查找树的查找和插入操作复杂度和插入顺序无关，在最坏情况下查找和插入操作访问的节点必然不超过logN个。</p>
+<h1 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h1><p>红黑树中使用红链接来实现3-节点。指向一个节点的链接颜色如果是<em>红色，那么这个节点和上层节点表示的是一个3-节点，而黑色则是普通连接</em></p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91.png" alt=""></center>
+
+<ol>
+<li>红链接都是左链接</li>
+<li>完美黑色平衡，即任意空链接到根节点的路径上的黑链接数量相同</li>
+</ol>
+<h2 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h2><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class RedBlackBST&lt;Key extends Comparable&lt;Key&gt;, Value&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> Node root;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="built_in">boolean</span> RED = <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="built_in">boolean</span> BLACK = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> class Node &#123;</span><br><span class="line">        Key <span class="built_in">key</span>;</span><br><span class="line">        Value val;</span><br><span class="line">        Node left, right;</span><br><span class="line">        <span class="built_in">int</span> N;</span><br><span class="line">        <span class="built_in">boolean</span> <span class="built_in">color</span>;</span><br><span class="line"></span><br><span class="line">        Node(Key <span class="built_in">key</span>, Value val, <span class="built_in">int</span> n, <span class="built_in">boolean</span> <span class="built_in">color</span>) &#123;</span><br><span class="line">            <span class="keyword">this</span>.<span class="built_in">key</span> = <span class="built_in">key</span>;</span><br><span class="line">            <span class="keyword">this</span>.val = val;</span><br><span class="line">            N = n;</span><br><span class="line">            <span class="keyword">this</span>.<span class="built_in">color</span> = <span class="built_in">color</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">boolean</span> isRed(Node x) &#123;</span><br><span class="line">        <span class="keyword">if</span> (x == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">return</span> x.<span class="built_in">color</span> == RED;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="左旋转"><a href="#左旋转" class="headerlink" title="左旋转"></a>左旋转</h2><p>上面提到红链接都是左链接，如果出现红链接为有链接的时候，就要进行左旋操作</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E5%B7%A6%E6%97%8B%E8%BD%AC%E8%BF%9E%E6%8E%A5.png" alt=""></center>
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">Node</span> <span class="title">rotateLeft</span>(<span class="keyword">Node</span> <span class="title">h</span>) &#123;</span><br><span class="line">    <span class="keyword">Node</span> <span class="title">x</span> = h.right;</span><br><span class="line">    h.right = x.left;</span><br><span class="line">    x.left = h;</span><br><span class="line">    x.color = h.color;</span><br><span class="line">    h.color = RED;</span><br><span class="line">    x.N = h.N;</span><br><span class="line">    h.N = <span class="number">1</span> + size(h.left) + size(h.right);</span><br><span class="line">    return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="右旋转"><a href="#右旋转" class="headerlink" title="右旋转"></a>右旋转</h2><p>进行右旋转是为了转换两个连续的左红连接</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E5%8F%B3%E6%97%8B%E8%BD%AC.png" alt=""></center>
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">Node</span> <span class="title">rotateRight</span>(<span class="keyword">Node</span> <span class="title">h</span>) &#123;</span><br><span class="line">    <span class="keyword">Node</span> <span class="title">x</span> = h.left;</span><br><span class="line">    h.left = x.right;</span><br><span class="line">    x.color = h.color;</span><br><span class="line">    h.color = RED;</span><br><span class="line">    x.N = h.N;</span><br><span class="line">    h.N = <span class="number">1</span> + size(h.left) + size(h.right);</span><br><span class="line">    return x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="颜色转化"><a href="#颜色转化" class="headerlink" title="颜色转化"></a>颜色转化</h2><p>一个4-节点在红黑树中表现为一个节点的左右节点都是红色的，分裂4-节点除了需要将子节点的颜色由红变黑外，同时需要将父节点的颜色由黑变红，从2-3树的角度看就是将中间节点移到上层节点。</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E9%A2%9C%E8%89%B2%E8%BD%AC%E5%8C%96.png" alt=""></center>
+
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void flipColors(<span class="keyword">Node</span> <span class="title">h</span>)&#123;</span><br><span class="line">    h.color = RED;</span><br><span class="line">    h.left.color = BLACK;</span><br><span class="line">    h.right.color = BLACK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="插入操作-1"><a href="#插入操作-1" class="headerlink" title="插入操作"></a>插入操作</h2><p>先将一个节点按照二叉查找树的方法插入到正确位置，然后再进行如下的颜色转换操作</p>
+<ol>
+<li>如果右子节点是红色的而左子节点是黑色的，进行左旋转</li>
+<li>如果左子节点是红色的，左子节点的左子节点也是红色的，进行右旋转</li>
+<li>如果左右子节点都是红色的，进行颜色转化</li>
+</ol>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E7%BA%A2%E9%BB%91%E6%A0%91%E6%8F%92%E5%85%A5%E6%93%8D%E4%BD%9C.png" alt=""></center>
+
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> put(Key <span class="built_in">key</span>, Value val) &#123;</span><br><span class="line">    root = put(root, <span class="built_in">key</span>, val);</span><br><span class="line">    root.<span class="built_in">color</span> = BLACK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Node put(Node x, Key <span class="built_in">key</span>, Value val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (x == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> Node(<span class="built_in">key</span>, val, <span class="number">1</span>, RED);</span><br><span class="line">    <span class="built_in">int</span> cmp = <span class="built_in">key</span>.compareTo(x.<span class="built_in">key</span>);</span><br><span class="line">    <span class="keyword">if</span> (cmp == <span class="number">0</span>) x.val = val;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>) x.left = put(x.left, <span class="built_in">key</span>, val);</span><br><span class="line">    <span class="keyword">else</span> x.right = put(x.right, <span class="built_in">key</span>, val);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isRed(x.right) &amp;&amp; !isRed(x.left)) x = rotateLeft(x);</span><br><span class="line">    <span class="keyword">if</span> (isRed(x.left) &amp;&amp; isRed(x.left.left)) x = rotateRight(x);</span><br><span class="line">    <span class="keyword">if</span> (isRed(x.left) &amp;&amp; isRed(x.right)) flipColors(x);</span><br><span class="line"></span><br><span class="line">    x.N = <span class="built_in">size</span>(x.left) + <span class="built_in">size</span>(x.right) + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> x;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>根节点一定为黑色，因为根节点没有上层节点，也就没有上层节点的左链接指向根节点。flipColors() 有可能会使得根节点的颜色变为红色，每当根节点由红色变成黑色时树的黑链接高度加 1</p>
+<h2 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h2><p>一颗大小为 N 的红黑树的高度不会超过 2logN。最坏的情况下是它所对应的 2-3 树，构成最左边的路径节点全部都是 3- 节点而其余都是 2- 节点。</p>
+<p>红黑树大多数的操作所需要的时间都是对数级别的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/24/计算机网络/" rel="next" title="计算机网络">
+                <i class="fa fa-chevron-left"></i> 计算机网络
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二叉查找树"><span class="nav-number">1.</span> <span class="nav-text">二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树的数据结构"><span class="nav-number">1.1.</span> <span class="nav-text">二叉查找树的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#get"><span class="nav-number">1.1.1.</span> <span class="nav-text">get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put"><span class="nav-number">1.1.2.</span> <span class="nav-text">put()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.1.3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#floor"><span class="nav-number">1.1.4.</span> <span class="nav-text">floor()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rank"><span class="nav-number">1.1.5.</span> <span class="nav-text">rank()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min"><span class="nav-number">1.1.6.</span> <span class="nav-text">min()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deleteMin"><span class="nav-number">1.1.7.</span> <span class="nav-text">deleteMin()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#delete"><span class="nav-number">1.1.8.</span> <span class="nav-text">delete()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#keys"><span class="nav-number">1.1.9.</span> <span class="nav-text">keys()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-3查找树"><span class="nav-number">2.</span> <span class="nav-text">2-3查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入操作"><span class="nav-number">2.1.</span> <span class="nav-text">插入操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#红黑二叉查找树"><span class="nav-number">3.</span> <span class="nav-text">红黑二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">数据结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#左旋转"><span class="nav-number">3.2.</span> <span class="nav-text">左旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#右旋转"><span class="nav-number">3.3.</span> <span class="nav-text">右旋转</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#颜色转化"><span class="nav-number">3.4.</span> <span class="nav-text">颜色转化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插入操作-1"><span class="nav-number">3.5.</span> <span class="nav-text">插入操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析-1"><span class="nav-number">3.6.</span> <span class="nav-text">分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
