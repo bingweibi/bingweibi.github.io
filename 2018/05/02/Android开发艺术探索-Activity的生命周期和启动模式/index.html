@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="剑指offer," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="题目描述用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。 解题思路 push操作：栈1用来push pop操作：栈1 pop–&amp;gt;栈2push–&amp;gt;栈2pop  编码实现123456789101112131415161718192021222324import java.util.Stack;public class Solution &amp;#123;">
-<meta name="keywords" content="剑指offer">
+<meta name="description" content="Activity的生命周期和启动模式Activity的生命周期全面分析典型情况下的生命周期分析">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="剑指offer---05">
-<meta property="og:url" content="http://yoursite.com/2018/04/16/剑指offer-05/index.html">
+<meta property="og:title" content="Android开发艺术探索---Activity的生命周期和启动模式">
+<meta property="og:url" content="http://yoursite.com/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="题目描述用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。 解题思路 push操作：栈1用来push pop操作：栈1 pop–&amp;gt;栈2push–&amp;gt;栈2pop  编码实现123456789101112131415161718192021222324import java.util.Stack;public class Solution &amp;#123;">
+<meta property="og:description" content="Activity的生命周期和启动模式Activity的生命周期全面分析典型情况下的生命周期分析">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T03:39:35.769Z">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:updated_time" content="2018-05-03T03:09:44.726Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="剑指offer---05">
-<meta name="twitter:description" content="题目描述用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。 解题思路 push操作：栈1用来push pop操作：栈1 pop–&amp;gt;栈2push–&amp;gt;栈2pop  编码实现123456789101112131415161718192021222324import java.util.Stack;public class Solution &amp;#123;">
+<meta name="twitter:title" content="Android开发艺术探索---Activity的生命周期和启动模式">
+<meta name="twitter:description" content="Activity的生命周期和启动模式Activity的生命周期全面分析典型情况下的生命周期分析">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 
 
 
@@ -120,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/16/剑指offer-05/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/"/>
 
 
 
 
 
-  <title>剑指offer---05 | Wakaka</title>
+  <title>Android开发艺术探索---Activity的生命周期和启动模式 | Wakaka</title>
   
 
 
@@ -258,7 +260,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/剑指offer-05/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Wakaka">
@@ -275,7 +277,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">剑指offer---05</h2>
+          <h2 class="post-title" itemprop="name headline">Android开发艺术探索---Activity的生命周期和启动模式</h2>
         
 
         <div class="post-meta">
@@ -287,8 +289,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T19:55:30+08:00">
-                2018-04-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-02T22:17:05+08:00">
+                2018-05-02
               </time>
             
 
@@ -325,12 +327,67 @@
       
 
       
-        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><ol>
-<li>push操作：栈1用来push</li>
-<li>pop操作：栈1 pop–&gt;栈2push–&gt;栈2pop</li>
+        <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="Activity的生命周期全面分析"><a href="#Activity的生命周期全面分析" class="headerlink" title="Activity的生命周期全面分析"></a>Activity的生命周期全面分析</h2><h3 id="典型情况下的生命周期分析"><a href="#典型情况下的生命周期分析" class="headerlink" title="典型情况下的生命周期分析"></a>典型情况下的生命周期分析</h3><center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center>
+
+<a id="more"></a>
+<p>注意情况：</p>
+<ol>
+<li>针对一个特定的Activity,第一次启动的时候，回调顺序如下:onCreate-&gt;onStart-&gt;onResume</li>
+<li>当用户打开新的Activity或者切换到桌面的时候，回调顺序如下:onPause-&gt;onStop.这里有一个特殊情况，如果新的Activity是透明的主题，那么当前的Activity不会回调onStop。</li>
+<li>当用户再次回到原来的Activity时候，回调顺序如下:onRestart-&gt;onStart-&gt;onResume</li>
+<li>当用户按back键回退的时候，回调顺序如下:onPause-&gt;onStop-&gt;onDestory</li>
+<li>当Activity被系统回收后再次打开，生命周期方法回调过程和1中一样，只是生命周期一样</li>
+<li>从整个生命周期来说，onCreate和onDestory是一对，分别对应着Activity的创建和销毁，并且只可以有一次调用；从是否可见来看,onStart和onStop是一对，可以被调用多次；从是否处于前台来说，onResum和onPause是一对，可以被调用多次。</li>
 </ol>
-<h1 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">push</span>(<span class="keyword">int</span> node) &#123;</span><br><span class="line">        stack1.<span class="keyword">push</span>(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">pop</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> (stack2.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span> (stack1.empty())&#123;</span><br><span class="line">                System.out.<span class="keyword">println</span>(<span class="string">"空队列"</span>);</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (!stack1.empty())&#123;</span><br><span class="line">                    stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack2.<span class="keyword">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>从Activity A跳往Activity B的过程中，先执行A 的onPause再执行Activity B的onResume</em></p>
+<h3 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h3><ol>
+<li>资源相关的系统配置发生改变导致Activity 被杀死并重新加载<br>Activity由于异常情况下终止，系统会调用onSaveInstanceState来保存当前Activity的状态，在onStop之前调用。<br>系统只会在Activity即将被销毁并且有机会重新显示的情况下才会去调用它。</li>
+<li>资源内存不足导致低优先级的Activity被杀死<ul>
+<li>前台Activity，优先级最高</li>
+<li>可见但非前台Activity,优先级次之</li>
+<li>后台Activity,优先级最低</li>
+</ul>
+</li>
+</ol>
+<h2 id="Activity的启动模式"><a href="#Activity的启动模式" class="headerlink" title="Activity的启动模式"></a>Activity的启动模式</h2><h3 id="Activity的LaunchMode"><a href="#Activity的LaunchMode" class="headerlink" title="Activity的LaunchMode"></a>Activity的LaunchMode</h3><p>任务栈：默认情况下，所有Activity所需的任务栈的名字为应用的包名</p>
+<ol>
+<li>standard(默认模式)，每次启动一个Activity都会重新创建一个新的实例，不管这个实例是否已经存在。</li>
+<li>singleTop(栈顶复用模式),如果新Activity已经位于任务栈的栈顶，那么此Activity不会被重新创建，同时它的onNewIntent方法会被回调，通过此方法的参数我们可以取出当前请求的信息。</li>
+<li>singleTask(栈内复用模式)，一种单例模式，在这种模式下，只要Activity在一个栈中存在，那么多次启动此Activity都不会重新创建实例，和singleTop一样，系统也会回调其onNewIntent</li>
+<li>singleInstance：具有此模式的Activity只能单独地位于一个任务栈中</li>
+</ol>
+<p><strong>指定Activity模式的两种方法</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;activity</span><br><span class="line">    android:<span class="attribute">name</span>=<span class="string">"..."</span></span><br><span class="line">    android:<span class="attribute">configChange</span>=<span class="string">"..."</span></span><br><span class="line">    android:<span class="attribute">launchMode</span>=<span class="string">"singleTask"</span></span><br><span class="line">    /&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startActivity(<span class="function"><span class="keyword">new</span> <span class="title">Intent</span>().<span class="title">setClass</span>(this,...).<span class="title">addFlags</span>(<span class="type">Intent</span>.<span class="type">FLAG_ACTIVITY_NEW_TASK</span>))；</span></span><br></pre></td></tr></table></figure>
+<p>第二种方法的优先级高于第一种方法</p>
+<h3 id="Actvity的Flags"><a href="#Actvity的Flags" class="headerlink" title="Actvity的Flags"></a>Actvity的Flags</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">FLAG_ACTIVITY_NEW_TASK</td>
+<td style="text-align:center">xml中指定启动模式singleTask</td>
+</tr>
+<tr>
+<td style="text-align:center">FLAG_ACTIVITY_SINGLE_TOP</td>
+<td style="text-align:center">xml中指定启动模式singleTop</td>
+</tr>
+<tr>
+<td style="text-align:center">FLAG_ACTIVITY_CLEAR_TOP</td>
+<td style="text-align:center">在同一个任务栈中所有位于它上面的Activity都要出栈</td>
+</tr>
+<tr>
+<td style="text-align:center">FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS</td>
+<td style="text-align:center">xml中指定android:excludeFromRecents=”true”</td>
+</tr>
+</tbody>
+</table>
+<h2 id="IntentFilter的匹配规则"><a href="#IntentFilter的匹配规则" class="headerlink" title="IntentFilter的匹配规则"></a>IntentFilter的匹配规则</h2><p>有一篇已经介绍过了，就不在介绍了。</p>
+
       
     </div>
     
@@ -347,7 +404,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/剑指offer/" rel="tag"># 剑指offer</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
         </div>
       
@@ -360,8 +417,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/16/剑指offer-04/" rel="next" title="剑指offer---04">
-                <i class="fa fa-chevron-left"></i> 剑指offer---04
+              <a href="/2018/04/25/Java基础-泛型/" rel="next" title="Java基础---泛型">
+                <i class="fa fa-chevron-left"></i> Java基础---泛型
               </a>
             
           </div>
@@ -370,8 +427,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/16/剑指offer-06/" rel="prev" title="剑指offer---06">
-                剑指offer---06 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/05/03/Android艺术开发探索-View的事件体系/" rel="prev" title="Android艺术开发探索---View的事件体系">
+                Android艺术开发探索---View的事件体系 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -500,7 +557,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编码实现"><span class="nav-number">3.</span> <span class="nav-text">编码实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的生命周期和启动模式"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期和启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的生命周期全面分析"><span class="nav-number">1.1.</span> <span class="nav-text">Activity的生命周期全面分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型情况下的生命周期分析"><span class="nav-number">1.1.1.</span> <span class="nav-text">典型情况下的生命周期分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的启动模式"><span class="nav-number">1.2.</span> <span class="nav-text">Activity的启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Activity的LaunchMode"><span class="nav-number">1.2.1.</span> <span class="nav-text">Activity的LaunchMode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Actvity的Flags"><span class="nav-number">1.2.2.</span> <span class="nav-text">Actvity的Flags</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentFilter的匹配规则"><span class="nav-number">1.3.</span> <span class="nav-text">IntentFilter的匹配规则</span></a></li></ol></li></ol></div>
             
 
           </div>

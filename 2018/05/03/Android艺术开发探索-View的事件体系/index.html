@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Android," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="View基础知识MotionEvent 和 TouchSlop MotionEvent ACTION_DOWN:手指刚接触屏幕 ACTION_MOVE:手指在屏幕上移动 ACTION_UP:手指在屏幕上松开的一瞬间   TouchSlopTouchSlop:系统所能识别出来的被认为是滑动的最小距离。换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android艺术开发探索---View的事件体系">
+<meta property="og:url" content="http://yoursite.com/2018/05/03/Android艺术开发探索-View的事件体系/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="View基础知识MotionEvent 和 TouchSlop MotionEvent ACTION_DOWN:手指刚接触屏幕 ACTION_MOVE:手指在屏幕上移动 ACTION_UP:手指在屏幕上松开的一瞬间   TouchSlopTouchSlop:系统所能识别出来的被认为是滑动的最小距离。换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/mScrollX%E5%92%8CmScrollY%E7%9A%84%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81.png">
+<meta property="og:updated_time" content="2018-05-03T03:12:24.204Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android艺术开发探索---View的事件体系">
+<meta name="twitter:description" content="View基础知识MotionEvent 和 TouchSlop MotionEvent ACTION_DOWN:手指刚接触屏幕 ACTION_MOVE:手指在屏幕上移动 ACTION_UP:手指在屏幕上松开的一瞬间   TouchSlopTouchSlop:系统所能识别出来的被认为是滑动的最小距离。换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/mScrollX%E5%92%8CmScrollY%E7%9A%84%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/03/Android艺术开发探索-View的事件体系/"/>
+
+
+
+
+
+  <title>Android艺术开发探索---View的事件体系 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/03/Android艺术开发探索-View的事件体系/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android艺术开发探索---View的事件体系</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-03T11:10:29+08:00">
+                2018-05-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="View基础知识"><a href="#View基础知识" class="headerlink" title="View基础知识"></a>View基础知识</h1><h2 id="MotionEvent-和-TouchSlop"><a href="#MotionEvent-和-TouchSlop" class="headerlink" title="MotionEvent 和 TouchSlop"></a>MotionEvent 和 TouchSlop</h2><ol>
+<li>MotionEvent<ul>
+<li>ACTION_DOWN:手指刚接触屏幕</li>
+<li>ACTION_MOVE:手指在屏幕上移动</li>
+<li>ACTION_UP:手指在屏幕上松开的一瞬间</li>
+</ul>
+</li>
+<li>TouchSlop<br>TouchSlop:系统所能识别出来的被认为是滑动的最小距离。换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操作。</li>
+</ol>
+<a id="more"></a>
+<h1 id="View的滑动"><a href="#View的滑动" class="headerlink" title="View的滑动"></a>View的滑动</h1><p>实现View滑动的三种方式：使用scrollTo/scrollBy方法、通过动画、通过改变View的LayoutParams</p>
+<h2 id="使用scrollTo-scrollBy方法"><a href="#使用scrollTo-scrollBy方法" class="headerlink" title="使用scrollTo/scrollBy方法"></a>使用scrollTo/scrollBy方法</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Set the scrolled position of your view. This will cause a call to</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> #onScrollChanged(int, int, int, int)&#125; and the view will be</span></span><br><span class="line"><span class="comment">     * invalidated.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x the x position to scroll to</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y the y position to scroll to</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">scrollTo</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (mScrollX != x || mScrollY != y) &#123;</span><br><span class="line">            <span class="keyword">int</span> oldX = mScrollX;</span><br><span class="line">            <span class="keyword">int</span> oldY = mScrollY;</span><br><span class="line">            mScrollX = x;</span><br><span class="line">            mScrollY = y;</span><br><span class="line">            invalidateParentCaches();</span><br><span class="line">            onScrollChanged(mScrollX, mScrollY, oldX, oldY);</span><br><span class="line">            <span class="keyword">if</span> (!awakenScrollBars()) &#123;</span><br><span class="line">                postInvalidateOnAnimation();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Move the scrolled position of your view. This will cause a call to</span></span><br><span class="line"><span class="comment">     * &#123;<span class="doctag">@link</span> #onScrollChanged(int, int, int, int)&#125; and the view will be</span></span><br><span class="line"><span class="comment">     * invalidated.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> x the amount of pixels to scroll by horizontally</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> y the amount of pixels to scroll by vertically</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">scrollBy</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">        scrollTo(mScrollX + x, mScrollY + y);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>scrollBy是基于当前位置的相对滑动，而scrollTo则是基于所传递参数的绝对滑动。<br>在滑动过程中，mScrollX的值总是等于View左边缘和View内容左边缘在水平方向的距离，而mScrollY的值总是等于View上边缘和View内容上边缘在竖直方向的距离。</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/mScrollX%E5%92%8CmScrollY%E7%9A%84%E5%8F%98%E5%8C%96%E8%A7%84%E5%BE%8B%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt=""></center>
+
+<h2 id="使用动画"><a href="#使用动画" class="headerlink" title="使用动画"></a>使用动画</h2><p>此动画可以再100ms内讲一个View从原始位置向右下角移动100个</p>
+<h3 id="使用View动画"><a href="#使用View动画" class="headerlink" title="使用View动画"></a>使用View动画</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;translate</span><br><span class="line">    android:<span class="attribute">duration</span>=<span class="string">"100"</span></span><br><span class="line">    android:fromXDelta = <span class="string">"0"</span></span><br><span class="line">    android:fromYDelya = <span class="string">"0"</span></span><br><span class="line">    andorid:interpolator = <span class="string">"@android:anim/linear_interpolator"</span></span><br><span class="line">    android:<span class="attribute">toXDelta</span>=<span class="string">"100"</span></span><br><span class="line">    android:<span class="attribute">toYDelta</span>=<span class="string">"100"</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>新的位置只是原来的一个影像，只能在新的位置在重新建一个与原来一样的View</p>
+<h3 id="使用属性动画"><a href="#使用属性动画" class="headerlink" title="使用属性动画"></a>使用属性动画</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">ObjectAnimator</span><span class="selector-class">.ofFloat</span>(targetView,<span class="string">"translationX"</span>,<span class="number">0</span>,<span class="number">100</span>)<span class="selector-class">.setDuration</span>(<span class="number">100</span>)<span class="selector-class">.start</span>();</span><br></pre></td></tr></table></figure>
+<h2 id="改变布局参数"><a href="#改变布局参数" class="headerlink" title="改变布局参数"></a>改变布局参数</h2><p>改变布局参数即改变LayoutParams</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MarginLayoutParams params = (MarginLayoutParams)mButton1.getLayoutParams()<span class="comment">;</span></span><br><span class="line">params.width += <span class="number">100</span><span class="comment">;</span></span><br><span class="line">params.leftMargin += <span class="number">100</span><span class="comment">;</span></span><br><span class="line">mbutton1.requestLayout()<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
+<li>scrollTo/scrollBy:操作简单，适合对View内容的滑动</li>
+<li>动画：操作简单，主要适用于没有交互的View和实现复杂的动画效果</li>
+<li>改变布局参数：操作稍微复杂，适合于有交互的View</li>
+</ol>
+<h1 id="弹性滑动"><a href="#弹性滑动" class="headerlink" title="弹性滑动"></a>弹性滑动</h1><p>将一次大的滑动分成若干次小的滑动并在一个时间段内完成</p>
+<h2 id="使用Scroller"><a href="#使用Scroller" class="headerlink" title="使用Scroller"></a>使用Scroller</h2><h2 id="通过动画"><a href="#通过动画" class="headerlink" title="通过动画"></a>通过动画</h2><h2 id="使用延时策略"><a href="#使用延时策略" class="headerlink" title="使用延时策略"></a>使用延时策略</h2><h1 id="View的事件分发机制"><a href="#View的事件分发机制" class="headerlink" title="View的事件分发机制"></a>View的事件分发机制</h1><p>之前有过介绍。</p>
+<h1 id="View的滑动冲突"><a href="#View的滑动冲突" class="headerlink" title="View的滑动冲突"></a>View的滑动冲突</h1><p>滑动冲突的三种方式</p>
+<ol>
+<li>外部滑动方向和内部滑动方向不一致</li>
+<li>外部滑动方向和内部滑动方向一致</li>
+<li>上面两种情况的嵌套</li>
+</ol>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E6%BB%91%E5%8A%A8%E5%86%B2%E7%AA%81.png" alt=""></center>
+
+<h2 id="解决冲突的两种方式"><a href="#解决冲突的两种方式" class="headerlink" title="解决冲突的两种方式"></a>解决冲突的两种方式</h2><h3 id="外部拦截法"><a href="#外部拦截法" class="headerlink" title="外部拦截法"></a>外部拦截法</h3><p>点击事件都是先经过父容器的拦截处理，如果父容器需要此事件就拦截，否则就不拦截</p>
+<p>实现这个方法主要是重写父容器的<code>onInterceptTouchEvent</code>方法<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    <span class="function"><span class="keyword">public</span> boolean <span class="title">onInterceptTouchEvent</span>(<span class="params">MotionEvent <span class="keyword">event</span></span>) </span>&#123;</span><br><span class="line">        boolean intercepted=<span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> x=(<span class="keyword">int</span>)<span class="keyword">event</span>.getX();</span><br><span class="line">        <span class="keyword">int</span> y=(<span class="keyword">int</span>)<span class="keyword">event</span>.getY();</span><br><span class="line">        <span class="keyword">switch</span> (<span class="keyword">event</span>.getAction())&#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">                intercepted=<span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">                <span class="keyword">if</span>(父容器需要当前点击事件)&#123;</span><br><span class="line">                   intercepted=<span class="literal">true</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    intercepted=<span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">                intercepted=<span class="literal">false</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mLastXIntercept=x;</span><br><span class="line">        mLastYIntercept=y;</span><br><span class="line">        <span class="keyword">return</span> intercepted;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="内部拦截法"><a href="#内部拦截法" class="headerlink" title="内部拦截法"></a>内部拦截法</h3><p>父容器不拦截任何事件，所有的事件都传递给子容器，如果子容器需要那就去消耗掉，否则就交给父容器进行处理.需要配合<code>requestDisallowInterceptTouchEvent</code>方法才可以正常工作，并且同时需要重写子容器的<code>dispatchTouchEvent</code>方法</p>
+<p>子容器<br><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    <span class="function"><span class="keyword">public</span> boolean <span class="title">dispatchTouchEvent</span>(<span class="params">MotionEvent <span class="keyword">event</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> x=(<span class="keyword">int</span>)<span class="keyword">event</span>.getX();</span><br><span class="line">        <span class="keyword">int</span> y=(<span class="keyword">int</span>)<span class="keyword">event</span>.getY();</span><br><span class="line">        <span class="keyword">switch</span> (<span class="keyword">event</span>.getAction())&#123;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</span><br><span class="line">                getParent().requestDisallowInterceptTouchEvent(<span class="literal">true</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</span><br><span class="line">                <span class="keyword">int</span> deltaX=x-mLastX;</span><br><span class="line">                <span class="keyword">int</span> deltaY=y-mLastY;</span><br><span class="line">                <span class="keyword">if</span>(父容器需要当前点击事件)&#123;</span><br><span class="line">                    getParent().requestDisallowInterceptTouchEvent(<span class="literal">false</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MotionEvent.ACTION_UP:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mLastX=x;</span><br><span class="line">        mLastY=y;</span><br><span class="line">        <span class="keyword">return</span> super.dispatchTouchEvent(<span class="keyword">event</span>);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>父容器<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">onInterceptTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> action=event.getAction();</span><br><span class="line">        <span class="keyword">if</span> (action==MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的三种场景都可以采用这两种处理方法来解决，按需索取。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/" rel="next" title="Android开发艺术探索---Activity的生命周期和启动模式">
+                <i class="fa fa-chevron-left"></i> Android开发艺术探索---Activity的生命周期和启动模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/tags.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#View基础知识"><span class="nav-number">1.</span> <span class="nav-text">View基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MotionEvent-和-TouchSlop"><span class="nav-number">1.1.</span> <span class="nav-text">MotionEvent 和 TouchSlop</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的滑动"><span class="nav-number">2.</span> <span class="nav-text">View的滑动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用scrollTo-scrollBy方法"><span class="nav-number">2.1.</span> <span class="nav-text">使用scrollTo/scrollBy方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用动画"><span class="nav-number">2.2.</span> <span class="nav-text">使用动画</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用View动画"><span class="nav-number">2.2.1.</span> <span class="nav-text">使用View动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用属性动画"><span class="nav-number">2.2.2.</span> <span class="nav-text">使用属性动画</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改变布局参数"><span class="nav-number">2.3.</span> <span class="nav-text">改变布局参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.4.</span> <span class="nav-text">结论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#弹性滑动"><span class="nav-number">3.</span> <span class="nav-text">弹性滑动</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Scroller"><span class="nav-number">3.1.</span> <span class="nav-text">使用Scroller</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过动画"><span class="nav-number">3.2.</span> <span class="nav-text">通过动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用延时策略"><span class="nav-number">3.3.</span> <span class="nav-text">使用延时策略</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的事件分发机制"><span class="nav-number">4.</span> <span class="nav-text">View的事件分发机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的滑动冲突"><span class="nav-number">5.</span> <span class="nav-text">View的滑动冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解决冲突的两种方式"><span class="nav-number">5.1.</span> <span class="nav-text">解决冲突的两种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部拦截法"><span class="nav-number">5.1.1.</span> <span class="nav-text">外部拦截法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内部拦截法"><span class="nav-number">5.1.2.</span> <span class="nav-text">内部拦截法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
