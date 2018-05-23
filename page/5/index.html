@@ -254,6 +254,147 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/Java基础-Integer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/05/Java基础-Integer/" itemprop="url">Java基础---Integer</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-05T22:28:22+08:00">
+                2018-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h1><p><code>Integer</code>类将Java中的原始类型<code>int</code>的值包装在对象中。Integer类型的对象包含一个int类型的字段。</p>
+<p><code>Integer</code>类提供将<code>int</code>与<code>string</code>互相转换的方法，另外还提供有用在的处理int型时的常量和方法。</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">More</span> ...<span class="title">Integer</span> <span class="keyword">extends</span> <span class="title">Number</span> <span class="title">implements</span> <span class="title">Comparable&lt;Integer&gt;</span> </span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>final修饰，不能被继承</li>
+<li>继承Number</li>
+<li>实现Comparable，可以利用comparable to进行比较(同类型之间)</li>
+</ol>
+<h1 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h1><h2 id="私有属性"><a href="#私有属性" class="headerlink" title="私有属性"></a>私有属性</h2><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1360826667806852920</span>L;</span><br></pre></td></tr></table></figure>
+<h2 id="公有属性"><a href="#公有属性" class="headerlink" title="公有属性"></a>公有属性</h2><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MAX_VALUE = <span class="number">0</span>x7fffffff;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span>   MIN_VALUE = <span class="number">0</span>x80000000;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">Class</span>&lt;Integer&gt;  TYPE = (<span class="keyword">Class</span>&lt;Integer&gt;) <span class="keyword">Class</span>.getPrimitiveClass(<span class="string">"int"</span>);</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="keyword">SIZE</span> = <span class="number">32</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> BYTES = <span class="keyword">SIZE</span> <span class="regexp">/ Byte.SIZE;</span></span><br></pre></td></tr></table></figure>
+<h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><h2 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表示指定的 int 值</span></span><br><span class="line"><span class="keyword">public</span> More ...Integer(<span class="keyword">int</span> <span class="keyword">value</span>) &#123;</span><br><span class="line">         <span class="keyword">this</span>.<span class="keyword">value</span> = <span class="keyword">value</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//表示指定的 string 值,利用parseInt</span></span><br><span class="line"><span class="keyword">public</span> More ...Integer(<span class="keyword">String</span> s) throws NumberFormatException &#123;</span><br><span class="line">         <span class="keyword">this</span>.value = <span class="built_in">parseInt</span>(s, <span class="number">10</span>);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="byteValue-…"><a href="#byteValue-…" class="headerlink" title="byteValue()…"></a>byteValue()…</h2><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Integer转化为byte返回</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">byte</span> More ...byteValue() &#123;</span><br><span class="line">         <span class="keyword">return</span> (<span class="keyword">byte</span>)<span class="keyword">value</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString()"></a>toString()</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返带符号回十进制的数值并作为字符串返回</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">String</span> More <span class="params">...</span>toString() &#123;</span><br><span class="line">         <span class="keyword">return</span> toString(value);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="hashcode"><a href="#hashcode" class="headerlink" title="hashcode()"></a>hashcode()</h2><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> More ...hashCode() &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">Integer</span>.hashCode(<span class="keyword">value</span>);</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="equals"><a href="#equals" class="headerlink" title="equals()"></a>equals()</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//与指定类型进行比较</span></span><br><span class="line"><span class="keyword">public</span> <span class="built_in">boolean</span> More <span class="params">...</span><span class="keyword">equals</span>(Object obj) &#123;</span><br><span class="line">         <span class="keyword">if</span> (obj instanceof <span class="built_in">Integer</span>) &#123;</span><br><span class="line">             <span class="keyword">return</span> value == ((<span class="built_in">Integer</span>)obj).intValue();</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">     &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="…"><a href="#…" class="headerlink" title="…"></a>…</h2><h1 id="Integer-和-int-的关系"><a href="#Integer-和-int-的关系" class="headerlink" title="Integer 和 int 的关系"></a>Integer 和 int 的关系</h1><ol>
+<li>int是java提供的8种基本类型之一。Java为每个原始类型提供了封装类，Integer是java为int提供的封装类。</li>
+<li>int的默认值是0，Integer的默认值是null</li>
+<li>两者都可以表示一个数值</li>
+<li>两者不可以互用，因为它们是两种不同的数据类型。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/05/Java基础-String相关/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -937,7 +1078,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -950,7 +1091,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
