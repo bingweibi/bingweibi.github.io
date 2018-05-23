@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Retrofit2.0," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="文章来自于 https://blog.csdn.net/qq_26787115/article/details/53034267  准备工作123456789101112131415//retrofit2.0implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;implementation &quot;com.squareup.retrofit2:con">
+<meta name="keywords" content="Retrofit2.0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit2.0教程">
+<meta property="og:url" content="http://yoursite.com/2018/05/23/Retrofit2-0教程/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="文章来自于 https://blog.csdn.net/qq_26787115/article/details/53034267  准备工作123456789101112131415//retrofit2.0implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;implementation &quot;com.squareup.retrofit2:con">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/GankApi%E8%BF%94%E5%9B%9EJson%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9A%E4%B9%89">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-11-13-09.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-03-15.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-13-25.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-19-21.png">
+<meta property="og:updated_time" content="2018-05-23T02:20:07.063Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit2.0教程">
+<meta name="twitter:description" content="文章来自于 https://blog.csdn.net/qq_26787115/article/details/53034267  准备工作123456789101112131415//retrofit2.0implementation &quot;com.squareup.retrofit2:retrofit:2.3.0&quot;implementation &quot;com.squareup.retrofit2:con">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/GankApi%E8%BF%94%E5%9B%9EJson%E6%95%B0%E6%8D%AE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/23/Retrofit2-0教程/"/>
+
+
+
+
+
+  <title>Retrofit2.0教程 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/Retrofit2-0教程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Retrofit2.0教程</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T10:18:59+08:00">
+                2018-05-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="文章来自于"><a href="#文章来自于" class="headerlink" title="文章来自于"></a>文章来自于</h1><blockquote>
+<p><a href="https://blog.csdn.net/qq_26787115/article/details/53034267" target="_blank" rel="noopener">https://blog.csdn.net/qq_26787115/article/details/53034267</a></p>
+</blockquote>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//retrofit2.0</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">"com.squareup.retrofit2:retrofit:2.3.0"</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">"com.squareup.retrofit2:converter-gson:2.3.0"</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">'com.squareup.retrofit2:adapter-rxjava:2.3.0'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//RxJava</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">'io.reactivex:rxjava:1.3.0'</span></span><br><span class="line"><span class="comment">//RxAndroid</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">'io.reactivex:rxandroid:1.2.1'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//okhttp3.0</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">"com.squareup.okhttp3:okhttp:3.9.1"</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//Gson</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">"com.google.code.gson:gson:2.8.4"</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="定义接口"><a href="#定义接口" class="headerlink" title="定义接口"></a>定义接口</h1><blockquote>
+<p>在官方文档中，第一句话就是”Retrofit turns your HTTP API into a Java Interface”</p>
+</blockquote>
+<p>我们的项目调用的接口来自于Gank的接口，例如：<a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="noopener">http://gank.io/api/data/Android/10/1</a><br>返回的Json数据：</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/GankApi%E8%BF%94%E5%9B%9EJson%E6%95%B0%E6%8D%AE.png" alt=""></center>
+
+<h2 id="定义一个接口类"><a href="#定义一个接口类" class="headerlink" title="定义一个接口类"></a>定义一个接口类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">GankApi</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> Android 信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GET</span>(<span class="string">"api/data/Android/10/1"</span>)</span><br><span class="line">    <span class="function">Call&lt;GankBean&gt; <span class="title">getAndroidInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分析接口的定义"><a href="#分析接口的定义" class="headerlink" title="分析接口的定义"></a>分析接口的定义</h3><p><a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="noopener">http://gank.io/api/data/Android/10/1</a></p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9A%E4%B9%89" alt=""></center>
+
+<p>在这里我们将接口分为两部分<code>baseUrl</code>和<code>接口定义</code>，在上面的接口定义中，使用GET请求，直接请求了<code>api/data/Android/10/1</code>，这样我们就能和后面定义的<code>baseUrl</code>拼接成完整的接口了。</p>
+<h1 id="基本请求"><a href="#基本请求" class="headerlink" title="基本请求"></a>基本请求</h1><blockquote>
+<p>官方文档中 The Retrofit class generates an implementation of the GithubService interface.</p>
+</blockquote>
+<p>意思就是直接把Retrofit的接口变成一个类</p>
+<ul>
+<li><p>创建一个Retrofit</p>
+<figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Retrofit</span> retrofit = <span class="function"><span class="keyword">new</span> <span class="title">Retrofit</span>.<span class="title">Builder</span>()</span></span><br><span class="line"><span class="function">                .<span class="title">baseUrl</span>("http://gank.io")</span></span><br><span class="line"><span class="function">                .<span class="title">addConverterFactory</span>(<span class="type">GsonConverterFactory</span>.create())</span></span><br><span class="line"><span class="function">                .<span class="title">build</span>();</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过retrofit的create方法创建接口对象</p>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GankApi api</span> = retrofit.create(GankApi.class);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>直接调用接口方法，返回一个Call</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Call</span>&lt;GankBean&gt; <span class="keyword">call</span> = api.getAndroidInfo();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>异步请求</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span>.enqueue(<span class="keyword">new</span> Callback&lt;GankBean&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> void onResponse(<span class="keyword">Call</span>&lt;GankBean&gt; <span class="keyword">call</span>, <span class="built_in">Response</span>&lt;GankBean&gt; <span class="built_in">response</span>) &#123;</span><br><span class="line">             GankBean.ResultsBean bean = <span class="built_in">response</span>.body().getResults().<span class="keyword">get</span>(<span class="number">0</span>);</span><br><span class="line">                mTextView.setText(</span><br><span class="line">                        <span class="string">"_id:"</span>+bean.get_id()+<span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"createdAt："</span> + bean.getCreatedAt() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"desc："</span> + bean.getDesc() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"images:"</span> + bean.getImages() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"publishedAt:"</span> + bean.getPublishedAt() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"source"</span> + bean.getSource() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"type:"</span> + bean.getType() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"url: "</span> + bean.getUrl() + <span class="string">"\n"</span></span><br><span class="line">                                + <span class="string">"who:"</span> + bean.getWho());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> void onFailure(<span class="keyword">Call</span>&lt;GankBean&gt; <span class="keyword">call</span>, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>运行结果</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-11-13-09.png" alt=""></center>
+
+<p>基本请求就是这样，配置做好，根据api定义好接口，配合Gson。请求完了就可以直接获得值了。</p>
+<h1 id="Get的动态参数"><a href="#Get的动态参数" class="headerlink" title="Get的动态参数"></a>Get的动态参数</h1><p>举个栗子<br>我们都知道url大多数都是拼接的，像我们查询天气的接口，就是动态传一个城市的名字。</p>
+<blockquote>
+<p><a href="http://op.juhe.cn/onebox/weather/query?cityname=深圳&amp;key=您申请的KEY" target="_blank" rel="noopener">http://op.juhe.cn/onebox/weather/query?cityname=深圳&amp;key=您申请的KEY</a></p>
+</blockquote>
+<p>默认cityname是深圳，后面就是我们需要拼接的</p>
+<ol>
+<li>WeatherApi<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">WeatherApi</span> &#123;</span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"onebox/weather/query?cityname=深圳"</span>)</span><br><span class="line">    Call&lt;WeatherDataBean&gt; getWeather(<span class="variable">@Query</span>(<span class="string">"key"</span>)String kry);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里可以看到，在Get的时候还是把连接的后半段传进去，但是在这里最后拼接的时候是一个key，所以在传入参数的前面加上<code>Query</code></p>
+<ol>
+<li><p>代码</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        WeatherDataApi</span></span><br><span class="line"><span class="comment">//        Get的动态参数</span></span><br><span class="line">        Retrofit retrofit = <span class="keyword">new</span> Retrofit.Builder()</span><br><span class="line">                .baseUrl(<span class="string">"http://op.juhe.cn/"</span>)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        WeatherApi api = retrofit.create(WeatherApi.<span class="keyword">class</span>);</span><br><span class="line">        <span class="keyword">Call</span>&lt;WeatherDataBean&gt; <span class="keyword">call</span> = api.getWeather(<span class="string">"4ea58de8a7573377cec0046f5e2469d5"</span>);</span><br><span class="line"><span class="comment">//        异步</span></span><br><span class="line">        <span class="keyword">call</span>.enqueue(<span class="keyword">new</span> Callback&lt;WeatherDataBean&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> onResponse(<span class="keyword">Call</span>&lt;WeatherDataBean&gt; <span class="keyword">call</span>, Response&lt;WeatherDataBean&gt; response) &#123;</span><br><span class="line">                String info = response.body().getResult().getData().getRealtime().getWeather().getInfo();</span><br><span class="line">                mTextView.setText(<span class="string">"深圳天气: "</span> + info);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> onFailure(<span class="keyword">Call</span>&lt;WeatherDataBean&gt; <span class="keyword">call</span>, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行结果</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-03-15.png" alt=""></center>
+
+</li>
+</ol>
+<h1 id="Get参数请求"><a href="#Get参数请求" class="headerlink" title="Get参数请求"></a>Get参数请求</h1><p>举个栗子</p>
+<blockquote>
+<p><a href="http://gank.io/api/data/Android/10/1" target="_blank" rel="noopener">http://gank.io/api/data/Android/10/1</a></p>
+</blockquote>
+<p>例如我们的接口是直接传参的</p>
+<blockquote>
+<p>//后面三个参数<br> Android可接受参数  | Android | iOS | 休息视频 | 福利 | 前端 | App<br> count 最大 50<br> page  是页数</p>
+</blockquote>
+<p> 这种类型又该如何操作呢？</p>
+<ul>
+<li>假设我们直接传入的参数是page<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">Gank2Api</span> &#123;</span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"api/data/Android/10/&#123;page&#125;"</span>)</span><br><span class="line">    Call&lt;GankBean&gt; getAndroidInfo(<span class="variable">@Path</span>(<span class="string">"page"</span>) int page);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在这里使用大括号做占位符，然后使用Path关键字，接着继续写代码<br><figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//        Get参数请求</span></span><br><span class="line">        <span class="type">Retrofit</span> retrofit = <span class="function"><span class="keyword">new</span> <span class="title">Retrofit</span>.<span class="title">Builder</span>()</span></span><br><span class="line"><span class="function">                .<span class="title">baseUrl</span>("http://gank.io/")</span></span><br><span class="line"><span class="function">                .<span class="title">addConverterFactory</span>(<span class="type">GsonConverterFactory</span>.create())</span></span><br><span class="line"><span class="function">                .<span class="title">build</span>();</span></span><br><span class="line"><span class="function">        <span class="title">Gank2Api</span> <span class="title">api</span> = <span class="title">retrofit</span>.<span class="title">create</span>(<span class="type">Gank2Api</span>.class);</span></span><br><span class="line"><span class="function">        <span class="title">api</span>.<span class="title">getAndroidInfo</span>(<span class="number">1</span>).<span class="title">enqueue</span>(new <span class="type">Callback</span>&lt;<span class="type">GankBean</span>&gt;() &#123;</span></span><br><span class="line"><span class="function">            @<span class="title">Override</span></span></span><br><span class="line"><span class="function">            <span class="title">public</span> <span class="title">void</span> <span class="title">onResponse</span>(<span class="type">Call</span>&lt;<span class="type">GankBean</span>&gt; call, <span class="type">Response</span>&lt;<span class="type">GankBean</span>&gt; response) &#123;</span></span><br><span class="line"><span class="function">                <span class="title">mTextView</span>.<span class="title">setText</span>(response.body().<span class="title">getResults</span>().<span class="title">get</span>(<span class="number">0</span>).<span class="title">getDesc</span>());</span></span><br><span class="line"><span class="function">            &#125;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">            @<span class="title">Override</span></span></span><br><span class="line"><span class="function">            <span class="title">public</span> <span class="title">void</span> <span class="title">onFailure</span>(<span class="type">Call</span>&lt;<span class="type">GankBean</span>&gt; call, <span class="type">Throwable</span> t) &#123;</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function">            &#125;</span></span><br><span class="line"><span class="function">        &#125;);</span></span><br></pre></td></tr></table></figure></p>
+<p>运行结果</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-13-25.png" alt=""></center>
+
+<h1 id="Get参数拼接"><a href="#Get参数拼接" class="headerlink" title="Get参数拼接"></a>Get参数拼接</h1><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">WeatherApi2</span> &#123;</span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"onebox/weather/query?"</span>)</span><br><span class="line">    Call&lt;WeatherDataBean&gt; getWeather(<span class="variable">@QueryMap</span> Map&lt;String, String&gt; params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Get后面传入的参数并没有像cityname一类的参数，但是有一个QueryMap,传入的是键值对<br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//      Get参数拼接</span></span><br><span class="line">        Retrofit retrofit = <span class="literal">new</span> Retrofit.Builder()</span><br><span class="line">                .baseUrl(<span class="string">"http://op.juhe.cn/"</span>)</span><br><span class="line">                .addConverterFactory(GsonConverterFactory.create())</span><br><span class="line">                .build();</span><br><span class="line">        WeatherApi2 api = retrofit.create(WeatherApi2.class);</span><br><span class="line">        <span class="built_in">Map</span>&lt;<span class="built_in">String</span>, <span class="built_in">String</span>&gt; <span class="keyword">params</span> = <span class="literal">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">params</span>.put(<span class="string">"cityname"</span>,<span class="string">"深圳"</span>);</span><br><span class="line">        <span class="keyword">params</span>.put(<span class="string">"key"</span>,<span class="string">"4ea58de8a7573377cec0046f5e2469d5"</span>);</span><br><span class="line">        api.getWeather(<span class="keyword">params</span>).enqueue(<span class="literal">new</span> Callback&lt;WeatherDataBean&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> <span class="literal">void</span> onResponse(Call&lt;WeatherDataBean&gt; call, Response&lt;WeatherDataBean&gt; response) &#123;</span><br><span class="line">                mTextView.setText(response.body().getResult().getData().getRealtime().getWeather().getInfo());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            <span class="keyword">public</span> <span class="literal">void</span> onFailure(Call&lt;WeatherDataBean&gt; call, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>运行结果</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/Screenshot_2018-05-11-17-19-21.png" alt=""></center>
+
+<h1 id="Post"><a href="#Post" class="headerlink" title="Post"></a>Post</h1><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import retrofit2.Call;</span><br><span class="line">import retrofit2.http.Body;</span><br><span class="line">import retrofit2.http.POST;</span><br><span class="line"></span><br><span class="line">public<span class="built_in"> interface </span>PostApi &#123;</span><br><span class="line"></span><br><span class="line">    @POST(<span class="string">"user/new"</span>)</span><br><span class="line">    Call&lt;Result&gt; postUser(@Body<span class="built_in"> User </span>user);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里POST的地址和之前的get也是一样的，这里返回一个Result是我们自己定义的结果类，Body是表示参数，我需要一个User，那我们的User就是<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(<span class="keyword">int</span> id)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.id = id;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> yes;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> no;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getYes</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> yes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setYes</span><span class="params">(<span class="keyword">int</span> yes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.yes = yes;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getNo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> no;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setNo</span><span class="params">(<span class="keyword">int</span> no)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.no = no;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用<br><figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">User <span class="keyword">user</span> = new User();</span><br><span class="line">    <span class="keyword">user</span>.<span class="built_in">set</span>Id(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">user</span>.<span class="built_in">set</span>Name(<span class="string">"lgl"</span>);</span><br><span class="line">    api.postUser(<span class="keyword">user</span>).enqueue(new Callback<span class="variable">&lt;Result&gt;</span>() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void <span class="keyword">on</span>Response(C<span class="literal">all</span><span class="variable">&lt;Result&gt;</span> call, Response<span class="variable">&lt;Result&gt;</span> response) &#123;</span><br><span class="line">            if (response.body().getYes() == <span class="number">0</span>) &#123;</span><br><span class="line">                Toast.makeText(MainActivity.this, <span class="string">"成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void <span class="keyword">on</span>Failure(C<span class="literal">all</span><span class="variable">&lt;Result&gt;</span> call, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>我在这里传了一个user进去，细节不过就是id和name，如果请求成功，那就返回0，失败就是1，这里服务端定义，这样我们就POST完成了</p>
+<h1 id="Post提交表单"><a href="#Post提交表单" class="headerlink" title="Post提交表单"></a>Post提交表单</h1><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@POST</span>(<span class="string">"user/edit"</span>)</span><br><span class="line">Call&lt;Result&gt; editUser(<span class="variable">@Field</span>(<span class="string">"id"</span>) int id, <span class="variable">@Field</span>(<span class="string">"name"</span>) String name);</span><br></pre></td></tr></table></figure>
+<p>直接调用方法<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">api.editUser(<span class="number">1</span>, <span class="string">"liuguilin"</span>).enqueue(<span class="keyword">new</span> Callback&lt;Result&gt;() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onResponse</span><span class="params">(Call&lt;Result&gt; call, Response&lt;Result&gt; response)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (response.body().getYes() == <span class="number">0</span>) &#123;</span><br><span class="line">                Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"成功"</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(Call&lt;Result&gt; call, Throwable t)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure></p>
+<h1 id="RxJava-Retrofit2-0"><a href="#RxJava-Retrofit2-0" class="headerlink" title="RxJava + Retrofit2.0"></a>RxJava + Retrofit2.0</h1><p>举个栗子<br>登录，登录成功后获取到user_id，再去请求用户信息，这里应该是两个请求对吧，我们先去写好接口，这里我们先用常规的方法去获取：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@POST</span>(<span class="string">"user/login"</span>)</span><br><span class="line">Call&lt;User&gt; login(<span class="variable">@Field</span>(<span class="string">"username"</span>) String user, <span class="variable">@Field</span>(<span class="string">"password"</span>) String password);</span><br><span class="line"></span><br><span class="line"><span class="variable">@GET</span>(<span class="string">"user/info"</span>)</span><br><span class="line">Call&lt;User&gt; getUser(<span class="variable">@Query</span>(<span class="string">"id"</span>) String id);</span><br></pre></td></tr></table></figure></p>
+<p>这里的两个接口，一个是登录，传参用户名和密码，还有一个是用id去查找用户信息的<br><figure class="highlight pony"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Retrofit</span> retrofit = <span class="function"><span class="keyword">new</span> <span class="title">Retrofit</span>.<span class="title">Builder</span>()</span></span><br><span class="line"><span class="function">                .<span class="title">baseUrl</span>("baseUrl")</span></span><br><span class="line"><span class="function">                .<span class="title">addConverterFactory</span>(<span class="type">GsonConverterFactory</span>.create())</span></span><br><span class="line"><span class="function">                .<span class="title">addCallAdapterFactory</span>(<span class="type">RxJavaCallAdapterFactory</span>.create())</span></span><br><span class="line"><span class="function">                .<span class="title">build</span>();</span></span><br><span class="line"><span class="function"> <span class="title">api</span> = <span class="title">retrofit</span>.<span class="title">create</span>(<span class="type">PostApi</span>.class);</span></span><br></pre></td></tr></table></figure></p>
+<p>这里我们需要增加addCallAdapterFactory为我们后面的Rx做准备，然后我们调用两次<br><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">api.login(<span class="string">"liuguilin"</span>, <span class="string">"748778890"</span>).enqueue(<span class="keyword">new</span> Callback&lt;User&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> void onResponse(<span class="keyword">Call</span>&lt;User&gt; <span class="keyword">call</span>, <span class="built_in">Response</span>&lt;User&gt; <span class="built_in">response</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">response</span>.isSuccessful()) &#123;</span><br><span class="line">            <span class="built_in">String</span> id = <span class="built_in">response</span>.body().getUser_id();</span><br><span class="line">            api.getUser(id).enqueue(<span class="keyword">new</span> Callback&lt;User&gt;() &#123;</span><br><span class="line">                @Override</span><br><span class="line">                <span class="keyword">public</span> void onResponse(<span class="keyword">Call</span>&lt;User&gt; <span class="keyword">call</span>, <span class="built_in">Response</span>&lt;User&gt; <span class="built_in">response</span>) &#123;</span><br><span class="line"></span><br><span class="line">                    Toast.makeText(MainActivity.this, <span class="string">"id:"</span> +</span><br><span class="line">                                    <span class="built_in">response</span>.body().getId()</span><br><span class="line">                                    + <span class="string">"name:"</span> + <span class="built_in">response</span>.body().getName(),</span><br><span class="line">                            Toast.LENGTH_SHORT).show();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                @Override</span><br><span class="line">                <span class="keyword">public</span> void onFailure(<span class="keyword">Call</span>&lt;User&gt; <span class="keyword">call</span>, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> void onFailure(<span class="keyword">Call</span>&lt;User&gt; <span class="keyword">call</span>, Throwable t) &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>RxJava写法<br>重新定义两个接口<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@POST</span>(<span class="string">"user/login"</span>)</span><br><span class="line">rx.Observable&lt;User&gt; loginForRX(<span class="variable">@Body</span> User user);</span><br><span class="line"></span><br><span class="line"><span class="variable">@GET</span>(<span class="string">"user/info"</span>)</span><br><span class="line">rx.Observable&lt;User&gt; getUserForRX(<span class="variable">@Query</span>(<span class="string">"id"</span>) String id);</span><br></pre></td></tr></table></figure></p>
+<p>这里的是伪代码，注意看使用方法<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">api.loginForRX(<span class="keyword">new</span> User(<span class="string">"liuguilin"</span>, <span class="string">"748778890"</span>)).flatMap(<span class="keyword">new</span> Func1&lt;User, Observable&lt;User&gt;&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Observable&lt;User&gt; <span class="title">call</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> api.getUser(user.getUser_id());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).subscribe(<span class="keyword">new</span> Action1&lt;User&gt;() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">call</span><span class="params">(User user)</span> </span>&#123;</span><br><span class="line">        Toast.makeText(MainActivity.<span class="keyword">this</span>, <span class="string">"name:"</span> + user.getName(), Toast.LENGTH_SHORT).show();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Retrofit2-0/" rel="tag"># Retrofit2.0</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/23/RxJava2-0教程/" rel="next" title="RxJava2.0教程">
+                <i class="fa fa-chevron-left"></i> RxJava2.0教程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#文章来自于"><span class="nav-number">1.</span> <span class="nav-text">文章来自于</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#准备工作"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定义接口"><span class="nav-number">3.</span> <span class="nav-text">定义接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义一个接口类"><span class="nav-number">3.1.</span> <span class="nav-text">定义一个接口类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析接口的定义"><span class="nav-number">3.1.1.</span> <span class="nav-text">分析接口的定义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本请求"><span class="nav-number">4.</span> <span class="nav-text">基本请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get的动态参数"><span class="nav-number">5.</span> <span class="nav-text">Get的动态参数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get参数请求"><span class="nav-number">6.</span> <span class="nav-text">Get参数请求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Get参数拼接"><span class="nav-number">7.</span> <span class="nav-text">Get参数拼接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Post"><span class="nav-number">8.</span> <span class="nav-text">Post</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Post提交表单"><span class="nav-number">9.</span> <span class="nav-text">Post提交表单</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RxJava-Retrofit2-0"><span class="nav-number">10.</span> <span class="nav-text">RxJava + Retrofit2.0</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
