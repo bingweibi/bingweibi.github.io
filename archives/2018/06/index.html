@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Android,事件分发," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,13 @@
 
 
 
-<meta name="description" content="点击事件的分发过程有三个重要的方法来共同完成  dispatchTouchEvent(MotionEvent ev):负责进行事件的分发 onInterceptTouchEvent(MotionEvent event):负责是否拦截某个事件 onTouchEvent(MotionEvent event):用于处理点击事件  现在我们用类比的方式来讲解事件分发机制假设你是一个公司的小职员，你的上司是">
-<meta name="keywords" content="Android,事件分发">
-<meta property="og:type" content="article">
-<meta property="og:title" content="View的事件分发机制">
-<meta property="og:url" content="http://yoursite.com/2018/04/10/View的事件分发机制/index.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wakaka">
+<meta property="og:url" content="http://yoursite.com/archives/2018/06/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="点击事件的分发过程有三个重要的方法来共同完成  dispatchTouchEvent(MotionEvent ev):负责进行事件的分发 onInterceptTouchEvent(MotionEvent event):负责是否拦截某个事件 onTouchEvent(MotionEvent event):用于处理点击事件  现在我们用类比的方式来讲解事件分发机制假设你是一个公司的小职员，你的上司是">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T03:38:46.968Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="View的事件分发机制">
-<meta name="twitter:description" content="点击事件的分发过程有三个重要的方法来共同完成  dispatchTouchEvent(MotionEvent ev):负责进行事件的分发 onInterceptTouchEvent(MotionEvent event):负责是否拦截某个事件 onTouchEvent(MotionEvent event):用于处理点击事件  现在我们用类比的方式来讲解事件分发机制假设你是一个公司的小职员，你的上司是">
+<meta name="twitter:title" content="Wakaka">
 
 
 
@@ -120,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/10/View的事件分发机制/"/>
+  <link rel="canonical" href="http://yoursite.com/archives/2018/06/"/>
 
 
 
 
 
-  <title>View的事件分发机制 | Wakaka</title>
+  <title>归档 | Wakaka</title>
   
 
 
@@ -145,7 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left page-archive">
     <div class="headband"></div>
 	
 	<a href="https://github.com/bingweibi">
@@ -244,174 +239,73 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block archive">
+    <div id="posts" class="posts-collapse">
+      <span class="archive-move-on"></span>
 
-  
+      <span class="archive-page-counter">
+        
+        
+         
+        
+        OK! 目前共计 48 篇日志。 继续努力。
+      </span>
 
-  
-  
-  
+      
+
+        
+        
+        
+
+        
+          
+          <div class="collection-title">
+            <h2 class="archive-year" id="archive-year-2018">2018</h2>
+          </div>
+        
+        
+
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/View的事件分发机制/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h3 class="post-title">
         
-        
-          <h2 class="post-title" itemprop="name headline">View的事件分发机制</h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/06/24/RxJava2-1/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">RxJava2(1)</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T16:05:23+08:00">
-                2018-04-10
-              </time>
-            
+            </a>
+        
+      </h3>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-06-24T19:32:57+08:00"
+              content="2018-06-24" >
+          06-24
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>点击事件的分发过程有三个重要的方法来共同完成</p>
-<ol>
-<li>dispatchTouchEvent(MotionEvent ev):负责进行事件的分发</li>
-<li>onInterceptTouchEvent(MotionEvent event):负责是否拦截某个事件</li>
-<li>onTouchEvent(MotionEvent event):用于处理点击事件</li>
-</ol>
-<h2 id="现在我们用类比的方式来讲解事件分发机制"><a href="#现在我们用类比的方式来讲解事件分发机制" class="headerlink" title="现在我们用类比的方式来讲解事件分发机制"></a>现在我们用类比的方式来讲解事件分发机制</h2><p>假设你是一个公司的小职员，你的上司是部长，部长的上司是总经理。</p>
-<ol>
-<li>公司接到一个业务(点击事件开始)</li>
-<li>首先肯定是总经理先接单(根视图:ViewGroup),判断是否将这个业务派发给部长完成(触发了dispatchTouchEvent(MotionEvent ev)方法)</li>
-<li>如果总经理觉得这单业务过于简单只需要自己就可以完成，于是便拦截下来，不往下分发了(触发了onInterceptTouchEvent(MotionEvent event))方法返回true</li>
-<li>总经理就自己处理了这个事件(出发了onTouchEvent(MotionEvent event))</li>
-<li>回到3，如果总经理觉得这个事情自己不愿意做，便将这个事情派发给了部长(触发了onInterceptTouchEvent(MotionEvent event))返回false</li>
-<li>部长同时觉得很适合你来做(触发了onInterceptTouchEvent(MotionEvent event))返回false</li>
-<li>现在任务就应该由你来完成了，你是不可以拦截的(没有onInterceptTouchEvent(MotionEvent event))</li>
-</ol>
-<h2 id="处理事件机制"><a href="#处理事件机制" class="headerlink" title="处理事件机制"></a>处理事件机制</h2><ol>
-<li>设置OnTouchListener，那么OnTouchListener中的onTouch方法会被会调</li>
-<li>如果OnTouch返回false，就调用当前View的onTouchEvent</li>
-<li>如果返回true,那么onTouchEvent就不会被调用</li>
-<li>在onTouchEvent方法中，如果设置了OnClickListener，那么它的onClick会被调用，所以OnClickListener优先级最低</li>
-</ol>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Android/" rel="tag"># Android</a>
-          
-            <a href="/tags/事件分发/" rel="tag"># 事件分发</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2018/04/07/Java基础-io类/" rel="next" title="Java基础---io类">
-                <i class="fa fa-chevron-left"></i> Java基础---io类
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/10/Android消息机制/" rel="prev" title="Android消息机制">
-                Android消息机制 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
 
-    <div class="post-spread">
       
+
     </div>
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -419,10 +313,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -443,17 +333,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -509,22 +390,6 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现在我们用类比的方式来讲解事件分发机制"><span class="nav-number">1.</span> <span class="nav-text">现在我们用类比的方式来讲解事件分发机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理事件机制"><span class="nav-number">2.</span> <span class="nav-text">处理事件机制</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -676,10 +541,6 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
-
-
 
   
 
