@@ -254,130 +254,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/" itemprop="url">Android开发艺术探索---Activity的生命周期和启动模式</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-02T22:17:05+08:00">
-                2018-05-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="Activity的生命周期全面分析"><a href="#Activity的生命周期全面分析" class="headerlink" title="Activity的生命周期全面分析"></a>Activity的生命周期全面分析</h2><h3 id="典型情况下的生命周期分析"><a href="#典型情况下的生命周期分析" class="headerlink" title="典型情况下的生命周期分析"></a>典型情况下的生命周期分析</h3><center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/02/Android开发艺术探索-Activity的生命周期和启动模式/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/Java基础-泛型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1534,6 +1410,148 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/21/Java集合类-ArrayList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/21/Java集合类-ArrayList/" itemprop="url">Java集合类--ArrayList</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-21T10:49:44+08:00">
+                2018-04-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="ArrayList简介"><a href="#ArrayList简介" class="headerlink" title="ArrayList简介"></a>ArrayList简介</h1><ol>
+<li>ArrayList基于数组实现，是一个动态数组队列，容量可以自动增加</li>
+<li><p>ArrayList继承AbstractList,实现RandomAccess和Serializable接口</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public <span class="class"><span class="keyword">class</span> <span class="title">ArrayList&lt;E&gt;</span> <span class="keyword">extends</span> <span class="title">AbstractList&lt;E&gt;</span></span></span><br><span class="line"><span class="class">        <span class="title">implements</span> <span class="title">List&lt;E&gt;</span>, <span class="title">RandomAccess</span>, <span class="title">Cloneable</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ArrayList</code> 继承 <code>AbstractList</code> 继承 <code>AbstractCollection</code> 实现 <code>List</code> 接口</p>
+<ul>
+<li>意味着具有添加、删除、修改和遍历等功能</li>
+</ul>
+</li>
+<li>实现了<code>RandomAccess</code>接口<ul>
+<li>提供了随机访问功能，实际上就是通过下标序号进行快速访问</li>
+</ul>
+</li>
+<li>实现了<code>Serializable</code>接口<ul>
+<li>支持序列化，也就意味了ArrayList能够通过序列化传输</li>
+</ul>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/04/21/Java集合类-ArrayList/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1584,7 +1602,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1596,7 +1614,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/tags.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
