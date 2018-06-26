@@ -79,20 +79,23 @@
 
 
 
-<meta name="description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 如何开始 基本元素  被观察者(Observable) 观察者(Observer) 订阅(subscribe)相信理解了观察者模式的很好理解这些概念。   在Gradle文件中添加依赖 12implementation &quot;io.reactivex.rxjava2:rxjava:2.1.15&quot;implementation &apos;">
+<meta name="description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 响应式编程响应式编程：一种基于异步数据流概念的编程模式。在这里你可以将数据想象成一条河流：他可以被观测、被过滤、被操作或者成为新的消费者与另一条数据流合并成为一条新的数据流。 异步单线程同步模型：   多线程模型：   异步模型：">
 <meta name="keywords" content="RxJava2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RxJava2(1)">
 <meta property="og:url" content="http://yoursite.com/2018/06/24/RxJava2-1/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 如何开始 基本元素  被观察者(Observable) 观察者(Observer) 订阅(subscribe)相信理解了观察者模式的很好理解这些概念。   在Gradle文件中添加依赖 12implementation &quot;io.reactivex.rxjava2:rxjava:2.1.15&quot;implementation &apos;">
+<meta property="og:description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 响应式编程响应式编程：一种基于异步数据流概念的编程模式。在这里你可以将数据想象成一条河流：他可以被观测、被过滤、被操作或者成为新的消费者与另一条数据流合并成为一条新的数据流。 异步单线程同步模型：   多线程模型：   异步模型：">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2240629-97665d70ec07fb8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/190">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2240629-a9196234fa70565f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2240629-39a3649588431c96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/603">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/RxJava2%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
-<meta property="og:updated_time" content="2018-06-25T07:23:47.487Z">
+<meta property="og:updated_time" content="2018-06-26T07:54:47.850Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RxJava2(1)">
-<meta name="twitter:description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 如何开始 基本元素  被观察者(Observable) 观察者(Observer) 订阅(subscribe)相信理解了观察者模式的很好理解这些概念。   在Gradle文件中添加依赖 12implementation &quot;io.reactivex.rxjava2:rxjava:2.1.15&quot;implementation &apos;">
-<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/RxJava2%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta name="twitter:description" content="简介RxJava2 提供一套基于观察者模式的异步编程的API，且链式调用。 响应式编程响应式编程：一种基于异步数据流概念的编程模式。在这里你可以将数据想象成一条河流：他可以被观测、被过滤、被操作或者成为新的消费者与另一条数据流合并成为一条新的数据流。 异步单线程同步模型：   多线程模型：   异步模型：">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/2240629-97665d70ec07fb8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/190">
 
 
 
@@ -328,6 +331,17 @@
 
       
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>RxJava2 提供一套基于<a href="http://design-patterns.readthedocs.io/zh_CN/latest/behavioral_patterns/observer.html" target="_blank" rel="noopener">观察者模式</a>的<a href="https://www.jianshu.com/p/c4dc7866eb81" target="_blank" rel="noopener">异步编程</a>的API，且链式调用。</p>
+<h2 id="响应式编程"><a href="#响应式编程" class="headerlink" title="响应式编程"></a>响应式编程</h2><p><strong>响应式编程</strong>：一种基于异步数据流概念的编程模式。在这里你可以将数据想象成一条河流：他可以被观测、被过滤、被操作或者成为新的消费者与另一条数据流合并成为一条新的数据流。</p>
+<h3 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h3><p>单线程同步模型：</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2240629-97665d70ec07fb8c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/190" alt=""></center>
+
+<p>多线程模型：</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2240629-a9196234fa70565f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt=""></center>
+
+<p>异步模型：</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2240629-39a3649588431c96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/603" alt=""></center>
+
+<a id="more"></a>
 <h2 id="如何开始"><a href="#如何开始" class="headerlink" title="如何开始"></a>如何开始</h2><ul>
 <li><p>基本元素</p>
 <ol>
@@ -340,7 +354,6 @@
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">implementation</span> <span class="string">"io.reactivex.rxjava2:rxjava:2.1.15"</span></span><br><span class="line"><span class="keyword">implementation</span> <span class="string">'io.reactivex.rxjava2:rxandroid:2.0.2'</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<a id="more"></a>
 <h2 id="示例应用"><a href="#示例应用" class="headerlink" title="示例应用"></a>示例应用</h2><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建被观察者</span></span><br><span class="line">Observable observable = Observable.create(<span class="literal">new</span> ObservableOnSubscribe() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> subscribe(ObservableEmitter emitter) throws Exception &#123;</span><br><span class="line">        <span class="keyword">Log</span>.i(<span class="built_in">TAG</span>, <span class="string">"subscribe thread: "</span> + <span class="keyword">Thread</span>.currentThread().getName());</span><br><span class="line">        emitter.onNext(<span class="number">1</span>);</span><br><span class="line">        emitter.onNext(<span class="number">2</span>);</span><br><span class="line">        emitter.onNext(<span class="number">3</span>);</span><br><span class="line">        emitter.onComplete();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建观察者</span></span><br><span class="line">Observer observer = <span class="literal">new</span> Observer&lt;<span class="built_in">Integer</span>&gt;() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> onSubscribe(Disposable d) &#123;</span><br><span class="line">        <span class="keyword">Log</span>.i(<span class="built_in">TAG</span>, <span class="string">"onSubscribe: "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> onNext(<span class="built_in">Integer</span> i) &#123;</span><br><span class="line">        <span class="keyword">Log</span>.i(<span class="built_in">TAG</span>, <span class="string">"onNext: "</span> + i);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> onError(Throwable e) &#123;</span><br><span class="line">        <span class="keyword">Log</span>.i(<span class="built_in">TAG</span>, <span class="string">"onError: "</span> + e.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> <span class="literal">void</span> onComplete() &#123;</span><br><span class="line">        <span class="keyword">Log</span>.i(<span class="built_in">TAG</span>, <span class="string">"onComplete: "</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//建立订阅关系</span></span><br><span class="line">observable.subscribe(observer);</span><br></pre></td></tr></table></figure>
 <h2 id="输出结果"><a href="#输出结果" class="headerlink" title="输出结果"></a>输出结果</h2><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">onSubscribe:</span> </span><br><span class="line">subscribe <span class="string">thread:</span> main</span><br><span class="line"><span class="string">onNext:</span> <span class="number">1</span></span><br><span class="line"><span class="string">onNext:</span> <span class="number">2</span></span><br><span class="line"><span class="string">onNext:</span> <span class="number">3</span></span><br><span class="line"><span class="string">onComplete:</span></span><br></pre></td></tr></table></figure>
 <h2 id="解释"><a href="#解释" class="headerlink" title="解释"></a>解释</h2><p>被观察者可以发送如下几种事件<br>|事件种类|作用|<br>|:–:|:–:|<br>|onNext()|被观察者发送该事件，观察者onNext()接收|<br>|onError()|被观察者发送该事件，观察者onError()接收，之后不再接收其他事件|<br>|onComplete()|被观察者发送该事件,观察者onComplete()接收，之后不再接收其他事件|</p>
@@ -514,7 +527,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何开始"><span class="nav-number">1.1.</span> <span class="nav-text">如何开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例应用"><span class="nav-number">1.2.</span> <span class="nav-text">示例应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出结果"><span class="nav-number">1.3.</span> <span class="nav-text">输出结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释"><span class="nav-number">1.4.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava2流程"><span class="nav-number">1.5.</span> <span class="nav-text">RxJava2流程</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#响应式编程"><span class="nav-number">1.1.</span> <span class="nav-text">响应式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异步"><span class="nav-number">1.1.1.</span> <span class="nav-text">异步</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何开始"><span class="nav-number">1.2.</span> <span class="nav-text">如何开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#示例应用"><span class="nav-number">1.3.</span> <span class="nav-text">示例应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输出结果"><span class="nav-number">1.4.</span> <span class="nav-text">输出结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解释"><span class="nav-number">1.5.</span> <span class="nav-text">解释</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava2流程"><span class="nav-number">1.6.</span> <span class="nav-text">RxJava2流程</span></a></li></ol></li></ol></div>
             
 
           </div>
