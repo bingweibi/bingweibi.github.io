@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Retrofit2," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="分析流程:构建请求对象-&amp;gt;构建请求接口-&amp;gt;发起同步/异步请求  举个栗子1234567Retrofit retrofit = new Retrofit.Builder()        .client(new OkHttpClient())        .baseUrl(&quot;&quot;https://api.github.com&quot;&quot;)        .addConverterFactory(">
+<meta name="keywords" content="Retrofit2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retrofit2(1)">
+<meta property="og:url" content="http://yoursite.com/2018/06/28/Retrofit2-1/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="分析流程:构建请求对象-&amp;gt;构建请求接口-&amp;gt;发起同步/异步请求  举个栗子1234567Retrofit retrofit = new Retrofit.Builder()        .client(new OkHttpClient())        .baseUrl(&quot;&quot;https://api.github.com&quot;&quot;)        .addConverterFactory(">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/retrofit2%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:updated_time" content="2018-06-28T07:39:19.049Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Retrofit2(1)">
+<meta name="twitter:description" content="分析流程:构建请求对象-&amp;gt;构建请求接口-&amp;gt;发起同步/异步请求  举个栗子1234567Retrofit retrofit = new Retrofit.Builder()        .client(new OkHttpClient())        .baseUrl(&quot;&quot;https://api.github.com&quot;&quot;)        .addConverterFactory(">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/retrofit2%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/28/Retrofit2-1/"/>
+
+
+
+
+
+  <title>Retrofit2(1) | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/Retrofit2-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Retrofit2(1)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T15:38:19+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>分析流程:构建请求对象-&gt;构建请求接口-&gt;发起同步/异步请求</p>
+</blockquote>
+<h1 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h1><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Retrofit retrofit = <span class="keyword">new</span> <span class="type">Retrofit</span>.Builder()</span><br><span class="line">        .client(<span class="keyword">new</span> <span class="type">OkHttpClient</span>())</span><br><span class="line">        .baseUrl(<span class="string">""</span>https:<span class="type"></span>//api.github.com<span class="string">""</span>)</span><br><span class="line">        .addConverterFactory(<span class="keyword">new</span> <span class="type">Converter</span>.Factory)</span><br><span class="line">        .addCallAdapterFactory(<span class="keyword">new</span> <span class="type">CallAdapter</span>.Factory)</span><br><span class="line">        .build();</span><br><span class="line">GitHubService service = retrofit.create(GitHubService.class);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="Retrofit2组成部分"><a href="#Retrofit2组成部分" class="headerlink" title="Retrofit2组成部分"></a>Retrofit2组成部分</h1><ol>
+<li>retrofit</li>
+<li>retrofit-converters</li>
+<li>retrofit-adapters</li>
+</ol>
+<h2 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h2><p>画了个大概</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/retrofit2%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="构建Retrofit对象"><a href="#构建Retrofit对象" class="headerlink" title="构建Retrofit对象"></a>构建Retrofit对象</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Build a new &#123;<span class="doctag">@link</span> Retrofit&#125;.</span></span><br><span class="line"><span class="comment">   * &lt;p&gt;</span></span><br><span class="line"><span class="comment">   * Calling &#123;<span class="doctag">@link</span> #baseUrl&#125; is required before calling &#123;<span class="doctag">@link</span> #build()&#125;. All other methods</span></span><br><span class="line"><span class="comment">   * are optional.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Builder</span> </span>&#123;</span><br><span class="line">    <span class="comment">//支持的平台</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Platform platform;</span><br><span class="line">    <span class="comment">//发起请求okhttp3的client工厂</span></span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Nullable</span> okhttp3.Call.Factory callFactory;</span><br><span class="line">    <span class="comment">//baseUrl</span></span><br><span class="line">    <span class="keyword">private</span> HttpUrl baseUrl;</span><br><span class="line">    <span class="comment">//转化器的工厂集合(Gson转换，Jackson转换)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;Converter.Factory&gt; converterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">//用来发起request和接收response的Call适配器</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> List&lt;CallAdapter.Factory&gt; adapterFactories = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="comment">//Executor并发框架，包括线程池等</span></span><br><span class="line">    <span class="keyword">private</span> <span class="meta">@Nullable</span> Executor callbackExecutor;</span><br><span class="line">    <span class="comment">//是否需要立即生效</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> validateEagerly;</span><br><span class="line"></span><br><span class="line">    Builder(Platform platform) &#123;</span><br><span class="line">      <span class="keyword">this</span>.platform = platform;</span><br><span class="line">      <span class="comment">// Add the built-in converter factory first. This prevents overriding its behavior but also</span></span><br><span class="line">      <span class="comment">// ensures correct behavior when using converters that consume all types.</span></span><br><span class="line">      converterFactories.add(<span class="keyword">new</span> BuiltInConverters());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Builder</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="comment">//支持android、iOS、java8</span></span><br><span class="line">      <span class="keyword">this</span>(Platform.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit 对象的构建使用了建造者模式(不是很懂设计模式，逃…)</p>
+<h3 id="构建用于请求的HTTP客户端"><a href="#构建用于请求的HTTP客户端" class="headerlink" title="构建用于请求的HTTP客户端"></a>构建用于请求的HTTP客户端</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * The HTTP client used for requests.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * This is a convenience method for calling &#123;@link #callFactory&#125;.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="keyword">public</span> Builder <span class="keyword">client</span>(OkHttpClient <span class="keyword">client</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> callFactory(checkNotNull(<span class="keyword">client</span>, <span class="string">"client == null"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构建一个指定的call工厂"><a href="#构建一个指定的call工厂" class="headerlink" title="构建一个指定的call工厂"></a>构建一个指定的call工厂</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Specify a custom call factory for creating &#123;<span class="doctag">@link</span> Call&#125; instances.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * Note: Calling &#123;<span class="doctag">@link</span> #client&#125; automatically sets this value.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="keyword">public</span> Builder callFactory(okhttp3.Call.Factory factory) &#123;</span><br><span class="line">  <span class="keyword">this</span>.callFactory = checkNotNull(factory, <span class="string">"factory == null"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="设置baseUrl"><a href="#设置baseUrl" class="headerlink" title="设置baseUrl"></a>设置baseUrl</h3><figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">/<span class="symbol">*</span><span class="symbol">*</span></span><br><span class="line"> <span class="symbol">*</span> Set the API base URL.</span><br><span class="line"> <span class="symbol">*</span></span><br><span class="line"> <span class="symbol">*</span> <span class="meta">@see</span> <span class="comment">#baseUrl(HttpUrl)</span></span><br><span class="line"> <span class="symbol">*</span>/</span><br><span class="line">public Builder baseUrl(String baseUrl) &#123;</span><br><span class="line">  checkNotNull(baseUrl, <span class="string">"baseUrl == null"</span>);</span><br><span class="line">  HttpUrl httpUrl = HttpUrl.parse(baseUrl);</span><br><span class="line">  if (httpUrl == null) &#123;</span><br><span class="line">    throw new IllegalArgumentException(<span class="string">"Illegal URL: "</span> + baseUrl);</span><br><span class="line">  &#125;</span><br><span class="line">  return baseUrl(httpUrl);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/<span class="symbol">*</span><span class="symbol">*</span></span><br><span class="line"> <span class="symbol">*</span> Set the API base URL.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> The specified endpoint values (such as with &#123;<span class="meta">@link</span> GET <span class="meta">@GET&#125;)</span> are resolved against this</span><br><span class="line"> <span class="symbol">*</span> value using &#123;<span class="meta">@link</span> HttpUrl<span class="comment">#resolve(String)&#125;. The behavior of this matches that of an</span></span><br><span class="line"> <span class="symbol">*</span> &#123;<span class="meta">@code</span> <span class="variable">&lt;a href=""&gt;</span>&#125; link on a website resolving on the current URL.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;b&gt;</span>Base URLs should always end in &#123;<span class="meta">@code</span> /&#125;.<span class="variable">&lt;/b&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> A trailing &#123;<span class="meta">@code</span> /&#125; ensures that endpoints values which are relative paths will correctly</span><br><span class="line"> <span class="symbol">*</span> append themselves to a base which has path components.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;b&gt;</span>Correct:<span class="variable">&lt;/b&gt;</span><span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com/api/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: foo/bar/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: http://example.com/api/foo/bar/</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;b&gt;</span>Incorrect:<span class="variable">&lt;/b&gt;</span><span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com/api<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: foo/bar/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: http://example.com/foo/bar/</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> This method enforces that &#123;<span class="meta">@code</span> baseUrl&#125; has a trailing &#123;<span class="meta">@code</span> /&#125;.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;b&gt;</span>Endpoint values which contain a leading &#123;<span class="meta">@code</span> /&#125; are absolute.<span class="variable">&lt;/b&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Absolute values retain only the host from &#123;<span class="meta">@code</span> baseUrl&#125; and ignore any specified path</span><br><span class="line"> <span class="symbol">*</span> components.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com/api/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: /foo/bar/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: http://example.com/foo/bar/</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: /foo/bar/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: http://example.com/foo/bar/</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;b&gt;</span>Endpoint values may be a full URL.<span class="variable">&lt;/b&gt;</span></span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Values which have a host replace the host of &#123;<span class="meta">@code</span> baseUrl&#125; and values also with a scheme</span><br><span class="line"> <span class="symbol">*</span> replace the scheme of &#123;<span class="meta">@code</span> baseUrl&#125;.</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: https://github.com/square/retrofit/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: https://github.com/square/retrofit/</span><br><span class="line"> <span class="symbol">*</span> <span class="variable">&lt;p&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Base URL: http://example.com<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Endpoint: //github.com/square/retrofit/<span class="variable">&lt;br&gt;</span></span><br><span class="line"> <span class="symbol">*</span> Result: http://github.com/square/retrofit/ (note the scheme stays 'http')</span><br><span class="line"> <span class="symbol">*</span>/</span><br><span class="line">public Builder baseUrl(HttpUrl baseUrl) &#123;</span><br><span class="line">  checkNotNull(baseUrl, <span class="string">"baseUrl == null"</span>);</span><br><span class="line">  List<span class="variable">&lt;String&gt;</span> pathSegments = baseUrl.pathSegments();</span><br><span class="line">  if (!<span class="string">""</span>.equals(pathSegments.get(pathSegments.size() - 1))) &#123;</span><br><span class="line">    throw new IllegalArgumentException(<span class="string">"baseUrl must end in /: "</span> + baseUrl);</span><br><span class="line">  &#125;</span><br><span class="line">  this.baseUrl = baseUrl;</span><br><span class="line">  return this;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Base URLs以<code>/</code>结束，不然报错</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">* <span class="symbol">&lt;b&gt;</span>Correc<span class="variable">t:</span>&lt;/<span class="keyword">b</span>&gt;<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Base URL: http://example.<span class="keyword">com</span>/api/<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Endpoin<span class="variable">t:</span> foo/bar/<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Resul<span class="variable">t:</span> http://example.<span class="keyword">com</span>/api/foo/bar/</span><br><span class="line">* <span class="symbol">&lt;p&gt;</span></span><br><span class="line">* <span class="symbol">&lt;b&gt;</span>Incorrec<span class="variable">t:</span>&lt;/<span class="keyword">b</span>&gt;<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Base URL: http://example.<span class="keyword">com</span>/api<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Endpoin<span class="variable">t:</span> foo/bar/<span class="symbol">&lt;br&gt;</span></span><br><span class="line">* Resul<span class="variable">t:</span> http://example.<span class="keyword">com</span>/foo/bar/</span><br></pre></td></tr></table></figure>
+<h3 id="构建转换器工厂-序列化与反序列化"><a href="#构建转换器工厂-序列化与反序列化" class="headerlink" title="构建转换器工厂(序列化与反序列化)"></a>构建转换器工厂(序列化与反序列化)</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Add converter factory for serialization and deserialization of objects. */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">addConverterFactory</span>(<span class="params">Converter.Factory factory</span>) </span>&#123;</span><br><span class="line">  converterFactories.<span class="keyword">add</span>(checkNotNull(factory, <span class="string">"factory == null"</span>));</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="构建call适配器工厂"><a href="#构建call适配器工厂" class="headerlink" title="构建call适配器工厂"></a>构建call适配器工厂</h3><figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Add a call adapter factory for supporting service method return types other than &#123;@link</span></span><br><span class="line"><span class="comment"> * Call&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Builder <span class="title">addCallAdapterFactory</span>(<span class="params">CallAdapter.Factory factory</span>) </span>&#123;</span><br><span class="line">  adapterFactories.<span class="keyword">add</span>(checkNotNull(factory, <span class="string">"factory == null"</span>));</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="build"><a href="#build" class="headerlink" title="build()"></a>build()</h3><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Create the &#123;@link Retrofit&#125; instance using the configured values.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Note: If neither &#123;@link #client&#125; nor &#123;@link #callFactory&#125; is called a default &#123;@link</span></span><br><span class="line"><span class="comment"> * OkHttpClient&#125; will be created and used.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> Retrofit build() &#123;</span><br><span class="line">  <span class="keyword">if</span> (baseUrl == <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">IllegalStateException</span>(<span class="string">"Base URL required."</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  okhttp3.Call.Factory callFactory = <span class="built_in">this</span>.callFactory;</span><br><span class="line">  <span class="keyword">if</span> (callFactory == <span class="literal">null</span>) &#123;</span><br><span class="line">    callFactory = <span class="keyword">new</span> <span class="type">OkHttpClient</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  Executor callbackExecutor = <span class="built_in">this</span>.callbackExecutor;</span><br><span class="line">  <span class="keyword">if</span> (callbackExecutor == <span class="literal">null</span>) &#123;</span><br><span class="line">    callbackExecutor = platform.defaultCallbackExecutor();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Make a defensive copy of the adapters and add the default Call adapter.</span></span><br><span class="line">  List&lt;CallAdapter.Factory&gt; adapterFactories = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="built_in">this</span>.adapterFactories);</span><br><span class="line">  adapterFactories.add(platform.defaultCallAdapterFactory(callbackExecutor));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Make a defensive copy of the converters.</span></span><br><span class="line">  List&lt;Converter.Factory&gt; converterFactories = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="built_in">this</span>.converterFactories);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Retrofit</span>(callFactory, baseUrl, converterFactories, adapterFactories,</span><br><span class="line">      callbackExecutor, validateEagerly);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>处理baseURL，其他没有设置的话，系统都会帮设置一个默认的值.</p>
+<h3 id="API编写"><a href="#API编写" class="headerlink" title="API编写"></a>API编写</h3><h4 id="举个栗子-1"><a href="#举个栗子-1" class="headerlink" title="举个栗子"></a>举个栗子</h4><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">public</span> <span class="selector-tag">interface</span> <span class="selector-tag">ZhiHuApi</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable">@GET</span>(<span class="string">"api/4/news/before/&#123;date&#125;"</span>)</span><br><span class="line">    Observable&lt;ZhiHu&gt; getOldStoriesInfo(<span class="variable">@Path</span>(<span class="string">"date"</span>) String date);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Retrofit2以接口和注解的形式进行定义API</p>
+<h5 id="GET注解"><a href="#GET注解" class="headerlink" title="GET注解"></a>GET注解</h5><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** Make a GET request. */</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Target(METHOD)</span></span><br><span class="line"><span class="meta">@Retention(RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> GET &#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * A relative or absolute path, or full URL of the endpoint. This value is optional if the first</span></span><br><span class="line"><span class="comment">   * parameter of the method is annotated with &#123;<span class="doctag">@link</span> Url <span class="doctag">@Url</span>&#125;.</span></span><br><span class="line"><span class="comment">   * &lt;p&gt;</span></span><br><span class="line"><span class="comment">   * See &#123;<span class="doctag">@linkplain</span> retrofit2.Retrofit.Builder#baseUrl(HttpUrl) base URL&#125; for details of how</span></span><br><span class="line"><span class="comment">   * this is resolved against a base URL to create the full endpoint URL.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  String value() <span class="keyword">default</span> <span class="string">""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>构建一个<code>GET</code>请求，参数是<code>String</code>，默认为空字符串。</p>
+<h5 id="Path注解"><a href="#Path注解" class="headerlink" title="Path注解"></a>Path注解</h5><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Named replacement in a URL path segment. Values are converted to strings using</span></span><br><span class="line"><span class="comment"> * &#123;@link Retrofit#stringConverter(Type, Annotation[])&#125; (or &#123;@link Object#toString()&#125;,</span></span><br><span class="line"><span class="comment"> * if no matching string converter is installed) and then URL encoded.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Simple example:</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;&lt;code&gt;</span></span><br><span class="line"><span class="comment"> * &amp;#64;GET("/image/&#123;id&#125;")</span></span><br><span class="line"><span class="comment"> * Call&amp;lt;ResponseBody&amp;gt; example(@Path("id") int id);</span></span><br><span class="line"><span class="comment"> * &lt;/code&gt;&lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> * Calling with &#123;@code foo.example(1)&#125; yields &#123;@code /image/1&#125;.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Values are URL encoded by default. Disable with &#123;@code encoded=true&#125;.</span></span><br><span class="line"><span class="comment"> * &lt;pre&gt;&lt;code&gt;</span></span><br><span class="line"><span class="comment"> * &amp;#64;GET("/user/&#123;name&#125;")</span></span><br><span class="line"><span class="comment"> * Call&amp;lt;ResponseBody&amp;gt; encoded(@Path("name") String name);</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * &amp;#64;GET("/user/&#123;name&#125;")</span></span><br><span class="line"><span class="comment"> * Call&amp;lt;ResponseBody&amp;gt; notEncoded(@Path(value="name", encoded=true) String name);</span></span><br><span class="line"><span class="comment"> * &lt;/code&gt;&lt;/pre&gt;</span></span><br><span class="line"><span class="comment"> * Calling &#123;@code foo.encoded("John+Doe")&#125; yields &#123;@code /user/John%2BDoe&#125; whereas</span></span><br><span class="line"><span class="comment"> * &#123;@code foo.notEncoded("John+Doe")&#125; yields &#123;@code /user/John+Doe&#125;.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Path parameters may not be &#123;@code null&#125;.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="variable">@Documented</span></span><br><span class="line"><span class="variable">@Retention</span>(RUNTIME)</span><br><span class="line"><span class="variable">@Target</span>(PARAMETER)</span><br><span class="line">public <span class="variable">@interface</span> Path &#123;</span><br><span class="line">  <span class="selector-tag">String</span> <span class="selector-tag">value</span>();</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Specifies whether the argument value to the annotated method parameter is already URL encoded.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="selector-tag">boolean</span> <span class="selector-tag">encoded</span>() <span class="selector-tag">default</span> <span class="selector-tag">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Path用于构建动态的Url，同时还可以设置URL encode，默认是false</p>
+<h3 id="创建Retrofit2-service"><a href="#创建Retrofit2-service" class="headerlink" title="创建Retrofit2 service"></a>创建Retrofit2 service</h3><h4 id="举个栗子-2"><a href="#举个栗子-2" class="headerlink" title="举个栗子"></a>举个栗子</h4><figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">GithubApi githubApi</span> = retrofit.create(GithubApi.class);</span><br></pre></td></tr></table></figure>
+<h5 id="create源码"><a href="#create源码" class="headerlink" title="create源码"></a>create源码</h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"><span class="markdown">/**</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * Create </span>an<span class="markdown"> implementation of </span>the<span class="markdown"> API endpoints defined by </span>the<span class="markdown"> &#123;@code service&#125; interface.</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * ...</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * For example:</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * <span class="xml"><span class="tag">&lt;<span class="name">pre</span>&gt;</span></span></span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * public interface CategoryService &#123;</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> *   &amp;#64;POST("category/&#123;cat&#125;/")</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> *   Call&amp;lt;List&amp;lt;Item&amp;gt;&amp;gt; categoryList(@Path("cat") String </span>a<span class="markdown">, @Query("page") int b);</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * &#125;</span></span></span><br><span class="line"><span class="comment"><span class="markdown"> * <span class="xml"><span class="tag">&lt;/<span class="name">pre</span>&gt;</span></span></span></span></span><br><span class="line"><span class="comment"><span class="markdown"> */</span></span></span><br><span class="line"><span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>) <span class="comment">// Single-interface proxy creation guarded by parameter safety.</span></span><br><span class="line">public &lt;T&gt; T create(<span class="keyword">final</span> Class&lt;T&gt; service) &#123;</span><br><span class="line">  Utils.validateServiceInterface(service);</span><br><span class="line">  <span class="keyword">if</span> (validateEagerly) &#123;</span><br><span class="line">    eagerlyValidateMethods(service);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> (T) Proxy.newProxyInstance(service.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[] &#123; service &#125;,</span><br><span class="line">      <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">        private <span class="keyword">final</span> Platform platform = Platform.<span class="keyword">get</span>();</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span> public <span class="built_in">Object</span> invoke(<span class="built_in">Object</span> proxy, Method method, <span class="meta">@Nullable</span> <span class="built_in">Object</span>[] args)</span><br><span class="line">            throws Throwable &#123;</span><br><span class="line">          <span class="comment">// If the method is a method from Object then defer to normal invocation.</span></span><br><span class="line">          <span class="keyword">if</span> (method.getDeclaringClass() == <span class="built_in">Object</span>.<span class="keyword">class</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> method.invoke(<span class="keyword">this</span>, args);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">if</span> (platform.isDefaultMethod(method)) &#123;</span><br><span class="line">            <span class="keyword">return</span> platform.invokeDefaultMethod(method, service, proxy, args);</span><br><span class="line">          &#125;</span><br><span class="line">          ServiceMethod&lt;<span class="built_in">Object</span>, <span class="built_in">Object</span>&gt; serviceMethod =</span><br><span class="line">              (ServiceMethod&lt;<span class="built_in">Object</span>, <span class="built_in">Object</span>&gt;) loadServiceMethod(method);</span><br><span class="line">          OkHttpCall&lt;<span class="built_in">Object</span>&gt; okHttpCall = <span class="keyword">new</span> OkHttpCall&lt;&gt;(serviceMethod, args);</span><br><span class="line">          <span class="keyword">return</span> serviceMethod.callAdapter.adapt(okHttpCall);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过接口实现定义好的API终端，这里使用了<a href="https://www.jianshu.com/p/6f6bb2f0ece9" target="_blank" rel="noopener">动态代理</a>，create有如下几个步骤</p>
+<ul>
+<li>判断传入进来的service</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">validateServiceInterface</span><span class="params">(Class&lt;T&gt; service)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!service.isInterface()) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"API declarations must be interfaces."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Prevent API interfaces from extending other interfaces. This not only avoids a bug in</span></span><br><span class="line">    <span class="comment">// Android (http://b.android.com/58753) but it forces composition of API declarations which is</span></span><br><span class="line">    <span class="comment">// the recommended pattern.</span></span><br><span class="line">    <span class="keyword">if</span> (service.getInterfaces().length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"API interfaces must not extend other interfaces."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>不是接口或多个接口类型，便报异常</p>
+<ul>
+<li>动态代理的 invoke 方法</li>
+</ul>
+<p><code>InvocationHandler</code>接口会将对方法的调用指派到代理的 <code>invoke</code> 方法中，进行处理。</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="function"><span class="keyword">method</span>.<span class="title">getDeclaringClass</span><span class="params">()</span> == <span class="title">Object</span>.<span class="title">class</span>) <span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">              return method.invoke(this, args);</span></span></span><br><span class="line"><span class="function"><span class="comment">            &#125;</span></span></span><br><span class="line"><span class="function"><span class="title">if</span> <span class="params">(<span class="keyword">platform</span>.isDefaultMethod(<span class="keyword">method</span>)</span>) <span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">              return platform.invokeDefaultMethod(method, service, proxy, args);</span></span></span><br><span class="line"><span class="function"><span class="comment">            &#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>这里当<code>method</code>是一个对象的<code>method</code>时，直接调用。如果是平台的默认方法（根据<code>Platform</code>代码中这种情况是<code>java8</code>）就直接执行调用默认方法。</p>
+<ul>
+<li><code>method</code>缓存到<code>ServiceMrthod</code>对象中</li>
+</ul>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ServiceMethod&lt;Object, Object&gt; serviceMethod =</span><br><span class="line">                (ServiceMethod&lt;Object, Object&gt;) loadServiceMethod(<span class="function"><span class="keyword">method</span>);</span></span><br><span class="line">                </span><br><span class="line">......    </span><br><span class="line"></span><br><span class="line">ServiceMethod&lt;?, ?&gt; loadServiceMethod(<span class="function"><span class="keyword">Method</span> <span class="title">method</span>) <span class="comment">&#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">    ServiceMethod&lt;?, ?&gt; result = serviceMethodCache.get(method);</span></span></span><br><span class="line"><span class="function"><span class="comment">    if (result != null) return result;</span></span></span><br><span class="line"><span class="function"><span class="comment"></span></span></span><br><span class="line"><span class="function"><span class="comment">    synchronized (serviceMethodCache) &#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">      result = serviceMethodCache.get(method);</span></span></span><br><span class="line"><span class="function"><span class="comment">      if (result == null) &#123;</span></span></span><br><span class="line"><span class="function"><span class="comment">        result = new ServiceMethod.Builder&lt;&gt;(this, method).build();</span></span></span><br><span class="line"><span class="function"><span class="comment">        serviceMethodCache.put(method, result);</span></span></span><br><span class="line"><span class="function"><span class="comment">      &#125;</span></span></span><br><span class="line"><span class="function">    &#125;</span></span><br><span class="line"><span class="function">    <span class="title">return</span> <span class="title">result</span>;</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>缓存中有<code>ServiceMethod</code>就取出，没有就<code>new</code>一个</p>
+<ul>
+<li>用过<code>ServiceMethod</code>初始化了一个<code>OkHttpCall</code>对象</li>
+</ul>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OkHttpC<span class="literal">all</span><span class="variable">&lt;Object&gt;</span> okHttpC<span class="literal">all</span> = new OkHttpC<span class="literal">all</span><span class="variable">&lt;&gt;</span>(serviceMethod, args);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>最后通过<code>callAdapter</code>的<code>adapt</code>方法返回一个代理了<code>Call</code>的实例</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">return</span> <span class="selector-tag">serviceMethod</span><span class="selector-class">.callAdapter</span><span class="selector-class">.adapt</span>(<span class="selector-tag">okHttpCall</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="发起请求"><a href="#发起请求" class="headerlink" title="发起请求"></a>发起请求</h3><p>同/异步请求</p>
+<figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">   * Synchronously send the <span class="built_in">request</span> <span class="keyword">and</span> return its <span class="built_in">response</span>.</span><br><span class="line">   *</span><br><span class="line">   * @throws IOException <span class="keyword">if</span> a problem occurred talking <span class="keyword">to</span> the <span class="built_in">server</span>.</span><br><span class="line">   * @throws RuntimeException (<span class="keyword">and</span> subclasses) <span class="keyword">if</span> an unexpected <span class="keyword">error</span> occurs creating the <span class="built_in">request</span></span><br><span class="line">   * <span class="keyword">or</span> decoding the <span class="built_in">response</span>.</span><br><span class="line">   */</span><br><span class="line">  <span class="built_in">Response</span>&lt;T&gt; <span class="keyword">execute</span>() throws IOException;</span><br><span class="line"></span><br><span class="line">  /**</span><br><span class="line">   * Asynchronously send the <span class="built_in">request</span> <span class="keyword">and</span> notify &#123;@code callback&#125; of its <span class="built_in">response</span> <span class="keyword">or</span> <span class="keyword">if</span> an <span class="keyword">error</span></span><br><span class="line">   * occurred talking <span class="keyword">to</span> the <span class="built_in">server</span>, creating the <span class="built_in">request</span>, <span class="keyword">or</span> processing the <span class="built_in">response</span>.</span><br><span class="line">   */</span><br><span class="line">  void enqueue(Callback&lt;T&gt; callback);</span><br></pre></td></tr></table></figure>
+<p><code>execute</code>同步请求、<code>enqueue</code>异步请求</p>
+<h5 id="execute、enqueue"><a href="#execute、enqueue" class="headerlink" title="execute、enqueue"></a><code>execute</code>、<code>enqueue</code></h5><p>这两个方法在<code>OkHttpCall</code>和<code>ExecutorCallbackCall</code>中实现</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="keyword">public</span> Response execute() throws IOException &#123;</span><br><span class="line">    synchronized (<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (executed) <span class="keyword">throw</span> new IllegalStateException(<span class="string">"Already Executed"</span>);</span><br><span class="line">      executed = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    captureCallStackTrace();</span><br><span class="line">    eventListener.callStart(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      client.dispatcher().executed(<span class="keyword">this</span>);</span><br><span class="line">      Response result = getResponseWithInterceptorChain();</span><br><span class="line">      <span class="keyword">if</span> (result == <span class="literal">null</span>) <span class="keyword">throw</span> new IOException(<span class="string">"Canceled"</span>);</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      eventListener.callFailed(<span class="keyword">this</span>, e);</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      client.dispatcher().finished(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(Callback responseCallback)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (executed) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Already Executed"</span>);</span><br><span class="line">      executed = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    captureCallStackTrace();</span><br><span class="line">    eventListener.callStart(<span class="keyword">this</span>);</span><br><span class="line">    client.dispatcher().enqueue(<span class="keyword">new</span> AsyncCall(responseCallback));</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>两者都是使用了<code>okhttp3</code>的请求回调，后封装成<code>retrofit2</code>的<code>Callback</code></p>
+<p>到这里网络请求已经完成，之后就是数据处理一类的。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Retrofit2/" rel="tag"># Retrofit2</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/27/RxJava2-5/" rel="next" title="RxJava2(5)">
+                <i class="fa fa-chevron-left"></i> RxJava2(5)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#举个栗子"><span class="nav-number">1.</span> <span class="nav-text">举个栗子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Retrofit2组成部分"><span class="nav-number">2.</span> <span class="nav-text">Retrofit2组成部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#流程图"><span class="nav-number">2.1.</span> <span class="nav-text">流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">2.2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构建Retrofit对象"><span class="nav-number">2.2.1.</span> <span class="nav-text">构建Retrofit对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建用于请求的HTTP客户端"><span class="nav-number">2.2.2.</span> <span class="nav-text">构建用于请求的HTTP客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建一个指定的call工厂"><span class="nav-number">2.2.3.</span> <span class="nav-text">构建一个指定的call工厂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设置baseUrl"><span class="nav-number">2.2.4.</span> <span class="nav-text">设置baseUrl</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建转换器工厂-序列化与反序列化"><span class="nav-number">2.2.5.</span> <span class="nav-text">构建转换器工厂(序列化与反序列化)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建call适配器工厂"><span class="nav-number">2.2.6.</span> <span class="nav-text">构建call适配器工厂</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build"><span class="nav-number">2.2.7.</span> <span class="nav-text">build()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API编写"><span class="nav-number">2.2.8.</span> <span class="nav-text">API编写</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子-1"><span class="nav-number">2.2.8.1.</span> <span class="nav-text">举个栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GET注解"><span class="nav-number">2.2.8.1.1.</span> <span class="nav-text">GET注解</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Path注解"><span class="nav-number">2.2.8.1.2.</span> <span class="nav-text">Path注解</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建Retrofit2-service"><span class="nav-number">2.2.9.</span> <span class="nav-text">创建Retrofit2 service</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#举个栗子-2"><span class="nav-number">2.2.9.1.</span> <span class="nav-text">举个栗子</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#create源码"><span class="nav-number">2.2.9.1.1.</span> <span class="nav-text">create源码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#发起请求"><span class="nav-number">2.2.10.</span> <span class="nav-text">发起请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#execute、enqueue"><span class="nav-number">2.2.10.0.1.</span> <span class="nav-text">execute、enqueue</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
