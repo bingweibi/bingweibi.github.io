@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发艺术探索---读书笔记(1)">
+<meta property="og:url" content="http://yoursite.com/2018/07/01/Android开发艺术探索-读书笔记-1/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8BActivity%E7%9A%84%E9%87%8D%E5%BB%BA%E8%BF%87%E7%A8%8B.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B1.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B2.png">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.png">
+<meta property="og:updated_time" content="2018-07-01T09:15:12.139Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发艺术探索---读书笔记(1)">
+<meta name="twitter:description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/01/Android开发艺术探索-读书笔记-1/"/>
+
+
+
+
+
+  <title>Android开发艺术探索---读书笔记(1) | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/01/Android开发艺术探索-读书笔记-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android开发艺术探索---读书笔记(1)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-01T17:14:20+08:00">
+                2018-07-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center>
+
+<a id="more"></a>
+<ol>
+<li>针对一个特定的<code>Activity</code>，第一次启动的时候，回调顺序:<code>onCreate</code>-&gt;<code>onStart</code>-&gt;<code>onResume</code></li>
+<li>当用户打开新的<code>Activity</code>或者切换到桌面的时候，回调顺序:<code>onPause</code>-&gt;<code>onStop</code>。特殊情况：如果新<code>Activity</code>采用的是透明主题，那么当前<code>Activity</code>不会回调<code>onStop</code>.(是不是可以采用1px的透明像素块去保证当前应用不被杀死?)</li>
+<li>当用户再次回到原来的<code>Activity</code>时，回调顺序:<code>onRestart</code>-&gt;<code>onStart</code>-&gt;<code>onResume</code></li>
+<li>当按下<code>back</code>键的时候，回调的顺序是:<code>onPause</code>-&gt;<code>onStop</code>-&gt;<code>onDestory</code></li>
+</ol>
+<ul>
+<li><p><code>onStart</code>和<code>onResume</code>、<code>onPause</code>和<code>onStop</code>从描述上看差不多。对我们来说有什么实质性上的不同？<br>这两个配对的回调分别表示不同的意义，<code>onStart</code>和<code>onStop</code>是从<code>Activity</code>是否可见的角度来回调的，而<code>onResume</code>和<code>onPause</code>是从<code>Activity</code>是否位于前台这个角度来回调的，除了这个区别之外，使用上没有什么明显的区别。</p>
+</li>
+<li><p>假设当前Activity为<code>A</code>，如果这时用户打开一个新的Activity <code>B</code>,那么<code>B</code>的<code>onResume</code>和<code>A</code>的<code>onPause</code>那个先执行？<br>旧的<code>Activity</code>先<code>onPause</code>,然后新的<code>Activity</code>再启动。</p>
+</li>
+</ul>
+<ol>
+<li>系统只在<code>Activity</code>异常终止时才会调用<code>onSaveInstanceState</code>和<code>onRestoreInstanceState</code>来存储和恢复数据，其他情况下不会触发这个过程。</li>
+<li>我们知道当系统配置发生改变之后，Activity会重建，如果不想重建的话，那么我们可以通过设置<code>android:configChanges=&quot;各种属性&quot;</code></li>
+</ol>
+<h2 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h2><h3 id="资源相关的系统配置发生改变导致Activity被杀死并重新创建"><a href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建" class="headerlink" title="资源相关的系统配置发生改变导致Activity被杀死并重新创建"></a>资源相关的系统配置发生改变导致Activity被杀死并重新创建</h3><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8BActivity%E7%9A%84%E9%87%8D%E5%BB%BA%E8%BF%87%E7%A8%8B.png" alt=""></center>
+
+<ul>
+<li>调用<code>onSaveInstanceState</code>的时机是在<code>onStop</code>之前，和<code>onPause</code>没有既定的时序关系，既可能在<code>onPause</code>之前也有可能在其之后调用</li>
+<li><code>onRestoreInstanceState</code>的调用时机在<code>onStart</code>之后</li>
+</ul>
+<h3 id="资源内存不足导致低优先级的Activity被杀死"><a href="#资源内存不足导致低优先级的Activity被杀死" class="headerlink" title="资源内存不足导致低优先级的Activity被杀死"></a>资源内存不足导致低优先级的Activity被杀死</h3><p><code>Activity</code>优先级：前台<code>Activity</code> &gt; 可见但非前台<code>Activity</code> &gt; 后台<code>Activity</code></p>
+<h2 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h2><ol>
+<li><code>standard</code>标准模式</li>
+<li><code>singleTop</code>栈顶复用模式</li>
+<li><code>singleTask</code>栈内复用模式</li>
+<li><code>sigleInstance</code>单实例模式</li>
+</ol>
+<p>注意：</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B1.png" alt=""></center><br><center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B2.png" alt=""></center>
+
+<ul>
+<li>指定启动模式有两种方式<ol>
+<li>通过<code>AndroidMenifest</code></li>
+<li>通过<code>Intent</code>设置标志位<br>优先级2 &gt; 1</li>
+</ol>
+</li>
+</ul>
+<h2 id="IntentFilter的匹配规则"><a href="#IntentFilter的匹配规则" class="headerlink" title="IntentFilter的匹配规则"></a>IntentFilter的匹配规则</h2><ul>
+<li>启动<code>Activity</code>分为两种，<code>显示调用</code>和<code>隐式调用</code>。如果一个<code>Intent</code>既是显示调用又是隐式调用的话，那么应该以显示调用为主。</li>
+<li>隐式调用需要<code>Intent</code>能够匹配目标组件的<code>Intentfilter</code>中设置的过滤信息。<code>IntentFilter</code>中的过滤信息有<code>action</code>,<code>category</code>,<code>data</code>.</li>
+<li><code>action</code>的匹配要求<code>Intent</code>中的<code>action</code>存在且必须和过滤规则中的其中一个<code>action</code>相同，另外，<code>action</code>区分大小写，大小写不用字符串相同的<code>action</code>会匹配失败。</li>
+<li><code>category</code>要求<code>Intent</code>中如果含有<code>category</code>，那么所有的<code>category</code>都必须和过滤规则中的其中一个<code>category</code>相同。<code>Intent</code>中可以没有<code>category</code>，仍然会匹配成功。</li>
+<li><code>data</code>的匹配规则要求<code>Intent</code>中必须含有<code>data</code>数据，并且<code>data</code>数据能够完全匹配过滤规则中的某一个<code>data</code>。</li>
+</ul>
+<h1 id="IPC机制-未完全看懂"><a href="#IPC机制-未完全看懂" class="headerlink" title="IPC机制(未完全看懂)"></a>IPC机制(未完全看懂)</h1><ol>
+<li>IPC(进程间通信或者跨进程通信)<ul>
+<li>线程：CPU调度的最小单元，同时线程是一种有限的系统资源</li>
+<li>进程：指一个执行单元，在PC和移动设备上指一个程序或者一个应用。</li>
+</ul>
+</li>
+<li>Android中使用多进程只有一种方法，就是给四大组件<code>在AndroidMenifest</code>中指定<code>android:process</code>属性。</li>
+<li>使用多线程会造成如下几方面的问题<ul>
+<li>静态成员和单例模式完全失效</li>
+<li>线程同步机制完全失效</li>
+<li>SharedPreferences的可靠性下降</li>
+<li>Application会多次创建</li>
+</ul>
+</li>
+<li>实现序列化的几种方式<ul>
+<li><code>Serializable</code>接口(首先静态成员属于类不属于对象，所以不会参与序列化过程；其次用transient关键字标记的成员变量不会参与序列化过程)（使用简单但是开销大适用于储存或者网络传输）</li>
+<li><code>Parcelable</code>接口（使用麻烦但是效率很高，主要用在内存序列化上）</li>
+<li>Binder</li>
+</ul>
+</li>
+<li>Android中的IPC方式<ul>
+<li>使用Bundle</li>
+<li>使用文件共享</li>
+<li>使用Messenger</li>
+<li>使用AIDL</li>
+<li>使用ContentProvider</li>
+<li>使用Socket</li>
+<li>Binder连接池<br>|名称|优点|缺点|使用场景|<br>|:—:|:—:|:—:|:—:|<br>|Bundle|简单易用|只能传输Bundle支持的数据类型|四大组件间的进程间通信|<br>|文件共享|简单易用|不适合高并发场景，并且无法做到进程间的即时通信|无并发访问情形，交换简单的数据实时性不高的场景|<br>|AIDL|功能强大，支持一对多并发通信，支持实时通信|使用较复杂，需要处理好线程同步|一对多通信且有RPC需求|<br>|Messenger|功能一般，支持一对多串行通信，支持实时通信|不能很好处理高并发情形，不支持RPC，数据通过Message进行传输，因此只能传输Bundle支持的数据类型|低并发的一对多即时通信，无RPC需求，或者无需要返回结果的RPC需求|<br>|ContntProvider|在数据源访问方面功能强大，支持一对多并发数据共享，可通过Call方法扩展其他操作|可以理解为受约束的AIDL，主要提供数据源的CRUD操作|一对多的进程间的数据共享|<br>|Socket|功能强大，可以通过网络传输字节流，支持一对多并发实时通信|实现细节稍微有点繁琐，不支持直接RPC|网络数据交换|</li>
+</ul>
+</li>
+</ol>
+<h1 id="View的事件体系"><a href="#View的事件体系" class="headerlink" title="View的事件体系"></a>View的事件体系</h1><ol>
+<li><code>View</code>是<code>Android</code>中所有控件的基类，不管是简单的<code>Button</code>和<code>TextView</code>还是复杂的<code>RelativeLayout</code>和<code>ListView</code>,它们共同的基类都是<code>View</code>。</li>
+<li><code>TouchSlop</code>是系统所能识别出的被认为是滑动的最小距离，换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操作。</li>
+<li>MotionEvent事件类型<ul>
+<li><code>ACTION_DOWN</code>:手指刚接触屏幕</li>
+<li><code>ACTION_MOVE</code>:手指在屏幕上移动</li>
+<li><code>ACTION_UP</code>:手指从屏幕上松开的一瞬间</li>
+</ul>
+</li>
+<li><p>三种滑动方式</p>
+<ul>
+<li>使用<code>scrollTo</code>/<code>scrollBy</code>(scrollTo:绝对滑动，scrollBy:相对滑动)</li>
+<li>使用动画(操作View的<code>translationX</code>和<code>translationY</code>)</li>
+<li>改变布局参数(改变LayoutParams)</li>
+</ul>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">scrollTo/scrollBy</td>
+<td style="text-align:center">操作简单，适合对View内容的滑动</td>
+<td style="text-align:center">只能滑动View的内容，并不能滑动View本身</td>
+</tr>
+<tr>
+<td style="text-align:center">动画</td>
+<td style="text-align:center">操作简单，主要适用于没有交互的View和实现复杂的动画效果</td>
+<td style="text-align:center">如果是使用View动画或者在Android3.0以下使用属性动画，均不能改变View本身的属性</td>
+</tr>
+<tr>
+<td style="text-align:center">改变布局参数</td>
+<td style="text-align:center">适合有交互的View</td>
+<td style="text-align:center">操作较复杂</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><p>弹性滑动</p>
+<ul>
+<li>使用<code>Scroller</code>(调用invalidate方法导致重绘，再去调用computeScoll)<ul>
+<li>Scroller本身并不能实现View的滑动，它需要配合View的computeScroll方法才能完成弹性滑动的效果，它不断地让View重绘，而每一次重绘距滑动起始时间会有一个时间间隔，通过这个时间间隔scroll就可以得出View当前的滑动位置，知道了滑动位置就可以通过scrollTo方法来完成View的滑动。就这样，View的每一次重绘都会导致View进行小幅度的滑动，而多次的小幅度滑动就组成了弹性滑动，这就是Scroller的工作机制。</li>
+</ul>
+</li>
+<li>通过动画</li>
+<li>使用延时策略(使用Handler或View的postDelayed方法，也可以使用线程的sleep方法)</li>
+</ul>
+</li>
+<li>View的事件分发机制</li>
+</ol>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.png" alt=""></center>
+
+<ul>
+<li><code>dispatchTouchEvent</code>(进行事件分发)</li>
+<li><code>onInterceptTouchEvent</code>(是否拦截某个事件)</li>
+<li><code>onTouchEvent</code>(处理点击事件)</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">dispatchTouvhEvent</span><span class="params">(MotionEvent ev)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(onInterceptTouchEvent(ev))&#123;</span><br><span class="line">        consume = onTouchEvent(ev);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        consume = child.dispatchTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> consume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>当一个点击事件产生后，它的传递过程遵循这样的顺序:<code>Activity</code>-&gt;<code>Window</code>-&gt;<code>View</code></li>
+<li>触摸事件以<code>down</code>事件开始，中间含有数量不定的<code>move</code>事件，最终以<code>up</code>事件结束</li>
+<li>正常情况下一个事件序列只能被一个<code>View</code>拦截且消耗，特殊情况下可以被其他<code>View</code>消耗</li>
+<li>某个<code>View</code>一旦决定拦截，那么这个事件序列只能由它来处理，并且它的<code>onInterceptTouchEvent</code>不会再被调用。</li>
+<li>某个<code>View</code>一旦开始处理事件，如果<code>onTouchEvent</code>返回了<code>false</code>，那么同一个时间序列中的其他事件都不会再交给它来处理，并且事件将重新交给它的父元素来处理，即父元素的<code>onTouchEvent</code>会被调用。</li>
+<li><code>ViewGroup</code>默认不拦截任何事件（<code>onInterceptTouchEvent</code>方法默认返回<code>false</code>）</li>
+<li><code>view</code>没有拦截方法，只有处理方法。</li>
+<li><code>view</code>的<code>onTouchEvent</code>默认返回<code>true</code>,除非它不可点击。</li>
+<li>事件传递过程是由外向内的，即事件总是先传递给父元素，然后再由父元素分发给子View。</li>
+</ul>
+<ol>
+<li><p>View的滑动冲突</p>
+<ul>
+<li>解决方式(外部拦截法，内部拦截法)</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/29/OkHttp3-3/" rel="next" title="OkHttp3(3)">
+                <i class="fa fa-chevron-left"></i> OkHttp3(3)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">54</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的生命周期和启动模式"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期和启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#典型情况下的生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">典型情况下的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建"><span class="nav-number">1.2.1.</span> <span class="nav-text">资源相关的系统配置发生改变导致Activity被杀死并重新创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源内存不足导致低优先级的Activity被杀死"><span class="nav-number">1.2.2.</span> <span class="nav-text">资源内存不足导致低优先级的Activity被杀死</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动模式"><span class="nav-number">1.3.</span> <span class="nav-text">启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentFilter的匹配规则"><span class="nav-number">1.4.</span> <span class="nav-text">IntentFilter的匹配规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPC机制-未完全看懂"><span class="nav-number">2.</span> <span class="nav-text">IPC机制(未完全看懂)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的事件体系"><span class="nav-number">3.</span> <span class="nav-text">View的事件体系</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
