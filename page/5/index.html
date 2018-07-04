@@ -254,6 +254,130 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/剑指offer-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/16/剑指offer-05/" itemprop="url">剑指offer---05</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-16T19:55:30+08:00">
+                2018-04-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><ol>
+<li>push操作：栈1用来push</li>
+<li>pop操作：栈1 pop–&gt;栈2push–&gt;栈2pop</li>
+</ol>
+<h1 id="编码实现"><a href="#编码实现" class="headerlink" title="编码实现"></a>编码实现</h1><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> Solution &#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">push</span>(<span class="keyword">int</span> node) &#123;</span><br><span class="line">        stack1.<span class="keyword">push</span>(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">pop</span>() &#123;</span><br><span class="line">        <span class="keyword">if</span> (stack2.empty())&#123;</span><br><span class="line">            <span class="keyword">if</span> (stack1.empty())&#123;</span><br><span class="line">                System.out.<span class="keyword">println</span>(<span class="string">"空队列"</span>);</span><br><span class="line">                <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">while</span> (!stack1.empty())&#123;</span><br><span class="line">                    stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack2.<span class="keyword">pop</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/16/剑指offer-04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1446,151 +1570,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/07/Java基础-io类/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/07/Java基础-io类/" itemprop="url">Java基础---io类</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-07T10:43:48+08:00">
-                2018-04-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><code>Java</code> <code>io</code>是为了实现“<strong>文件、控制台、网络设备</strong>”等输入输出设备之间的通信。</p>
-<h1 id="IO框架分类"><a href="#IO框架分类" class="headerlink" title="IO框架分类"></a>IO框架分类</h1><h2 id="字节为单位的IO流"><a href="#字节为单位的IO流" class="headerlink" title="字节为单位的IO流"></a>字节为单位的IO流</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%AD%97%E8%8A%82%E5%8D%95%E4%BD%8D%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81.jpg" alt=""></center>
-
-<ol>
-<li>OutputStream/InputStream:以字节为单位的IO流的超类</li>
-<li>ByteArrayOutputStream/ByteArrayInputStream:字节数组IO流</li>
-<li>PipedOutputStream/PipedInputStream:管道IO流，实现多线程间的管道通信</li>
-<li>FilterOutputStream/FilterInputStream:过滤IO流</li>
-<li>DataOutputStream/DataInputStream:数据IO流</li>
-<li>BufferedOutputStream/BufferedInputStream:缓冲IO流</li>
-<li>PrintStream:打印输出流</li>
-<li>FileOutputStream/FileInputStream:文件IO流</li>
-<li>ObjectOutputStream/ObjectInputStream:对象IO流</li>
-</ol>
-<h2 id="字符为单位的IO流"><a href="#字符为单位的IO流" class="headerlink" title="字符为单位的IO流"></a>字符为单位的IO流</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%AD%97%E7%AC%A6%E4%B8%BA%E5%8D%95%E4%BD%8D%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%B5%81.jpg" alt=""></center>
-
-<ol>
-<li>Writer/Reader:以字符为单位的IO流的超类</li>
-<li>CharArrayWriter/CharArrayReader:字符数组的IO流</li>
-<li>PipedWriter/PopedReader:字符类型的管道IO流</li>
-<li>FliterWriter/FliterReader:字符类型的过滤IO流</li>
-<li>BufferedWriter/BufferedReader:字符缓冲IO流</li>
-<li>OutputStreamWriter/InputStreamReader:字节转字符的IO流</li>
-<li>FileWriter/FileReader:字符类型的IO流</li>
-<li>PrintWriter:字符类型的打印输出流</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1641,7 +1620,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">57</span>
+                  <span class="site-state-item-count">58</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
