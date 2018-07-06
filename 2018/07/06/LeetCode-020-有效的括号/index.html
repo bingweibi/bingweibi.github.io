@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="LeetCode," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="题目描述给定一个只包括 &amp;#39;(&amp;#39;，&amp;#39;)&amp;#39;，&amp;#39;{&amp;#39;，&amp;#39;}&amp;#39;，&amp;#39;[&amp;#39;，&amp;#39;]&amp;#39; 的字符串，判断字符串是否有效。 有效字符串需满足：  左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。  注意空字符串可被认为是有效字符串。 示例12输入: &quot;()&quot;输出: true 思路利用栈压入，每次压入都检查栈">
+<meta name="keywords" content="LeetCode">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode-020-有效的括号">
 <meta property="og:url" content="http://yoursite.com/2018/07/06/LeetCode-020-有效的括号/index.html">
 <meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="题目描述给定一个只包括 &amp;#39;(&amp;#39;，&amp;#39;)&amp;#39;，&amp;#39;{&amp;#39;，&amp;#39;}&amp;#39;，&amp;#39;[&amp;#39;，&amp;#39;]&amp;#39; 的字符串，判断字符串是否有效。 有效字符串需满足：  左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。  注意空字符串可被认为是有效字符串。 示例12输入: &quot;()&quot;输出: true 思路利用栈压入，每次压入都检查栈">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-06T01:50:00.472Z">
+<meta property="og:updated_time" content="2018-07-06T01:59:26.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LeetCode-020-有效的括号">
+<meta name="twitter:description" content="题目描述给定一个只包括 &amp;#39;(&amp;#39;，&amp;#39;)&amp;#39;，&amp;#39;{&amp;#39;，&amp;#39;}&amp;#39;，&amp;#39;[&amp;#39;，&amp;#39;]&amp;#39; 的字符串，判断字符串是否有效。 有效字符串需满足：  左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。  注意空字符串可被认为是有效字符串。 示例12输入: &quot;()&quot;输出: true 思路利用栈压入，每次压入都检查栈">
 
 
 
@@ -321,7 +325,17 @@
       
 
       
-        
+        <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><p>给定一个只包括 <code>&#39;(&#39;，&#39;)&#39;，&#39;{&#39;，&#39;}&#39;，&#39;[&#39;，&#39;]&#39;</code> 的字符串，判断字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<ol>
+<li>左括号必须用相同类型的右括号闭合。</li>
+<li>左括号必须以正确的顺序闭合。</li>
+</ol>
+<p>注意空字符串可被认为是有效字符串。</p>
+<h1 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h1><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: <span class="string">"()"</span></span><br><span class="line">输出: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>利用栈压入，每次压入都检查栈顶和数组的第一个元素是否匹配，直至栈为空</p>
+<h1 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h1><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="built_in">isValid</span>(<span class="keyword">String</span> s) &#123;</span><br><span class="line">       Stack&lt;Character&gt; result = <span class="keyword">new</span> Stack&lt;Character&gt;();</span><br><span class="line">        <span class="keyword">int</span> n=s.length();</span><br><span class="line">        <span class="built_in">if</span>(n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="built_in">return</span> true;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;n;i++) &#123;</span><br><span class="line">            <span class="built_in">if</span>(result.empty())&#123;</span><br><span class="line">                result.push(s.toCharArray()[i]);</span><br><span class="line">            &#125; <span class="built_in">else</span> <span class="built_in">if</span>(result.<span class="built_in">peek</span>()==<span class="string">'('</span>&amp;&amp;s.toCharArray()[i]==<span class="string">')'</span>|| result.<span class="built_in">peek</span>()==<span class="string">'['</span>&amp;&amp;s.toCharArray()[i]==<span class="string">']'</span>|| result.<span class="built_in">peek</span>()==<span class="string">'&#123;'</span>&amp;&amp;s.toCharArray()[i]==<span class="string">'&#125;'</span>)&#123;</span><br><span class="line">                result.pop();</span><br><span class="line">            &#125; <span class="built_in">else</span>&#123;</span><br><span class="line">                result.push(s.toCharArray()[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">return</span> result.empty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -335,6 +349,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
+          
+        </div>
       
 
       
@@ -414,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -471,6 +500,22 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目描述"><span class="nav-number">1.</span> <span class="nav-text">题目描述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#示例"><span class="nav-number">2.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#思路"><span class="nav-number">3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解答"><span class="nav-number">4.</span> <span class="nav-text">解答</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
