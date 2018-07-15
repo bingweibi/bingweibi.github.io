@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="并发编程的挑战上下文切换CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下一次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。 如何减少上下文切换 无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的ID按照Hash算法取">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发编程的艺术(1)">
+<meta property="og:url" content="http://yoursite.com/2018/07/15/Java并发编程的艺术-1/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="并发编程的挑战上下文切换CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下一次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。 如何减少上下文切换 无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的ID按照Hash算法取">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-15T08:13:27.790Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发编程的艺术(1)">
+<meta name="twitter:description" content="并发编程的挑战上下文切换CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下一次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次上下文切换。 如何减少上下文切换 无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的ID按照Hash算法取">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/15/Java并发编程的艺术-1/"/>
+
+
+
+
+
+  <title>Java并发编程的艺术(1) | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/15/Java并发编程的艺术-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java并发编程的艺术(1)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-15T16:08:07+08:00">
+                2018-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="并发编程的挑战"><a href="#并发编程的挑战" class="headerlink" title="并发编程的挑战"></a>并发编程的挑战</h1><h2 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h2><p>CPU通过时间片分配算法来循环执行任务，当前任务执行一个时间片后会切换到下一个任务。但是，在切换前会保存上一个任务的状态，以便下一次切换回这个任务时，可以再加载这个任务的状态，所以任务从保存到再加载的过程就是一次<strong>上下文切换</strong>。</p>
+<h2 id="如何减少上下文切换"><a href="#如何减少上下文切换" class="headerlink" title="如何减少上下文切换"></a>如何减少上下文切换</h2><ol>
+<li>无锁并发编程。多线程竞争锁时，会引起上下文切换，所以多线程处理数据时，可以用一些办法来避免使用锁，如将数据的ID按照Hash算法取模分段。不同的线程处理不同段的数据。</li>
+<li>CAS算法。Java的Atmoic包使用CAS算法来更新数据，而不需要加锁</li>
+<li>使用最少线程。避免创建不需要的线程，比如任务很少，但是创建了很多线程来处理，这样会造成大量线程都处于等待状态</li>
+<li>协程：在单线程里实现多任务的调度，并在单线程里维持多个任务的切换。</li>
+</ol>
+<a id="more"></a>
+<h2 id="避免死锁的常见方法"><a href="#避免死锁的常见方法" class="headerlink" title="避免死锁的常见方法"></a>避免死锁的常见方法</h2><ol>
+<li>避免一个线程同时获取多个锁</li>
+<li>避免一个线程在锁内同时占用多个资源，尽量保证每个锁只占用一个资源</li>
+<li>尝试使用定时锁，使用Lock.tryLock(timeout)来替代使用内部锁机制</li>
+<li>对于数据库锁，加锁和解锁必须要在一个数据库连接里，否则会出现解锁失效的情况</li>
+</ol>
+<h2 id="CAS算法"><a href="#CAS算法" class="headerlink" title="CAS算法"></a>CAS算法</h2><p>Java多线程—&gt;线程安全问题—&gt;可见性、有序性和原子性(Java内存模型已解决前两个，锁解决最后一个)</p>
+<p><strong>锁分为悲观锁和乐观锁</strong></p>
+<ul>
+<li>悲观锁：指的是数据被外界(包括本系统当前的其他事务，以及来自外部系统的事务处理)修改持保守态度，因此在整个数据处理过程中，将数据处于锁定状态。<code>synchronized</code>就是一种悲观锁。</li>
+<li>乐观锁：每次不加锁而是假设没有冲突而去完成某项操作，如果因为冲突失败就重试，知道成功为止。<code>CAS</code>就是乐观锁的一种。</li>
+</ul>
+<p>乐观锁认为数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测，如果发现冲突了，则返回用户错误的信息，让用户决定如何去做。实现细节就是<strong>冲突检测和数据更新</strong>。</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>CAS：当多个线程尝试使用CAS同时更新同一个变量时，只有其中一个线程能更新变量的值，而其他线程都失败，失败的线程不会被挂起，而是被告知在这次竞争中失败了，并且可以再次尝试。</p>
+<p>CAS操作包含三个操作数—内存位置(V)、预期原值(A)和新值(B)。如果内存位置的值与预期原值相匹配，那么处理器就会自动将该位置值更新为新值，否则处理器不做任何操作。无论哪一种情况，它都会在CAS指令之前返回该位置的值。在一些特殊情况下将仅返回CAS是否成功，而不去提取当前值。CAS有效说明了<strong>我认为位置V应该包含值A；如果包含该值，则把B放在这个位置，否则不去更改这个位置，只是告诉我这个位置上现在的值就行了</strong></p>
+<h4 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h4><p>CAS先进行比较在进行替换，检查值没有发生变化就进行更新。但是如果一个值由A–&gt;B–&gt;A的话。使用CAS是不会检查出发生变化，解决的办法是使用版本号，A–&gt;B–&gt;A就会变成呢过1A–&gt;2B–&gt;3A。</p>
+<h1 id="Java并发机制的底层实现原理"><a href="#Java并发机制的底层实现原理" class="headerlink" title="Java并发机制的底层实现原理"></a>Java并发机制的底层实现原理</h1><p>Java代码编译–&gt;Java字节码–&gt;类加载器加载到JVM–&gt;JVM执行字节码–&gt;最终转化为汇编指令在CPU上执行。</p>
+<h2 id="volatile的应用"><a href="#volatile的应用" class="headerlink" title="volatile的应用"></a>volatile的应用</h2><p><code>volatile</code>保证了共享变量的”<strong>可见性</strong>“,<br>可见性：当一个线程修改一个共享变量时，另外一个线程能读到这个修改的值。</p>
+<p><code>volatile</code>：Java编程语言允许线程访问共享变量，为了确保共享变量能被准确和一直地更新，线程应该确保通过排它锁单独获得这个变量。</p>
+<p>内存屏障：一组处理器指令，用于实现对内存操作的<strong>顺序限制</strong>。<br>原子操作：不可中断的一个或一系列操作.</p>
+<p><strong>volatile如何保证可见性?</strong></p>
+<p>被<code>volatile</code>修饰的共享变量在生成的汇编指令中会多处一个<code>Lock</code>前缀的指令，那么这个<code>Lock</code>前缀指令会做什么呢？</p>
+<ol>
+<li>将当前处理器缓存行(缓存中可以分配的最小存储单位)的数据写回系统内存。</li>
+<li>这个写回内存的操作会使得其他缓存行缓存了该内存地址的数据无效。</li>
+</ol>
+<p><strong>缓存一致性协议</strong>：每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器对这个数据进行修改操作的时候，会重新从系统内存中把数据读到处理器缓存里。</p>
+<p><strong>volatile的两条实现原则</strong></p>
+<ul>
+<li>Lock前缀指令会引起处理器缓存回写到内存</li>
+</ul>
+<p>对于Intel486和Pentium处理器，在锁操作时，总是在总线上声言LOCK#信号。但是在P6和目前的处理器中，如果访问的内存区域已经缓存在处理器内部，则不会声言LOCK#信号，相反，它会锁定这块内存区域的缓存并回写到内存，并使用缓存一致性机制来确保修改的原子性，此操作被称为”缓存锁定”，缓存一致性机制会阻止同时修改由两个以上处理器缓存内存区域数据。   </p>
+<ul>
+<li>一个处理器的缓存回写到内存会导致其他处理器的缓存无效</li>
+</ul>
+<p>处理器使用嗅探技术来保证他的内部缓存、系统内存和其他处理器的缓存数据在总线上保存一致。</p>
+<p>理解：volatile先”加锁”当前缓存写回内存，然后使其它使用该共享变量的内存无效，这样只能从内存中重新获取，这样就保证了<strong>可见性</strong>。</p>
+<h2 id="synchronized的实现原理与应用"><a href="#synchronized的实现原理与应用" class="headerlink" title="synchronized的实现原理与应用"></a>synchronized的实现原理与应用</h2><p>Java中的每一个对象都可以作为锁，具体表现为以下三种形式</p>
+<ul>
+<li>对于普通同步方法，锁是当前实例对象</li>
+<li>对于静态同步方法，锁是当前类的Class对象</li>
+<li>对于同步方法块，锁是Synchonized括号里配置的对象</li>
+</ul>
+<h3 id="锁的升级与对比"><a href="#锁的升级与对比" class="headerlink" title="锁的升级与对比"></a>锁的升级与对比</h3><p>锁一共有四种状态:无锁状态、偏向锁状态、轻量级锁状态和重量级锁状态。</p>
+<p>锁可以升级但是不能降级。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">锁</th>
+<th style="text-align:left">优点</th>
+<th style="text-align:left">缺点</th>
+<th style="text-align:left">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">偏向锁</td>
+<td style="text-align:left">加锁和解锁不需要额外的消耗，和执行非同步方法相比仅存在纳秒级的差距</td>
+<td style="text-align:left">如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
+<td style="text-align:left">适用于只有一个线程访问同步块场景</td>
+</tr>
+<tr>
+<td style="text-align:left">轻量级锁</td>
+<td style="text-align:left">竞争的线程不会阻塞，提高了程序的响应速度</td>
+<td style="text-align:left">如果始终得不到锁竞争的线程，使用自旋会消耗CPU</td>
+<td style="text-align:left">追求响应时间，同步块执行速度非常快</td>
+</tr>
+<tr>
+<td style="text-align:left">重量级锁</td>
+<td style="text-align:left">线程竞争不使用自旋，不会消耗CPU</td>
+<td style="text-align:left">线程阻塞，响应时间缓慢</td>
+<td style="text-align:left">追求吞吐量，同步块执行速度较长</td>
+</tr>
+</tbody>
+</table>
+<h3 id="原子操作的实现原理"><a href="#原子操作的实现原理" class="headerlink" title="原子操作的实现原理"></a>原子操作的实现原理</h3><ul>
+<li><p>通过总线锁保证原子性<br>所谓总线锁就是使用处理器提供的一个LOCK#信号，当一个处理器在总线上输出此信号时，其他处理器的请求将被阻塞住，那么该处理器就可以独占共享内存</p>
+</li>
+<li><p>通过缓存锁定来保证原子性<br>缓存锁定是指内存区域如果被缓存在处理器的缓存行中，并且在Lock操作期间被锁定，那么当它执行锁操作回写到内存时，处理器不在总线上声言LOCK#信号，而是<strong>修改内部的内存地址，并允许它的缓存一致性机制来保证操作的原子性</strong>，因为缓存一致性会阻止同时修改由两个以上处理器缓存的内存区域数据，当其他处理器回写已被锁定的缓存行的数据时，会时缓存行无效。</p>
+</li>
+</ul>
+<p>两种情况处理器不使用缓存锁定</p>
+<ul>
+<li>当操作数据不能缓存在处理器内部，或操作的数据跨多个缓存行时，则处理器会调用总线锁定</li>
+<li>有些处理器不支持缓存锁定。</li>
+</ul>
+<p>Java中可以通过<strong>锁</strong>和<strong>循环CAS</strong>的方式实现原子操作.</p>
+<p>CAS实现原子操作的三大问题</p>
+<ul>
+<li>ABA问题，前面已经写过</li>
+<li>循环时间长开销大</li>
+<li>只能保证一个共享变量的原子操作(多个共享变量可以将其合并为一个共享变量来进行操作)</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/13/Android-版本/" rel="next" title="Android-版本">
+                <i class="fa fa-chevron-left"></i> Android-版本
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc1OS8xNDI5MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#并发编程的挑战"><span class="nav-number">1.</span> <span class="nav-text">并发编程的挑战</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#上下文切换"><span class="nav-number">1.1.</span> <span class="nav-text">上下文切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何减少上下文切换"><span class="nav-number">1.2.</span> <span class="nav-text">如何减少上下文切换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免死锁的常见方法"><span class="nav-number">1.3.</span> <span class="nav-text">避免死锁的常见方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS算法"><span class="nav-number">1.4.</span> <span class="nav-text">CAS算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CAS"><span class="nav-number">1.4.1.</span> <span class="nav-text">CAS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ABA问题"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">ABA问题</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java并发机制的底层实现原理"><span class="nav-number">2.</span> <span class="nav-text">Java并发机制的底层实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile的应用"><span class="nav-number">2.1.</span> <span class="nav-text">volatile的应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#synchronized的实现原理与应用"><span class="nav-number">2.2.</span> <span class="nav-text">synchronized的实现原理与应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#锁的升级与对比"><span class="nav-number">2.2.1.</span> <span class="nav-text">锁的升级与对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子操作的实现原理"><span class="nav-number">2.2.2.</span> <span class="nav-text">原子操作的实现原理</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
