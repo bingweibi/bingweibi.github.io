@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="读书笔记," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="keywords" content="读书笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java并发编程的艺术(3)">
+<meta property="og:url" content="http://yoursite.com/2018/07/17/Java并发编程的艺术-3/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-8a3b0eb7d1a36bf6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-809d694b89376d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/664">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-7f4d61d7f908528e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-b4f4c6fba937e18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/644">
+<meta property="og:image" content="http://cmsblogs.qiniudn.com/wp-content/uploads/2017/03/201701270001_thumb.png">
+<meta property="og:image" content="http://ifeve.com/wp-content/uploads/2015/10/1.png">
+<meta property="og:image" content="https://res.infoq.com/articles/ConcurrentHashMap/zh/resources/2.jpg">
+<meta property="og:image" content="https://res.infoq.com/articles/java-threadPool/zh/resources/threadpool.jpg">
+<meta property="og:updated_time" content="2018-07-17T03:02:34.291Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java并发编程的艺术(3)">
+<meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="twitter:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/17/Java并发编程的艺术-3/"/>
+
+
+
+
+
+  <title>Java并发编程的艺术(3) | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/17/Java并发编程的艺术-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Java并发编程的艺术(3)</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-17T11:01:56+08:00">
+                2018-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java并发编程基础"><a href="#Java并发编程基础" class="headerlink" title="Java并发编程基础"></a>Java并发编程基础</h1><p>线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。</p>
+<p>线程的状态<br>|状态名称|说明|<br>|:–|:–|<br>|NEW|初始状态，线程被构建，但是还没有调用start()方法|<br>|RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”|<br>|BLOCKED|阻塞状态，表示线程阻塞于锁|<br>|WAITING|等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断)|<br>|TIME_WAITING|超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的|<br>|TERMINATED|终止状态，表示当前线程已经执行完毕|</p>
+<a id="more"></a>
+<p>Java线程状态变迁</p>
+<center><img src="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif" alt=""></center>
+
+<p>Daemon线程：一种支持型线程，主要被用作程序中后台调度以及支持性工作。这就意味着，当一个Java虚拟机中不存在非Daemon线程的时候，Java虚拟机将会退出。</p>
+<h2 id="启动线程"><a href="#启动线程" class="headerlink" title="启动线程"></a>启动线程</h2><p>线程对象在初始化完成之后，调用start()方法就可以启动这个线程。</p>
+<h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>中断可被理解为一个标志位属性，它表示为一个运行中的线程是否被其他线程进行了中断操作。</p>
+<h2 id="不再推荐的suspend-、resume-和stop"><a href="#不再推荐的suspend-、resume-和stop" class="headerlink" title="不再推荐的suspend()、resume()和stop()"></a>不再推荐的suspend()、resume()和stop()</h2><p>不再推荐使用的原因是suspend()线程不会释放已经占有的资源，而是占有者资源进入睡眠状态，这样容易引起死锁问题，stop()不能保证资源正常释放，容易处于不确定状态下</p>
+<h2 id="线程间通信"><a href="#线程间通信" class="headerlink" title="线程间通信"></a>线程间通信</h2><h3 id="volatile和synchronized关键字"><a href="#volatile和synchronized关键字" class="headerlink" title="volatile和synchronized关键字"></a>volatile和synchronized关键字</h3><p><strong>volatile:</strong> 可以用来修饰字段，就是告知程序任何对该对变量的访问要从共享内存中获取，而对它的改变必须同步刷新回共享内存中，<strong>它能保证所有线程对变量访问的可见性。</strong><br><strong>synchronized：</strong>可以修饰方法或以同步块的形式进行使用，它主要确保多个线程在同一个时刻，只能有一个线程处于方法或者同步块中，<strong>它保证了线程对变量访问的可见性和排他性。</strong></p>
+<h2 id="等待-通知机制"><a href="#等待-通知机制" class="headerlink" title="等待/通知机制"></a>等待/通知机制</h2><p>等待/通知机制: 一个线程A调用对象O的wait()方法进入等待状态，而另一个线程B调用了对象O的notify()或者notifyAll()方法，线程A收到通知后从对象O的wait()方法返回，进而执行后续操作。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">方法名称</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">notify()</td>
+<td style="text-align:left">通知一个在对象上等待的线程，使其从wait()方法返回，而返回的前提是该线程获取到了对象的锁</td>
+</tr>
+<tr>
+<td style="text-align:left">notifyAll()</td>
+<td style="text-align:left">通知所有等待在该对象上的线程</td>
+</tr>
+<tr>
+<td style="text-align:left">wait()</td>
+<td style="text-align:left">调用该方法的线程进入WAITING状态，只有等待另外线程的通知或被中断才会返回，需要注意，调用wait()方法后，回释放对象的锁</td>
+</tr>
+<tr>
+<td style="text-align:left">wait(long)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">wait(long,int)</td>
+</tr>
+</tbody>
+</table>
+<p>调用wait()、notify()和notifyAll()<strong>注意的细节</strong></p>
+<ol>
+<li>使用wait()、notify()和notifyAll()时需要先对调用的对象加锁</li>
+<li>调用wait()方法后，线程状态有RUNNING变为WAITING,并将当前线程放置到对象的等待队列</li>
+<li>notify()或notifyAll()方法调用后，等待线程依旧不会从wait()返回，需要调用notify()或notifyAll()的线程释放锁之后，等待线程才有机会从wait()返回</li>
+<li>notify()方法将等待队列中的一个等待线程从等待队列中移到同步队列中，而notifyAll()方法则是将等待队列中的所有线程全部移到同步队列，被移动的线程从WAITING变为BLOCKED</li>
+<li>从wait()方法返回的前提是获得了调用对象的锁</li>
+</ol>
+<p>等待方遵循如下原则：</p>
+<ol>
+<li>获取对象的锁</li>
+<li>如果条件不满足，那么调用对象的wait()方法，被通知后仍要检查条件</li>
+<li>条件满足则执行对应的逻辑</li>
+</ol>
+<p>通知方遵循的原则：</p>
+<ol>
+<li>获得对象的锁</li>
+<li>改变条件</li>
+<li>通知所有等待在对象上的线程</li>
+</ol>
+<p><code>PipedOutputStream</code>,<code>PipedInputStream</code>,<code>PipedReader</code>和<code>PipedWriter</code>前两种面向字节，后两种面向字符</p>
+<h2 id="Thread-join"><a href="#Thread-join" class="headerlink" title="Thread.join()"></a>Thread.join()</h2><p>Thread.join()含义：当前线程A等待thread线程终止之后才从Thread.join()返回。</p>
+<h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p><code>ThreadLocal</code>，即线程变量，是一个以<code>ThreadLocal</code>对象为键，任意对象为值的存储结构，这个结构被附带在线程上，也就是说一个线程可以根据一个<code>ThreadLocal</code>对象查询到绑定在这个线程上的一个值。</p>
+<h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><h2 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h2><p>一个锁能够防止多个线程同时访问共享资源。在Lock出现之前，是采用synchronized关键字来实现锁功能的。<strong>那现在为什么取代了？</strong></p>
+<p>Lock接口提供的synchronized关键字不具备的主要特性<br>|特性|描述|<br>|:—|:—|<br>|尝试非阻塞地获取锁|当前线程尝试获取锁，如果这一时刻锁没有被其他线程获取到，则成功获取并持有锁|<br>|能被中断地获取锁|与synchronized不同，获取到锁的线程能够响应中断，当获取到锁的线程被中断时，中断异常将会被抛出，同时锁会被释放|<br>|超时获取锁|在指定的截止时间之前获取锁，如果截止时间到了仍旧无法获取锁，则返回|</p>
+<h2 id="队列同步器"><a href="#队列同步器" class="headerlink" title="队列同步器"></a>队列同步器</h2><p>队列同步器<code>AbstractQueueSynchronizer</code>,是用来构建锁或者其他同步组件的基础框架，它使用了一个int成员变量表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队工作。</p>
+<p>队列同步器是实现锁的关键，锁是面向使用者的，它定义了使用者与锁交互的接口，隐藏了实现细节；队列同步器面向的是锁的实现者，它简化了锁的实现方式，屏蔽了同步状态管理、线程的排队、等待与唤醒等底层操作。</p>
+<h3 id="队列同步器的实现分析"><a href="#队列同步器的实现分析" class="headerlink" title="队列同步器的实现分析"></a>队列同步器的实现分析</h3><p>同步队列、独占式同步状态获取与释放、共享式同步状态获取与释放以及超时获取同步状态</p>
+<h4 id="同步队列"><a href="#同步队列" class="headerlink" title="同步队列"></a>同步队列</h4><p>队列同步器依赖内部的同步队列来完成同步状态的管理，当前线程获取同步状态失败时，同步器会将当前线程以及等待状态等信息构造成为一个节点并将其加入同步队列，同时会阻塞当前线程，当同步状态释放时，会把首节点中的线程唤醒，使其再次尝试获取同步状态。</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2904682-8a3b0eb7d1a36bf6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt=""></center>
+
+<p>当一个线程成功地获取了同步状态(或者锁)，其他线程将无法同步状态，转而被构造成为节点并加入到同步队列中，而这个加入队列的过程必须要保证线程安全，所以同步器提供了一个基于CAS的设置为节点的方法。</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2904682-809d694b89376d47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/664" alt=""></center>
+
+<p>需要传递当前线程”认为”的尾节点和当前节点，只有设置成功后，当前节点才正式与之前的尾节点建立关联。</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2904682-7f4d61d7f908528e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700" alt=""></center>
+
+<p>同步队列遵循FIFO，首节点是获取同步状态成功的节点，首节点的线程在释放同步状态时，将会唤醒后继节点，而后继节点将会在获取同步状态成功时将自己设置为首节点。</p>
+<p>设置首节点是通过获取同步状态成功的线程来完成的，由于只有一个线程能够成功获取到同步状态，因此设置头节点的方法不需要使用CAS来保证，只需要将首节点设置为原首节点的后继节点并断开原首节点的next引用即可。</p>
+<h4 id="独占式同步状态获取与释放"><a href="#独占式同步状态获取与释放" class="headerlink" title="独占式同步状态获取与释放"></a>独占式同步状态获取与释放</h4><p>通过同步器的acquire(int arg)方法获取同步状态。<br><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="function"><span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!tryAcquire(arg) &amp;&amp; acquireQueued(addWaiter(Node.EXCLUSIVE), arg))</span><br><span class="line">            selfInterrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主要逻辑：</p>
+<ol>
+<li>调用自定义同步器实现的<code>tryAcquire(int arg)</code>方法，该方法保证线程安全的获取同步状态</li>
+<li>如果同步状态获取失败，则构造同步节点(独占式<code>Node.EXCLUSIVE</code>，同一时刻只能有一个线程成功获取同步状态),并通过<code>addWaiter(Node node)</code>方法将该节点加入同步队列的尾部</li>
+<li>最后调用<code>acquireQueued(Node node,int arg)</code>方法，是的该节点以”死循环”的方式获取同步状态。</li>
+<li>如果获取不到则阻塞节点中的线程，而被阻塞线程的唤醒主要依靠前驱节点的出队或阻塞线程被中断来实现</li>
+</ol>
+<p><strong>但是这个方法对中断不敏感</strong>，也就是说由于线程获取同步状态失败后进入同步队列中，后续对线程进行中断操作时，线程不会从同步队列中移出。</p>
+<p>独占式同步状态获取流程</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/2904682-b4f4c6fba937e18f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/644" alt=""></center>
+
+<ol>
+<li>在获取同步状态时，同步器维护一个同步队列，获取状态失败的线程都会被加入队列中并在对队列中进行自旋</li>
+<li>移出队列(或停止自旋)的条件是前驱节点为头结点且成功获取了同步状态</li>
+<li>在释放同步状态时，同步器调用<code>tryRelease(int arg)</code>方法释放同步状态，然后唤醒头节点的后继节点</li>
+</ol>
+<h4 id="共享式同步状态获取与释放"><a href="#共享式同步状态获取与释放" class="headerlink" title="共享式同步状态获取与释放"></a>共享式同步状态获取与释放</h4><p>与独占式主要区别是在于<code>tryReleaseShared(int arg)</code>方法必须确保同步状态(或资源数)线程安全释放，一般是通过循环和CAS来保证的，因为释放同步状态的操作会同时来自多个线程。</p>
+<h4 id="独占式超时获取同步状态"><a href="#独占式超时获取同步状态" class="headerlink" title="独占式超时获取同步状态"></a>独占式超时获取同步状态</h4><center><img src="http://cmsblogs.qiniudn.com/wp-content/uploads/2017/03/201701270001_thumb.png" alt=""></center>
+
+<h2 id="重入锁"><a href="#重入锁" class="headerlink" title="重入锁"></a>重入锁</h2><p>重入锁:支持重进入的锁，表示该锁能够支持一个线程对资源的重复加锁。除此之外，该锁还支持获取锁时的公平和非公平选择。</p>
+<p>实现重进入<br>重进入是指任意线程在获取到锁之后能够再次获取该锁而不会被锁所阻塞。这样就需要解决两个问题</p>
+<ul>
+<li>线程再次获取锁，锁需要去识别获取锁的线程是否为当前占据锁的线程，如果是，则再次成功获取</li>
+<li>锁的最终释放，线程重复n次获取锁，随后在第n次释放该锁后，其他线程能够获取到该锁。锁得最终释放要求对于获取进行技术自增，计数表示当前锁被重复获取的次数，而锁被释放时，计数自减，当计数等于0时表示锁已经成功释放。</li>
+</ul>
+<p>公平和非公平获取锁的区别<br>如果一个锁是公平的，那么锁的获取顺序就应该符合请求的绝对时间顺序，也就是FIFO。<br>公平锁保证了锁的获取按照FIFO原则，而代价是进行大量的线程切换。非公平锁虽然可能造成线程”饥饿”，但极少的线程切换，保证了其更大的吞吐量。</p>
+<h2 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h2><p>读写锁在同一时刻允许多个读线程访问，但是在写线程访问时，所有的读线程和其他写线程都会被阻塞。</p>
+<p>读写锁的自定义同步器需要在同步状态(一个整型变量)上维护多个读线程和一个写线程的状态。</p>
+<center><img src="http://ifeve.com/wp-content/uploads/2015/10/1.png" alt=""></center>
+
+<p>假设当前同步状态值为S，写状态等于S&amp;0x0000FFFF,读状态等于S&gt;&gt;&gt;16，当写状态增加1时，等于S+1，当读状态增加1时，等于S+(1&lt;&lt;16)也就是S+0x00010000</p>
+<p>S不等于0时，当写状态等于0，则度状态大于0，即读锁已被获取</p>
+<h1 id="Java并发容器和框架"><a href="#Java并发容器和框架" class="headerlink" title="Java并发容器和框架"></a>Java并发容器和框架</h1><h2 id="ConcurrentHashMap"><a href="#ConcurrentHashMap" class="headerlink" title="ConcurrentHashMap"></a>ConcurrentHashMap</h2><p>出现的原因</p>
+<ul>
+<li>线程不安全的HashMap</li>
+</ul>
+<p>HashMap在并发执行put操作时会引起死循环，是因为多线程会导致HashMap的Entery链表形成环形数据结构，一旦形成环形数据结构，Entry的next节点永远不为空，就会产生死循环获取Entry</p>
+<ul>
+<li>效率低下的HashTable</li>
+</ul>
+<p>当一个线程访问HashTable的同步方法，其他线程也访问HashTable的同步方法时，会进行阻塞和轮询状态。</p>
+<ul>
+<li>ConcurrentHashMap优势<br>ConcurrentHashMap使用锁分段技术，容器中有多把锁，每一把锁用于锁容器其中一部分数据，当多线程访问容器中不同数据段的数据时，线程间就不会存在锁竞争，从而有效提高并发访问效率。</li>
+</ul>
+<h3 id="ConcurrentHashMap的结构"><a href="#ConcurrentHashMap的结构" class="headerlink" title="ConcurrentHashMap的结构"></a>ConcurrentHashMap的结构</h3><center><img src="https://res.infoq.com/articles/ConcurrentHashMap/zh/resources/2.jpg" alt=""></center>
+
+<p>ConcurrentHashMap由Segment数组结构和HashEntry数组结构组成。Segment是一种重入锁，在ConcurrentHashMap里扮演锁的角色；HashEntry则用于存储键值对数据</p>
+<h1 id="Java中的线程池"><a href="#Java中的线程池" class="headerlink" title="Java中的线程池"></a>Java中的线程池</h1><p>线程池优点</p>
+<ol>
+<li>降低资源消耗</li>
+<li>提高响应速度</li>
+<li>提高线程的可管理性</li>
+</ol>
+<h2 id="线程池的实现原理"><a href="#线程池的实现原理" class="headerlink" title="线程池的实现原理"></a>线程池的实现原理</h2><center><img src="https://res.infoq.com/articles/java-threadPool/zh/resources/threadpool.jpg" alt=""></center>
+
+<p>当提交一个新任务到线程池中，线程池的处理流程</p>
+<ol>
+<li>线程池判断核心线程池里的线程是否都在执行任务。如果不是，则创建一个新的工作线程来执行任务。如果核心线程池里的线程都在执行任务，则进入下个流程</li>
+<li>线程池判断工作队列是否已经满，如果工作队列没有满，则将新提交的任务存储在这个工作队列里。如果工作队列满了，则进入下个流程。</li>
+<li>线程池判断线程池的线程是否都处于工作状态。如果没有，则创建一个新的工作线程来执行任务，如果已经满了，则交个饱和策略来处理这个任务。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/16/Java并发编程的艺术-2/" rel="next" title="Java并发编程的艺术(2)">
+                <i class="fa fa-chevron-left"></i> Java并发编程的艺术(2)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc1OS8xNDI5MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/tags.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java并发编程基础"><span class="nav-number">1.</span> <span class="nav-text">Java并发编程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#启动线程"><span class="nav-number">1.1.</span> <span class="nav-text">启动线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中断"><span class="nav-number">1.2.</span> <span class="nav-text">中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不再推荐的suspend-、resume-和stop"><span class="nav-number">1.3.</span> <span class="nav-text">不再推荐的suspend()、resume()和stop()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程间通信"><span class="nav-number">1.4.</span> <span class="nav-text">线程间通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#volatile和synchronized关键字"><span class="nav-number">1.4.1.</span> <span class="nav-text">volatile和synchronized关键字</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#等待-通知机制"><span class="nav-number">1.5.</span> <span class="nav-text">等待/通知机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Thread-join"><span class="nav-number">1.6.</span> <span class="nav-text">Thread.join()</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">1.7.</span> <span class="nav-text">ThreadLocal</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中的锁"><span class="nav-number">2.</span> <span class="nav-text">Java中的锁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lock接口"><span class="nav-number">2.1.</span> <span class="nav-text">Lock接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列同步器"><span class="nav-number">2.2.</span> <span class="nav-text">队列同步器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#队列同步器的实现分析"><span class="nav-number">2.2.1.</span> <span class="nav-text">队列同步器的实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#同步队列"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">同步队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占式同步状态获取与释放"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">独占式同步状态获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#共享式同步状态获取与释放"><span class="nav-number">2.2.1.3.</span> <span class="nav-text">共享式同步状态获取与释放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#独占式超时获取同步状态"><span class="nav-number">2.2.1.4.</span> <span class="nav-text">独占式超时获取同步状态</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重入锁"><span class="nav-number">2.3.</span> <span class="nav-text">重入锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写锁"><span class="nav-number">2.4.</span> <span class="nav-text">读写锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java并发容器和框架"><span class="nav-number">3.</span> <span class="nav-text">Java并发容器和框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ConcurrentHashMap"><span class="nav-number">3.1.</span> <span class="nav-text">ConcurrentHashMap</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcurrentHashMap的结构"><span class="nav-number">3.1.1.</span> <span class="nav-text">ConcurrentHashMap的结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中的线程池"><span class="nav-number">4.</span> <span class="nav-text">Java中的线程池</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程池的实现原理"><span class="nav-number">4.1.</span> <span class="nav-text">线程池的实现原理</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
