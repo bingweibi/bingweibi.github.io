@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
 <meta name="keywords" content="读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发编程的艺术(3)">
 <meta property="og:url" content="http://yoursite.com/2018/07/17/Java并发编程的艺术-3/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta property="og:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-8a3b0eb7d1a36bf6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="http://ifeve.com/wp-content/uploads/2015/10/1.png">
 <meta property="og:image" content="https://res.infoq.com/articles/ConcurrentHashMap/zh/resources/2.jpg">
 <meta property="og:image" content="https://res.infoq.com/articles/java-threadPool/zh/resources/threadpool.jpg">
-<meta property="og:updated_time" content="2018-07-17T03:02:34.291Z">
+<meta property="og:updated_time" content="2018-07-17T03:06:27.612Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程的艺术(3)">
-<meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:–|:–||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
 <meta name="twitter:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
 
 
@@ -336,7 +336,7 @@
 
       
         <h1 id="Java并发编程基础"><a href="#Java并发编程基础" class="headerlink" title="Java并发编程基础"></a>Java并发编程基础</h1><p>线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。</p>
-<p>线程的状态<br>|状态名称|说明|<br>|:–|:–|<br>|NEW|初始状态，线程被构建，但是还没有调用start()方法|<br>|RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”|<br>|BLOCKED|阻塞状态，表示线程阻塞于锁|<br>|WAITING|等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断)|<br>|TIME_WAITING|超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的|<br>|TERMINATED|终止状态，表示当前线程已经执行完毕|</p>
+<p>线程的状态<br>|状态名称|说明|<br>|:—|:—|<br>|NEW|初始状态，线程被构建，但是还没有调用start()方法|<br>|RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”|<br>|BLOCKED|阻塞状态，表示线程阻塞于锁|<br>|WAITING|等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断)|<br>|TIME_WAITING|超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的|<br>|TERMINATED|终止状态，表示当前线程已经执行完毕|</p>
 <a id="more"></a>
 <p>Java线程状态变迁</p>
 <center><img src="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif" alt=""></center>
@@ -609,7 +609,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/tags.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
