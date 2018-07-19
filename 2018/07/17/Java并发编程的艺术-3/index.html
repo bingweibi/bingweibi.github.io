@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态    状态名称 说明     NEW 初始状态，线程被构建，但是还没有调用start()方法   RUNNABLE 运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”   BLOCKED 阻塞状态，表示线程">
 <meta name="keywords" content="读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java并发编程的艺术(3)">
 <meta property="og:url" content="http://yoursite.com/2018/07/17/Java并发编程的艺术-3/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta property="og:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态    状态名称 说明     NEW 初始状态，线程被构建，但是还没有调用start()方法   RUNNABLE 运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”   BLOCKED 阻塞状态，表示线程">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/2904682-8a3b0eb7d1a36bf6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/700">
@@ -96,10 +96,10 @@
 <meta property="og:image" content="http://ifeve.com/wp-content/uploads/2015/10/1.png">
 <meta property="og:image" content="https://res.infoq.com/articles/ConcurrentHashMap/zh/resources/2.jpg">
 <meta property="og:image" content="https://res.infoq.com/articles/java-threadPool/zh/resources/threadpool.jpg">
-<meta property="og:updated_time" content="2018-07-17T03:12:13.434Z">
+<meta property="og:updated_time" content="2018-07-19T07:57:23.223Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程的艺术(3)">
-<meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态|状态名称|说明||:—|:—||NEW|初始状态，线程被构建，但是还没有调用start()方法||RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”||BLOCKED|阻塞状态，表示线程阻">
+<meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态    状态名称 说明     NEW 初始状态，线程被构建，但是还没有调用start()方法   RUNNABLE 运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”   BLOCKED 阻塞状态，表示线程">
 <meta name="twitter:image" content="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif">
 
 
@@ -336,7 +336,41 @@
 
       
         <h1 id="Java并发编程基础"><a href="#Java并发编程基础" class="headerlink" title="Java并发编程基础"></a>Java并发编程基础</h1><p>线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。</p>
-<p>线程的状态<br>|状态名称|说明|<br>|:—|:—|<br>|NEW|初始状态，线程被构建，但是还没有调用start()方法|<br>|RUNNABLE|运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”|<br>|BLOCKED|阻塞状态，表示线程阻塞于锁|<br>|WAITING|等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断)|<br>|TIME_WAITING|超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的|<br>|TERMINATED|终止状态，表示当前线程已经执行完毕|</p>
+<p>线程的状态</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">状态名称</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">NEW</td>
+<td style="text-align:left">初始状态，线程被构建，但是还没有调用start()方法</td>
+</tr>
+<tr>
+<td style="text-align:left">RUNNABLE</td>
+<td style="text-align:left">运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”</td>
+</tr>
+<tr>
+<td style="text-align:left">BLOCKED</td>
+<td style="text-align:left">阻塞状态，表示线程阻塞于锁</td>
+</tr>
+<tr>
+<td style="text-align:left">WAITING</td>
+<td style="text-align:left">等待状态，表示线程进入等待状态，进入该状态表示当前线程需要等待其他线程做出一些特定动作(通知或中断)</td>
+</tr>
+<tr>
+<td style="text-align:left">TIME_WAITING</td>
+<td style="text-align:left">超时等待状态，该状态不同于WAITING，它是可以在指定的时间自行返回的</td>
+</tr>
+<tr>
+<td style="text-align:left">TERMINATED</td>
+<td style="text-align:left">终止状态，表示当前线程已经执行完毕</td>
+</tr>
+</tbody>
+</table>
 <a id="more"></a>
 <p>Java线程状态变迁</p>
 <center><img src="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif" alt=""></center>
@@ -400,7 +434,29 @@
 <h2 id="Thread-join"><a href="#Thread-join" class="headerlink" title="Thread.join()"></a>Thread.join()</h2><p>Thread.join()含义：当前线程A等待thread线程终止之后才从Thread.join()返回。</p>
 <h2 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h2><p><code>ThreadLocal</code>，即线程变量，是一个以<code>ThreadLocal</code>对象为键，任意对象为值的存储结构，这个结构被附带在线程上，也就是说一个线程可以根据一个<code>ThreadLocal</code>对象查询到绑定在这个线程上的一个值。</p>
 <h1 id="Java中的锁"><a href="#Java中的锁" class="headerlink" title="Java中的锁"></a>Java中的锁</h1><h2 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h2><p>一个锁能够防止多个线程同时访问共享资源。在Lock出现之前，是采用synchronized关键字来实现锁功能的。<strong>那现在为什么取代了？</strong></p>
-<p>Lock接口提供的synchronized关键字不具备的主要特性<br>|特性|描述|<br>|:—|:—|<br>|尝试非阻塞地获取锁|当前线程尝试获取锁，如果这一时刻锁没有被其他线程获取到，则成功获取并持有锁|<br>|能被中断地获取锁|与synchronized不同，获取到锁的线程能够响应中断，当获取到锁的线程被中断时，中断异常将会被抛出，同时锁会被释放|<br>|超时获取锁|在指定的截止时间之前获取锁，如果截止时间到了仍旧无法获取锁，则返回|</p>
+<p>Lock接口提供的synchronized关键字不具备的主要特性</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">尝试非阻塞地获取锁</td>
+<td style="text-align:left">当前线程尝试获取锁，如果这一时刻锁没有被其他线程获取到，则成功获取并持有锁</td>
+</tr>
+<tr>
+<td style="text-align:left">能被中断地获取锁</td>
+<td style="text-align:left">与synchronized不同，获取到锁的线程能够响应中断，当获取到锁的线程被中断时，中断异常将会被抛出，同时锁会被释放</td>
+</tr>
+<tr>
+<td style="text-align:left">超时获取锁</td>
+<td style="text-align:left">在指定的截止时间之前获取锁，如果截止时间到了仍旧无法获取锁，则返回</td>
+</tr>
+</tbody>
+</table>
 <h2 id="队列同步器"><a href="#队列同步器" class="headerlink" title="队列同步器"></a>队列同步器</h2><p>队列同步器<code>AbstractQueueSynchronizer</code>,是用来构建锁或者其他同步组件的基础框架，它使用了一个int成员变量表示同步状态，通过内置的FIFO队列来完成资源获取线程的排队工作。</p>
 <p>队列同步器是实现锁的关键，锁是面向使用者的，它定义了使用者与锁交互的接口，隐藏了实现细节；队列同步器面向的是锁的实现者，它简化了锁的实现方式，屏蔽了同步状态管理、线程的排队、等待与唤醒等底层操作。</p>
 <h3 id="队列同步器的实现分析"><a href="#队列同步器的实现分析" class="headerlink" title="队列同步器的实现分析"></a>队列同步器的实现分析</h3><p>同步队列、独占式同步状态获取与释放、共享式同步状态获取与释放以及超时获取同步状态</p>
@@ -516,6 +572,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/19/Java基础-面试/" rel="prev" title="Java基础-面试">
+                Java基础-面试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
