@@ -79,23 +79,23 @@
 
 
 
-<meta name="description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据  缓存Key既然是缓存功能，就必然会有用于进行缓存的Key。先来看一下Glide缓存Key的生成逻辑。生成缓存Key的代码在Engine类的load()方法">
+<meta name="description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据">
 <meta name="keywords" content="Gide">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Glide-2">
 <meta property="og:url" content="http://yoursite.com/2018/07/20/Glide-2/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据  缓存Key既然是缓存功能，就必然会有用于进行缓存的Key。先来看一下Glide缓存Key的生成逻辑。生成缓存Key的代码在Engine类的load()方法">
+<meta property="og:description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/target%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84%E5%9B%BE.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Glide%E5%8A%A8%E5%9B%BE">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Glide%E5%8A%A8%E5%9B%BE2">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Glide%E5%8A%A8%E5%9B%BE3">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Glide%E6%97%A5%E5%BF%97%E8%BE%93%E5%87%BA.png">
-<meta property="og:updated_time" content="2018-07-20T09:24:15.484Z">
+<meta property="og:updated_time" content="2018-07-20T09:29:19.909Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Glide-2">
-<meta name="twitter:description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据  缓存Key既然是缓存功能，就必然会有用于进行缓存的Key。先来看一下Glide缓存Key的生成逻辑。生成缓存Key的代码在Engine类的load()方法">
+<meta name="twitter:description" content="本系列文章是在郭霖的文章基础上进行写作的 Glide缓存简介Glide的缓存设计分为两个模块，一个是内存缓存，一个是硬盘缓存。  内存缓存作用是防止应用重复将图片数据读取到内存中 硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据">
 <meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/target%E7%BB%A7%E6%89%BF%E7%BB%93%E6%9E%84%E5%9B%BE.png">
 
 
@@ -337,6 +337,7 @@
 <li>内存缓存作用是防止应用重复将图片数据读取到内存中</li>
 <li>硬盘缓存的作用是防止应用重复从网络或其他地方重复下载和读取数据</li>
 </ul>
+<a id="more"></a>
 <h2 id="缓存Key"><a href="#缓存Key" class="headerlink" title="缓存Key"></a>缓存Key</h2><p>既然是缓存功能，就必然会有用于进行缓存的Key。先来看一下Glide缓存Key的生成逻辑。<br>生成缓存Key的代码在Engine类的load()方法当中，这部分代码我们在上一篇文章当中已经分析过了，只不过当时忽略了缓存相关的内容，那么我们现在重新来看一下：</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> class Engine implements EngineJobListener,</span><br><span class="line">        MemoryCache.ResourceRemovedListener,</span><br><span class="line">        EngineResource.ResourceListener &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> &lt;T, Z, R&gt; LoadStatus load(Key signature, <span class="built_in">int</span> <span class="built_in">width</span>, <span class="built_in">int</span> <span class="built_in">height</span>, DataFetcher&lt;T&gt; fetcher,</span><br><span class="line">            DataLoadProvider&lt;T, Z&gt; loadProvider, Transformation&lt;Z&gt; transformation, ResourceTranscoder&lt;Z, R&gt; transcoder,</span><br><span class="line">            Priority priority, <span class="built_in">boolean</span> isMemoryCacheable, DiskCacheStrategy diskCacheStrategy, ResourceCallback cb) &#123;</span><br><span class="line">        Util.assertMainThread();</span><br><span class="line">        <span class="keyword">long</span> startTime = LogTime.getLogTime();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">final</span> <span class="keyword">String</span> id = fetcher.getId();</span><br><span class="line">        EngineKey <span class="built_in">key</span> = keyFactory.buildKey(id, signature, <span class="built_in">width</span>, <span class="built_in">height</span>, loadProvider.getCacheDecoder(),</span><br><span class="line">                loadProvider.getSourceDecoder(), transformation, loadProvider.getEncoder(),</span><br><span class="line">                transcoder, loadProvider.getSourceEncoder());</span><br><span class="line"></span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到，这里在第11行调用了fetcher.getId()方法获得了一个id字符串，这个字符串也就是我们要加载的图片的唯一标识，比如说如果是一张网络上的图片的话，那么这个id就是这张图片的url地址。</p>
@@ -695,7 +696,7 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/tags.html">
+                <a href="/tags/index.html">
                   <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
