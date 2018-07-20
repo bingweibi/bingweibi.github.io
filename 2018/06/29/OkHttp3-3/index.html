@@ -79,24 +79,25 @@
 
 
 
-<meta name="description" content="介绍主要讲解OkHttp中的拦截器  负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectInterceptor(请看">
+<meta name="description" content="介绍主要讲解OkHttp中的拦截器 拦截器流程  拦截器介绍 负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectIn">
 <meta name="keywords" content="OkHttp3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OkHttp3(3)">
 <meta property="og:url" content="http://yoursite.com/2018/06/29/OkHttp3-3/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="介绍主要讲解OkHttp中的拦截器  负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectInterceptor(请看">
+<meta property="og:description" content="介绍主要讲解OkHttp中的拦截器 拦截器流程  拦截器介绍 负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectIn">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E6%8B%A6%E6%88%AA%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/RetryAndFollowUpInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/BridgeInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/CacheInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/ConnectInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/CallServerInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
-<meta property="og:updated_time" content="2018-06-29T11:37:31.050Z">
+<meta property="og:updated_time" content="2018-07-20T02:58:41.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OkHttp3(3)">
-<meta name="twitter:description" content="介绍主要讲解OkHttp中的拦截器  负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectInterceptor(请看">
-<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/RetryAndFollowUpInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta name="twitter:description" content="介绍主要讲解OkHttp中的拦截器 拦截器流程  拦截器介绍 负责失败重试以及重定向retryAndFollowUpInterceptor(请看这儿) 负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的BridgeInterceptor(请看这儿) 负责读取缓存直接返回、更新缓存CacheInterceptor(请看这儿) 负责和服务器建立连接ConnectIn">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/%E6%8B%A6%E6%88%AA%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png">
 
 
 
@@ -332,25 +333,26 @@
 
       
         <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>主要讲解OkHttp中的拦截器</p>
-<ul>
+<h2 id="拦截器流程"><a href="#拦截器流程" class="headerlink" title="拦截器流程"></a>拦截器流程</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/%E6%8B%A6%E6%88%AA%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt=""></center>
+
+<h2 id="拦截器介绍"><a href="#拦截器介绍" class="headerlink" title="拦截器介绍"></a>拦截器介绍</h2><ul>
 <li>负责失败重试以及重定向<code>retryAndFollowUpInterceptor</code>(<a href="https://www.jianshu.com/p/64111e0db93c" target="_blank" rel="noopener">请看这儿</a>)</li>
 <li>负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的<code>BridgeInterceptor</code>(<a href="https://www.jianshu.com/p/ede34ab5b776" target="_blank" rel="noopener">请看这儿</a>)</li>
 <li>负责读取缓存直接返回、更新缓存<code>CacheInterceptor</code>(<a href="https://www.jianshu.com/p/8d0bc05104ef" target="_blank" rel="noopener">请看这儿</a>)</li>
 <li>负责和服务器建立连接<code>ConnectInterceptor</code>(<a href="https://www.jianshu.com/p/5472521f8d63" target="_blank" rel="noopener">请看这儿</a>)</li>
 <li>负责向服务器发送请求数据、从服务器读取响应数据<code>CallServerInterceptor</code>(<a href="https://www.jianshu.com/p/4510ae14dbe9" target="_blank" rel="noopener">请看这儿</a>)</li>
 </ul>
-<a id="more"></a>
-<h2 id="retryAndFollowUpInterceptor流程图"><a href="#retryAndFollowUpInterceptor流程图" class="headerlink" title="retryAndFollowUpInterceptor流程图"></a><code>retryAndFollowUpInterceptor</code>流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/RetryAndFollowUpInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+<h2 id="retryAndFollowUpInterceptor流程图"><a href="#retryAndFollowUpInterceptor流程图" class="headerlink" title="retryAndFollowUpInterceptor流程图"></a>retryAndFollowUpInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/RetryAndFollowUpInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
 
-<h2 id="BridgeInterceptor流程图"><a href="#BridgeInterceptor流程图" class="headerlink" title="BridgeInterceptor流程图"></a><code>BridgeInterceptor</code>流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/BridgeInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+<h2 id="BridgeInterceptor流程图"><a href="#BridgeInterceptor流程图" class="headerlink" title="BridgeInterceptor流程图"></a>BridgeInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/BridgeInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
 
-<h2 id="CacheInterceptor流程图"><a href="#CacheInterceptor流程图" class="headerlink" title="CacheInterceptor流程图"></a><code>CacheInterceptor</code>流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CacheInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+<h2 id="CacheInterceptor流程图"><a href="#CacheInterceptor流程图" class="headerlink" title="CacheInterceptor流程图"></a>CacheInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CacheInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
 
-<h2 id="ConnectInterceptor流程图"><a href="#ConnectInterceptor流程图" class="headerlink" title="ConnectInterceptor流程图"></a><code>ConnectInterceptor</code>流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/ConnectInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+<h2 id="ConnectInterceptor流程图"><a href="#ConnectInterceptor流程图" class="headerlink" title="ConnectInterceptor流程图"></a>ConnectInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/ConnectInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
 
-<h2 id="CallServerInterceptor流程图"><a href="#CallServerInterceptor流程图" class="headerlink" title="CallServerInterceptor流程图"></a><code>CallServerInterceptor</code>流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CallServerInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+<h2 id="CallServerInterceptor流程图"><a href="#CallServerInterceptor流程图" class="headerlink" title="CallServerInterceptor流程图"></a>CallServerInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CallServerInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
 
-
+<p>来源见跳转链接，侵删</p>
 
       
     </div>
@@ -526,7 +528,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#retryAndFollowUpInterceptor流程图"><span class="nav-number">1.1.</span> <span class="nav-text">retryAndFollowUpInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BridgeInterceptor流程图"><span class="nav-number">1.2.</span> <span class="nav-text">BridgeInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheInterceptor流程图"><span class="nav-number">1.3.</span> <span class="nav-text">CacheInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConnectInterceptor流程图"><span class="nav-number">1.4.</span> <span class="nav-text">ConnectInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CallServerInterceptor流程图"><span class="nav-number">1.5.</span> <span class="nav-text">CallServerInterceptor流程图</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器流程"><span class="nav-number">1.1.</span> <span class="nav-text">拦截器流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器介绍"><span class="nav-number">1.2.</span> <span class="nav-text">拦截器介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#retryAndFollowUpInterceptor流程图"><span class="nav-number">1.3.</span> <span class="nav-text">retryAndFollowUpInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BridgeInterceptor流程图"><span class="nav-number">1.4.</span> <span class="nav-text">BridgeInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheInterceptor流程图"><span class="nav-number">1.5.</span> <span class="nav-text">CacheInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ConnectInterceptor流程图"><span class="nav-number">1.6.</span> <span class="nav-text">ConnectInterceptor流程图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CallServerInterceptor流程图"><span class="nav-number">1.7.</span> <span class="nav-text">CallServerInterceptor流程图</span></a></li></ol></li></ol></div>
             
 
           </div>
