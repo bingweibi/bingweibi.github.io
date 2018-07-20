@@ -254,6 +254,456 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/29/OkHttp3-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/29/OkHttp3-3/" itemprop="url">OkHttp3(3)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-29T11:01:37+08:00">
+                2018-06-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>主要讲解OkHttp中的拦截器</p>
+<h2 id="拦截器流程"><a href="#拦截器流程" class="headerlink" title="拦截器流程"></a>拦截器流程</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/%E6%8B%A6%E6%88%AA%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt=""></center>
+
+<h2 id="拦截器介绍"><a href="#拦截器介绍" class="headerlink" title="拦截器介绍"></a>拦截器介绍</h2><ul>
+<li>负责失败重试以及重定向<code>retryAndFollowUpInterceptor</code>(<a href="https://www.jianshu.com/p/64111e0db93c" target="_blank" rel="noopener">请看这儿</a>)</li>
+<li>负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的<code>BridgeInterceptor</code>(<a href="https://www.jianshu.com/p/ede34ab5b776" target="_blank" rel="noopener">请看这儿</a>)</li>
+<li>负责读取缓存直接返回、更新缓存<code>CacheInterceptor</code>(<a href="https://www.jianshu.com/p/8d0bc05104ef" target="_blank" rel="noopener">请看这儿</a>)</li>
+<li>负责和服务器建立连接<code>ConnectInterceptor</code>(<a href="https://www.jianshu.com/p/5472521f8d63" target="_blank" rel="noopener">请看这儿</a>)</li>
+<li>负责向服务器发送请求数据、从服务器读取响应数据<code>CallServerInterceptor</code>(<a href="https://www.jianshu.com/p/4510ae14dbe9" target="_blank" rel="noopener">请看这儿</a>)</li>
+</ul>
+<h2 id="retryAndFollowUpInterceptor流程图"><a href="#retryAndFollowUpInterceptor流程图" class="headerlink" title="retryAndFollowUpInterceptor流程图"></a>retryAndFollowUpInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/RetryAndFollowUpInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<h2 id="BridgeInterceptor流程图"><a href="#BridgeInterceptor流程图" class="headerlink" title="BridgeInterceptor流程图"></a>BridgeInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/BridgeInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<h2 id="CacheInterceptor流程图"><a href="#CacheInterceptor流程图" class="headerlink" title="CacheInterceptor流程图"></a>CacheInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CacheInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<h2 id="ConnectInterceptor流程图"><a href="#ConnectInterceptor流程图" class="headerlink" title="ConnectInterceptor流程图"></a>ConnectInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/ConnectInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<h2 id="CallServerInterceptor流程图"><a href="#CallServerInterceptor流程图" class="headerlink" title="CallServerInterceptor流程图"></a>CallServerInterceptor流程图</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/CallServerInterceptor%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center>
+
+<p>来源见跳转链接，侵删</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/OkHttp3-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/OkHttp3-2/" itemprop="url">OkHttp3(2)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T21:34:41+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h1><figure class="highlight vbscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> url = <span class="string">"https://raw.github.com/square/okhttp/master/README.md"</span>;</span><br><span class="line">OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line"><span class="built_in">Request</span> <span class="built_in">request</span> = <span class="keyword">new</span> <span class="built_in">Request</span>.Builder().url(url).build();</span><br><span class="line">okhttp3.<span class="built_in">Response</span> <span class="built_in">response</span> = <span class="literal">null</span>;</span><br><span class="line">okHttpClient.newCall(<span class="built_in">request</span>).enqueue(<span class="keyword">new</span> Callback() &#123;</span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> void onFailure(<span class="keyword">Call</span> <span class="keyword">call</span>, IOException e) &#123;</span><br><span class="line">        <span class="built_in">Log</span>.i(TAG, <span class="string">"onFailure: "</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    <span class="keyword">public</span> void onResponse(<span class="keyword">Call</span> <span class="keyword">call</span>, <span class="built_in">Response</span> <span class="built_in">response</span>) throws IOException &#123;</span><br><span class="line">        <span class="built_in">String</span> json = <span class="built_in">response</span>.body().<span class="built_in">string</span>();</span><br><span class="line">        <span class="built_in">Log</span>.i(TAG,json);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h1 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h1><h2 id="new-OkHttpClient"><a href="#new-OkHttpClient" class="headerlink" title="new OkHttpClient()"></a>new OkHttpClient()</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> OkHttpClient() &#123;</span><br><span class="line">    <span class="comment">//自动builder()</span></span><br><span class="line">    <span class="keyword">this</span>(new Builder());</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  OkHttpClient(Builder builder) &#123;</span><br><span class="line">    <span class="keyword">this</span>.dispatcher = builder.dispatcher;</span><br><span class="line">    <span class="keyword">this</span>.proxy = builder.proxy;</span><br><span class="line">    <span class="keyword">this</span>.protocols = builder.protocols;</span><br><span class="line">    <span class="keyword">this</span>.connectionSpecs = builder.connectionSpecs;</span><br><span class="line">    <span class="keyword">this</span>.interceptors = Util.immutableList(builder.interceptors);</span><br><span class="line">    <span class="keyword">this</span>.networkInterceptors = Util.immutableList(builder.networkInterceptors);</span><br><span class="line">    <span class="keyword">this</span>.eventListenerFactory = builder.eventListenerFactory;</span><br><span class="line">    <span class="keyword">this</span>.proxySelector = builder.proxySelector;</span><br><span class="line">    <span class="keyword">this</span>.cookieJar = builder.cookieJar;</span><br><span class="line">    <span class="keyword">this</span>.cache = builder.cache;</span><br><span class="line">    <span class="keyword">this</span>.internalCache = builder.internalCache;</span><br><span class="line">    <span class="keyword">this</span>.socketFactory = builder.socketFactory;</span><br><span class="line"></span><br><span class="line">    boolean isTLS = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">for</span> (ConnectionSpec spec : connectionSpecs) &#123;</span><br><span class="line">      isTLS = isTLS || spec.isTls();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (builder.sslSocketFactory != <span class="literal">null</span> || !isTLS) &#123;</span><br><span class="line">      <span class="keyword">this</span>.sslSocketFactory = builder.sslSocketFactory;</span><br><span class="line">      <span class="keyword">this</span>.certificateChainCleaner = builder.certificateChainCleaner;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      X509TrustManager trustManager = systemDefaultTrustManager();</span><br><span class="line">      <span class="keyword">this</span>.sslSocketFactory = systemDefaultSslSocketFactory(trustManager);</span><br><span class="line">      <span class="keyword">this</span>.certificateChainCleaner = CertificateChainCleaner.<span class="keyword">get</span>(trustManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (interceptors.contains(<span class="literal">null</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> new IllegalStateException(<span class="string">"Null interceptor: "</span> + interceptors);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (networkInterceptors.contains(<span class="literal">null</span>)) &#123;</span><br><span class="line">      <span class="keyword">throw</span> new IllegalStateException(<span class="string">"Null network interceptor: "</span> + networkInterceptors);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="new-Request-Builder-url-url-build"><a href="#new-Request-Builder-url-url-build" class="headerlink" title="new Request.Builder().url(url).build()"></a>new Request.Builder().url(url).build()</h2><h3 id="Builder"><a href="#Builder" class="headerlink" title="Builder()"></a>Builder()</h3><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public Builder() &#123;</span><br><span class="line">  this.method = <span class="string">"<span class="keyword">GET</span>"</span>;</span><br><span class="line">  this.headers = new Headers.Builder();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="url"><a href="#url" class="headerlink" title="url()"></a>url()</h3><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public Builder <span class="built_in">url</span>(<span class="built_in">String</span> <span class="built_in">url</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">url</span> == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException(<span class="string">"url == null"</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Silently replace web socket URLs with HTTP URLs.</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">url</span>.regionMatches(<span class="literal">true</span>, <span class="number">0</span>, <span class="string">"ws:"</span>, <span class="number">0</span>, <span class="number">3</span>)) &#123;</span><br><span class="line">    <span class="built_in">url</span> = <span class="string">"http:"</span> + <span class="built_in">url</span>.substring(<span class="number">3</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">url</span>.regionMatches(<span class="literal">true</span>, <span class="number">0</span>, <span class="string">"wss:"</span>, <span class="number">0</span>, <span class="number">4</span>)) &#123;</span><br><span class="line">    <span class="built_in">url</span> = <span class="string">"https:"</span> + <span class="built_in">url</span>.substring(<span class="number">4</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  HttpUrl parsed = HttpUrl.parse(<span class="built_in">url</span>);</span><br><span class="line">  <span class="keyword">if</span> (parsed == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"unexpected url: "</span> + <span class="built_in">url</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">url</span>(parsed);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="build"><a href="#build" class="headerlink" title="build()"></a>build()</h3><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Request build() &#123;</span><br><span class="line">  <span class="keyword">if</span> (url == <span class="literal">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="type">IllegalStateException</span>(<span class="string">"url == null"</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="type">Request</span>(<span class="built_in">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Request"><a href="#Request" class="headerlink" title="Request()"></a>Request()</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Request(Builder builder) &#123;</span><br><span class="line">    <span class="keyword">this</span>.url = builder.url;</span><br><span class="line">    <span class="keyword">this</span>.method = builder.method;</span><br><span class="line">    <span class="keyword">this</span>.headers = builder.headers.build();</span><br><span class="line">    <span class="keyword">this</span>.body = builder.body;</span><br><span class="line">    <span class="keyword">this</span>.tag = builder.tag != <span class="literal">null</span> ? builder.tag : <span class="keyword">this</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="发起HTTP请求"><a href="#发起HTTP请求" class="headerlink" title="发起HTTP请求"></a>发起HTTP请求</h2><h3 id="okHttpClient-newCall-request"><a href="#okHttpClient-newCall-request" class="headerlink" title="okHttpClient.newCall(request)"></a>okHttpClient.newCall(request)</h3><figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@Override <span class="keyword">public</span> Call <span class="keyword">new</span><span class="type">Call</span>(Request request) &#123;</span><br><span class="line">    <span class="keyword">return</span> RealCall.<span class="keyword">new</span><span class="type">RealCall</span>(<span class="built_in">this</span>, request, <span class="literal">false</span> <span class="comment">/* for web socket */</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>根据请求创建新的Call,主要起作用的是<code>newRealCall()</code></p>
+<h3 id="同步请求execute"><a href="#同步请求execute" class="headerlink" title="同步请求execute()"></a>同步请求execute()</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="keyword">public</span> Response execute() throws IOException &#123;</span><br><span class="line">    synchronized (<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (executed) <span class="keyword">throw</span> new IllegalStateException(<span class="string">"Already Executed"</span>);</span><br><span class="line">      executed = <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    captureCallStackTrace();</span><br><span class="line">    eventListener.callStart(<span class="keyword">this</span>);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      client.dispatcher().executed(<span class="keyword">this</span>);</span><br><span class="line">      Response result = getResponseWithInterceptorChain();</span><br><span class="line">      <span class="keyword">if</span> (result == <span class="literal">null</span>) <span class="keyword">throw</span> new IOException(<span class="string">"Canceled"</span>);</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">      eventListener.callFailed(<span class="keyword">this</span>, e);</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      client.dispatcher().finished(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>首先判断<code>call</code>是否执行过<code>if (executed)</code>，每个<code>call</code>只能执行一次，如果还想要一样的call，可以通过<code>clone()</code></li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@SuppressWarnings</span>(<span class="string">"CloneDoesntCallSuperClone"</span>) <span class="comment">// We are a final type &amp; this saves clearing state.</span></span><br><span class="line">  <span class="variable">@Override</span> public RealCall clone() &#123;</span><br><span class="line">    <span class="selector-tag">return</span> <span class="selector-tag">RealCall</span><span class="selector-class">.newRealCall</span>(client, originalRequest, forWebSocket);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>client.dispatcher().executed(this);</code></li>
+</ul>
+<p>执行<code>call</code>,<code>HTTP</code>请求的执行策略</p>
+<ul>
+<li><code>getResponseWithInterceptorChain();</code></li>
+</ul>
+<p>进行拦截操作，然后获得<code>HTTP</code>的返回结果</p>
+<h4 id="getResponseWithInterceptorChain源码分析"><a href="#getResponseWithInterceptorChain源码分析" class="headerlink" title="getResponseWithInterceptorChain源码分析"></a>getResponseWithInterceptorChain源码分析</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Response getResponseWithInterceptorChain() throws IOException &#123;</span><br><span class="line">    <span class="comment">// Build a full stack of interceptors.</span></span><br><span class="line">    List&lt;Interceptor&gt; interceptors = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    interceptors.addAll(<span class="keyword">client</span>.interceptors());</span><br><span class="line">    interceptors.add(retryAndFollowUpInterceptor);</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> BridgeInterceptor(<span class="keyword">client</span>.cookieJar()));</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> CacheInterceptor(<span class="keyword">client</span>.internalCache()));</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> ConnectInterceptor(<span class="keyword">client</span>));</span><br><span class="line">    <span class="keyword">if</span> (!forWebSocket) &#123;</span><br><span class="line">      interceptors.addAll(<span class="keyword">client</span>.networkInterceptors());</span><br><span class="line">    &#125;</span><br><span class="line">    interceptors.add(<span class="keyword">new</span> CallServerInterceptor(forWebSocket));</span><br><span class="line"></span><br><span class="line">    Interceptor.Chain chain = <span class="keyword">new</span> RealInterceptorChain(interceptors, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="keyword">null</span>, <span class="number">0</span>,</span><br><span class="line">        originalRequest, <span class="keyword">this</span>, eventListener, <span class="keyword">client</span>.connectTimeoutMillis(),</span><br><span class="line">        <span class="keyword">client</span>.readTimeoutMillis(), <span class="keyword">client</span>.writeTimeoutMillis());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> chain.proceed(originalRequest);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>设置拦截器集合<code>List&lt;Interceptor&gt; interceptors = new ArrayList&lt;&gt;();</code></li>
+<li>将配置<code>client</code>时候的拦截器加入集合<code>interceptors.addAll(client.interceptors());</code></li>
+<li>负责失败重试以及重定向<code>interceptors.add(retryAndFollowUpInterceptor);</code></li>
+<li>负责把用户构造的请求转换为发送到服务器的请求、把服务器返回的响应转换为用户友好的响应的<code>interceptors.add(new BridgeInterceptor(client.cookieJar()));</code></li>
+<li>负责读取缓存直接返回、更新缓存<code>interceptors.add(new CacheInterceptor(client.internalCache()));</code></li>
+<li>负责和服务器建立连接<code>interceptors.add(new ConnectInterceptor(client));</code> </li>
+<li>配置<code>OkHttpClient</code>时设置的<code>interceptors.addAll(client.networkInterceptors());</code></li>
+<li>负责向服务器发送请求数据、从服务器读取响应数据<code>interceptors.add(new CallServerInterceptor(forWebSocket));</code></li>
+</ol>
+<ul>
+<li><code>client.dispatcher().finished(this);</code></li>
+</ul>
+<p>通知<code>dispatcher</code>执行完毕</p>
+<h3 id="异步请求enqueue"><a href="#异步请求enqueue" class="headerlink" title="异步请求enqueue()"></a>异步请求<code>enqueue()</code></h3><figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span> <span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">enqueue</span><span class="params">(Callback responseCallback)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (executed) <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Already Executed"</span>);</span><br><span class="line">      executed = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    captureCallStackTrace();</span><br><span class="line">    eventListener.callStart(<span class="keyword">this</span>);</span><br><span class="line">    client.dispatcher().enqueue(<span class="keyword">new</span> AsyncCall(responseCallback));</span><br></pre></td></tr></table></figure>
+<pre><code>synchronized void enqueue(AsyncCall call) {
+if (runningAsyncCalls.size() &lt; maxRequests &amp;&amp; runningCallsForHost(call) &lt; maxRequestsPerHost) {
+  runningAsyncCalls.add(call);
+  executorService().execute(call);
+} else {
+  readyAsyncCalls.add(call);
+}
+</code></pre><p>  }<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>dispatcher</code>在当前执行的时候如果还可以执行一个并发请求，那就立刻执行,否则加入<code>runningAsyncCalls</code>队列，等待当前请求执行完成，然后再执行。</p>
+<p>其他的和同步请求一样。</p>
+<h2 id="获取返回数据"><a href="#获取返回数据" class="headerlink" title="获取返回数据"></a>获取返回数据</h2><p>在发起网络请求之后，我们就可以在<code>Response</code>中获取到返回的数据，包括状态码、状态信息、返回头、<code>responsebody</code>,返回的<code>responsebody</code>可能会非常大，所以必须要用通过数据流的方式进行访问，其他部分可以随意获取。</p>
+<p><code>responsebody</code>需要注意：</p>
+<ol>
+<li>每个<code>body</code>只能被消费一次，多次消费会报异常</li>
+<li><code>body</code>必须被关闭，不然会发生泄漏</li>
+</ol>
+<h2 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h2><p>之前的拦截器中，提到了负责缓存拦截器，所以在建立连接之前，我们应该检查相应是否被缓存、缓存是否可以用，如果是就直接返回缓存的数据，否则进行后面的步骤将返回的网络数据写进缓存。</p>
+<p>缓存的具体缓存逻辑是在OkHttp中内置封装类一个<code>Cache</code>类，利用<code>DiskLruCache</code>，按照<code>LRU</code>算法进行缓存淘汰。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>图源见水印</p>
+<center><img src="https://blog.piasy.com/img/201607/okhttp_full_process.png" alt=""></center>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/OkHttp3-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/28/OkHttp3-1/" itemprop="url">OkHttp3(1)</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-28T18:48:26+08:00">
+                2018-06-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
+<p>翻译自官网</p>
+</blockquote>
+<p>套话….</p>
+<ul>
+<li>支持http2，对一台机器的所有请求共享同一个socket </li>
+<li>内置连接池，支持连接复用，减少延迟</li>
+<li>支持透明的gzip压缩响应体</li>
+<li>通过缓存避免重复的请求 </li>
+<li>请求失败时自动重试主机的其他备用ip，自动重定向</li>
+<li>好用的API</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/28/OkHttp3-1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/28/Retrofit2-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1145,387 +1595,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/23/RxJava2-0教程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/23/RxJava2-0教程/" itemprop="url">RxJava2.0教程</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-23T10:14:30+08:00">
-                2018-05-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="本文章全部摘抄于-https-www-jianshu-com-p-464fa025229e"><a href="#本文章全部摘抄于-https-www-jianshu-com-p-464fa025229e" class="headerlink" title="本文章全部摘抄于 https://www.jianshu.com/p/464fa025229e"></a>本文章全部摘抄于 <a href="https://www.jianshu.com/p/464fa025229e" target="_blank" rel="noopener">https://www.jianshu.com/p/464fa025229e</a></h1><h1 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/RxJava1.png" alt=""></center>
-
-<p>上面的管道，我们称它为<code>上游</code>，下面的管道我们称之为<code>下游</code>。在RxJava中分别对应着<code>observable</code>(被观察者)和<code>observer</code>(观察者)。被观察者/观察者之间通过订阅(<code>subscribe()</code>)来进行关联。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/23/RxJava2-0教程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/实现双导航栏/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/14/实现双导航栏/" itemprop="url">BottomNavigationView+ViewPager+Fragment---实现双导航栏</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T09:57:16+08:00">
-                2018-05-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h1><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%8F%8C%E5%AF%BC%E8%88%AA%E6%A0%8F.gif" alt=""></center>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/05/14/实现双导航栏/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/Java基础-泛型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Wakaka">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Wakaka">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/25/Java基础-泛型/" itemprop="url">Java基础---泛型</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T18:38:42+08:00">
-                2018-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="一个问题"><a href="#一个问题" class="headerlink" title="一个问题"></a>一个问题</h1><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt; l1 = <span class="literal">new</span> ArrayList&lt;<span class="built_in">String</span>&gt;();</span><br><span class="line"><span class="built_in">List</span>&lt;<span class="built_in">Integer</span>&gt; l2 = <span class="literal">new</span> ArrayList&lt;<span class="built_in">Integer</span>&gt;();</span><br><span class="line"></span><br><span class="line">System.out.println(l1.getClass() == l2.getClass());</span><br></pre></td></tr></table></figure>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">输出：<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>ok ,反正我在写这个文章之前是不懂的，可能半桶水晃得太厉害了吧！</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/04/25/Java基础-泛型/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1571,7 +1645,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">82</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1583,8 +1657,8 @@
               
               
               <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                <a href="/tags/tags.html">
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
