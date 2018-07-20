@@ -79,23 +79,26 @@
 
 
 
-<meta name="description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta name="description" content="ActivityActivity：一种可以包含用户界面的组件，主要用于和用户进行交互。 Activity的生命周期典型情况下的生命周期什么是典型情况下的生命周期？有用户参与情况下，Activity所经过的生命周期的改变。">
 <meta name="keywords" content="读书笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android开发艺术探索---读书笔记(1)">
 <meta property="og:url" content="http://yoursite.com/2018/07/01/Android开发艺术探索-读书笔记-1/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta property="og:description" content="ActivityActivity：一种可以包含用户界面的组件，主要用于和用户进行交互。 Activity的生命周期典型情况下的生命周期什么是典型情况下的生命周期？有用户参与情况下，Activity所经过的生命周期的改变。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8BActivity%E7%9A%84%E9%87%8D%E5%BB%BA%E8%BF%87%E7%A8%8B.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B1.png">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B2.png">
+<meta property="og:image" content="http://7xigjz.com1.z0.glb.clouddn.com/binder-work-principle.jpg">
 <meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.png">
-<meta property="og:updated_time" content="2018-07-01T09:15:12.139Z">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/performTraversals%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/4334738-4384dcb0598a7502.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/480">
+<meta property="og:updated_time" content="2018-07-20T01:37:55.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android开发艺术探索---读书笔记(1)">
-<meta name="twitter:description" content="Activity的生命周期和启动模式典型情况下的生命周期">
+<meta name="twitter:description" content="ActivityActivity：一种可以包含用户界面的组件，主要用于和用户进行交互。 Activity的生命周期典型情况下的生命周期什么是典型情况下的生命周期？有用户参与情况下，Activity所经过的生命周期的改变。">
 <meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png">
 
 
@@ -331,41 +334,73 @@
       
 
       
-        <h1 id="Activity的生命周期和启动模式"><a href="#Activity的生命周期和启动模式" class="headerlink" title="Activity的生命周期和启动模式"></a>Activity的生命周期和启动模式</h1><h2 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h2><center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center>
+        <h1 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h1><p>Activity：一种可以包含用户界面的组件，主要用于和用户进行交互。</p>
+<h2 id="Activity的生命周期"><a href="#Activity的生命周期" class="headerlink" title="Activity的生命周期"></a>Activity的生命周期</h2><h3 id="典型情况下的生命周期"><a href="#典型情况下的生命周期" class="headerlink" title="典型情况下的生命周期"></a>典型情况下的生命周期</h3><p>什么是典型情况下的生命周期？<br>有用户参与情况下，Activity所经过的生命周期的改变。</p>
+<center><img src="http://p2g00vblr.bkt.clouddn.com/Activity%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt=""></center>
 
 <a id="more"></a>
 <ol>
-<li>针对一个特定的<code>Activity</code>，第一次启动的时候，回调顺序:<code>onCreate</code>-&gt;<code>onStart</code>-&gt;<code>onResume</code></li>
-<li>当用户打开新的<code>Activity</code>或者切换到桌面的时候，回调顺序:<code>onPause</code>-&gt;<code>onStop</code>。特殊情况：如果新<code>Activity</code>采用的是透明主题，那么当前<code>Activity</code>不会回调<code>onStop</code>.(是不是可以采用1px的透明像素块去保证当前应用不被杀死?)</li>
-<li>当用户再次回到原来的<code>Activity</code>时，回调顺序:<code>onRestart</code>-&gt;<code>onStart</code>-&gt;<code>onResume</code></li>
-<li>当按下<code>back</code>键的时候，回调的顺序是:<code>onPause</code>-&gt;<code>onStop</code>-&gt;<code>onDestory</code></li>
-</ol>
-<ul>
-<li><p><code>onStart</code>和<code>onResume</code>、<code>onPause</code>和<code>onStop</code>从描述上看差不多。对我们来说有什么实质性上的不同？<br>这两个配对的回调分别表示不同的意义，<code>onStart</code>和<code>onStop</code>是从<code>Activity</code>是否可见的角度来回调的，而<code>onResume</code>和<code>onPause</code>是从<code>Activity</code>是否位于前台这个角度来回调的，除了这个区别之外，使用上没有什么明显的区别。</p>
-</li>
-<li><p>假设当前Activity为<code>A</code>，如果这时用户打开一个新的Activity <code>B</code>,那么<code>B</code>的<code>onResume</code>和<code>A</code>的<code>onPause</code>那个先执行？<br>旧的<code>Activity</code>先<code>onPause</code>,然后新的<code>Activity</code>再启动。</p>
-</li>
-</ul>
-<ol>
+<li>针对一个特定的<code>Activity</code>，第一次启动的时候，回调顺序:<code>onCreate</code>–&gt;<code>onStart</code>–&gt;<code>onResume</code></li>
+<li>当用户打开新的<code>Activity</code>或者切换到桌面的时候，回调顺序:<code>onPause</code>-&gt;<code>onStop</code>。<strong>特殊情况</strong>：如果新<code>Activity</code>采用的是透明主题，那么当前<code>Activity</code>不会回调<code>onStop</code>.(是不是可以采用1px的透明像素块去保证当前应用不被杀死?)</li>
+<li>当用户再次回到原来的<code>Activity</code>时，回调顺序:<code>onRestart</code>–&gt;<code>onStart</code>–&gt;<code>onResume</code></li>
+<li>当按下<code>back</code>键的时候，回调的顺序是:<code>onPause</code>–&gt;<code>onStop</code>–&gt;<code>onDestory</code></li>
 <li>系统只在<code>Activity</code>异常终止时才会调用<code>onSaveInstanceState</code>和<code>onRestoreInstanceState</code>来存储和恢复数据，其他情况下不会触发这个过程。</li>
 <li>我们知道当系统配置发生改变之后，Activity会重建，如果不想重建的话，那么我们可以通过设置<code>android:configChanges=&quot;各种属性&quot;</code></li>
 </ol>
-<h2 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h2><h3 id="资源相关的系统配置发生改变导致Activity被杀死并重新创建"><a href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建" class="headerlink" title="资源相关的系统配置发生改变导致Activity被杀死并重新创建"></a>资源相关的系统配置发生改变导致Activity被杀死并重新创建</h3><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8BActivity%E7%9A%84%E9%87%8D%E5%BB%BA%E8%BF%87%E7%A8%8B.png" alt=""></center>
+<hr>
+<ul>
+<li><p><code>onStart</code>和<code>onResume</code>、<code>onPause</code>和<code>onStop</code>从描述上看差不多。对我们来说有什么实质性上的不同？<br>这两个配对的回调分别表示不同的意义，<code>onStart</code>和<code>onStop</code>是从<code>Activity</code><strong>是否可见</strong>的角度来回调的，而<code>onResume</code>和<code>onPause</code>是从<code>Activity</code><strong>是否位于前台</strong>这个角度来回调的，除了这个区别之外，使用上没有什么明显的区别。</p>
+</li>
+<li><p>假设当前Activity为<code>A</code>，如果这时用户打开一个新的Activity <code>B</code>,那么<code>B</code>的<code>onResume</code>和<code>A</code>的<code>onPause</code>那个先执行？<br><strong>旧的<code>Activity</code>先<code>onPause</code>,然后新的<code>Activity</code>再启动。</strong></p>
+</li>
+</ul>
+<hr>
+<h3 id="异常情况下的生命周期分析"><a href="#异常情况下的生命周期分析" class="headerlink" title="异常情况下的生命周期分析"></a>异常情况下的生命周期分析</h3><p>异常情况下的生命周期：Activity被系统回收或者由于当前设备的<code>Configuration</code>发生改变从而导致Activity被销毁重建。</p>
+<h4 id="资源相关的系统配置发生改变导致Activity被杀死并重新创建"><a href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建" class="headerlink" title="资源相关的系统配置发生改变导致Activity被杀死并重新创建"></a>资源相关的系统配置发生改变导致Activity被杀死并重新创建</h4><center><img src="http://p2g00vblr.bkt.clouddn.com/%E5%BC%82%E5%B8%B8%E6%83%85%E5%86%B5%E4%B8%8BActivity%E7%9A%84%E9%87%8D%E5%BB%BA%E8%BF%87%E7%A8%8B.png" alt=""></center>
 
 <ul>
 <li>调用<code>onSaveInstanceState</code>的时机是在<code>onStop</code>之前，和<code>onPause</code>没有既定的时序关系，既可能在<code>onPause</code>之前也有可能在其之后调用</li>
+<li><code>onSaveInstanceState</code>保存的数据已Bundle对象作为参数传递给<code>onRestoreInstanceState</code>和<code>oncreate</code>(需要进行判断)方法</li>
 <li><code>onRestoreInstanceState</code>的调用时机在<code>onStart</code>之后</li>
 </ul>
-<h3 id="资源内存不足导致低优先级的Activity被杀死"><a href="#资源内存不足导致低优先级的Activity被杀死" class="headerlink" title="资源内存不足导致低优先级的Activity被杀死"></a>资源内存不足导致低优先级的Activity被杀死</h3><p><code>Activity</code>优先级：前台<code>Activity</code> &gt; 可见但非前台<code>Activity</code> &gt; 后台<code>Activity</code></p>
-<h2 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h2><ol>
-<li><code>standard</code>标准模式</li>
-<li><code>singleTop</code>栈顶复用模式</li>
-<li><code>singleTask</code>栈内复用模式</li>
-<li><code>sigleInstance</code>单实例模式</li>
-</ol>
+<p>系统只会在Activity即将被销毁且有可能重新显示的情况下才会调用<code>onSaveInstanceState</code></p>
+<h4 id="资源内存不足导致低优先级的Activity被杀死"><a href="#资源内存不足导致低优先级的Activity被杀死" class="headerlink" title="资源内存不足导致低优先级的Activity被杀死"></a>资源内存不足导致低优先级的Activity被杀死</h4><p>Activity优先级：前台<code>Activity</code> &gt; 可见但非前台<code>Activity</code> &gt; 后台<code>Activity</code></p>
+<hr>
+<h3 id="启动模式"><a href="#启动模式" class="headerlink" title="启动模式"></a>启动模式</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">启动模式</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>standard</code></td>
+<td style="text-align:left">标准模式</td>
+<td style="text-align:left">每次启动一个Activity都会创建一个新的实例，不管这个实例是否已经存在</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>singleTop</code></td>
+<td style="text-align:left">栈顶复用模式</td>
+<td style="text-align:left">如果新的Activity已经位于任务栈的栈顶，那么此Activity不会被重新创建，同时它的onNewIntent方法会回调，通过此方法的参数可以取出当前请求的信息</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>singleTask</code></td>
+<td style="text-align:left">栈内复用模式</td>
+<td style="text-align:left">只要Activity在一个栈中存在，那么多次启动此Activity都不会重新创建实例</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>sigleInstance</code></td>
+<td style="text-align:left">单实例模式</td>
+<td style="text-align:left">Activity只单独地位于一个任务栈中</td>
+</tr>
+</tbody>
+</table>
 <p>注意：</p>
 <center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B1.png" alt=""></center><br><center><img src="http://p2g00vblr.bkt.clouddn.com/%E4%BB%BB%E5%8A%A1%E6%A0%88%E7%A4%BA%E4%BE%8B2.png" alt=""></center>
 
+<p>任务栈是什么？<br>任务相关性：TaskAffinity，标识了一个Activity所需要的任务栈的名字，默认情况下，所有Activity所需的任务栈的名字为应用的名字。</p>
 <ul>
 <li>指定启动模式有两种方式<ol>
 <li>通过<code>AndroidMenifest</code></li>
@@ -373,14 +408,38 @@
 </ol>
 </li>
 </ul>
+<h2 id="Intent"><a href="#Intent" class="headerlink" title="Intent"></a>Intent</h2><ul>
+<li><p>显式Intent</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">startActivity(<span class="name">new</span> Intent(<span class="name">AActivity</span>.this,BActivity.class))<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>隐式Intent<br>下面就是</p>
+</li>
+</ul>
 <h2 id="IntentFilter的匹配规则"><a href="#IntentFilter的匹配规则" class="headerlink" title="IntentFilter的匹配规则"></a>IntentFilter的匹配规则</h2><ul>
-<li>启动<code>Activity</code>分为两种，<code>显示调用</code>和<code>隐式调用</code>。如果一个<code>Intent</code>既是显示调用又是隐式调用的话，那么应该以显示调用为主。</li>
+<li>启动Activity分为两种，<code>显示调用</code>和<code>隐式调用</code>。如果一个<code>Intent</code>既是显示调用又是隐式调用的话，那么应该以显示调用为主。</li>
 <li>隐式调用需要<code>Intent</code>能够匹配目标组件的<code>Intentfilter</code>中设置的过滤信息。<code>IntentFilter</code>中的过滤信息有<code>action</code>,<code>category</code>,<code>data</code>.</li>
 <li><code>action</code>的匹配要求<code>Intent</code>中的<code>action</code>存在且必须和过滤规则中的其中一个<code>action</code>相同，另外，<code>action</code>区分大小写，大小写不用字符串相同的<code>action</code>会匹配失败。</li>
 <li><code>category</code>要求<code>Intent</code>中如果含有<code>category</code>，那么所有的<code>category</code>都必须和过滤规则中的其中一个<code>category</code>相同。<code>Intent</code>中可以没有<code>category</code>，仍然会匹配成功。</li>
 <li><code>data</code>的匹配规则要求<code>Intent</code>中必须含有<code>data</code>数据，并且<code>data</code>数据能够完全匹配过滤规则中的某一个<code>data</code>。</li>
 </ul>
-<h1 id="IPC机制-未完全看懂"><a href="#IPC机制-未完全看懂" class="headerlink" title="IPC机制(未完全看懂)"></a>IPC机制(未完全看懂)</h1><ol>
+<hr>
+<h1 id="Service"><a href="#Service" class="headerlink" title="Service"></a>Service</h1><p>Service：Android中实现程序后台运行的解决方案，适合去执行一些不需要和用户交互但需要长期运行的任务。(没有界面的Activity)</p>
+<h2 id="Service的生命周期"><a href="#Service的生命周期" class="headerlink" title="Service的生命周期"></a>Service的生命周期</h2><ul>
+<li>startService<br>onCreate()–&gt;onStartCommand()–&gt;startService()–&gt;stopService()/stopSelf()–&gt;onDestory()</li>
+<li>bindService<br>onCreate()–&gt;onBind()–&gt;startService()–&gt;stopService()–&gt;unBindService()–&gt;onDestory()</li>
+</ul>
+<h2 id="IntentService"><a href="#IntentService" class="headerlink" title="IntentService"></a>IntentService</h2><p>IntentService 是Service 的子类，它使用工作线程<strong>逐一处理</strong>所有启动请求，如果不要求服务同时处理多个请求，这是最好的选择。 您只需实现 onHandIntent方法即可，该方法会接收每个启动请求的 Intent，就能够执行后台工作。</p>
+<h2 id="BroadcasrReceiver"><a href="#BroadcasrReceiver" class="headerlink" title="BroadcasrReceiver"></a>BroadcasrReceiver</h2><h3 id="广播分类"><a href="#广播分类" class="headerlink" title="广播分类"></a>广播分类</h3><ul>
+<li>标准广播</li>
+<li>有序广播</li>
+</ul>
+<h3 id="广播注册方式"><a href="#广播注册方式" class="headerlink" title="广播注册方式"></a>广播注册方式</h3><ul>
+<li>静态注册</li>
+<li>动态注册(记得取消注册)</li>
+</ul>
+<h2 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a>ContentProvider</h2><p>ContentProvider主要用于在不同的应用程序之间实现数据共享的功能，提供了一套完整的机制，允许一个程序访问另一个程序中的数据，同时还能保证被访问数据的安全性。</p>
+<hr>
+<h2 id="IPC机制"><a href="#IPC机制" class="headerlink" title="IPC机制"></a>IPC机制</h2><ol>
 <li>IPC(进程间通信或者跨进程通信)<ul>
 <li>线程：CPU调度的最小单元，同时线程是一种有限的系统资源</li>
 <li>进程：指一个执行单元，在PC和移动设备上指一个程序或者一个应用。</li>
@@ -394,34 +453,91 @@
 <li>Application会多次创建</li>
 </ul>
 </li>
-<li>实现序列化的几种方式<ul>
-<li><code>Serializable</code>接口(首先静态成员属于类不属于对象，所以不会参与序列化过程；其次用transient关键字标记的成员变量不会参与序列化过程)（使用简单但是开销大适用于储存或者网络传输）</li>
-<li><code>Parcelable</code>接口（使用麻烦但是效率很高，主要用在内存序列化上）</li>
-<li>Binder</li>
-</ul>
-</li>
-<li>Android中的IPC方式<ul>
-<li>使用Bundle</li>
-<li>使用文件共享</li>
-<li>使用Messenger</li>
-<li>使用AIDL</li>
-<li>使用ContentProvider</li>
-<li>使用Socket</li>
-<li>Binder连接池<br>|名称|优点|缺点|使用场景|<br>|:—:|:—:|:—:|:—:|<br>|Bundle|简单易用|只能传输Bundle支持的数据类型|四大组件间的进程间通信|<br>|文件共享|简单易用|不适合高并发场景，并且无法做到进程间的即时通信|无并发访问情形，交换简单的数据实时性不高的场景|<br>|AIDL|功能强大，支持一对多并发通信，支持实时通信|使用较复杂，需要处理好线程同步|一对多通信且有RPC需求|<br>|Messenger|功能一般，支持一对多串行通信，支持实时通信|不能很好处理高并发情形，不支持RPC，数据通过Message进行传输，因此只能传输Bundle支持的数据类型|低并发的一对多即时通信，无RPC需求，或者无需要返回结果的RPC需求|<br>|ContntProvider|在数据源访问方面功能强大，支持一对多并发数据共享，可通过Call方法扩展其他操作|可以理解为受约束的AIDL，主要提供数据源的CRUD操作|一对多的进程间的数据共享|<br>|Socket|功能强大，可以通过网络传输字节流，支持一对多并发实时通信|实现细节稍微有点繁琐，不支持直接RPC|网络数据交换|</li>
-</ul>
-</li>
 </ol>
-<h1 id="View的事件体系"><a href="#View的事件体系" class="headerlink" title="View的事件体系"></a>View的事件体系</h1><ol>
-<li><code>View</code>是<code>Android</code>中所有控件的基类，不管是简单的<code>Button</code>和<code>TextView</code>还是复杂的<code>RelativeLayout</code>和<code>ListView</code>,它们共同的基类都是<code>View</code>。</li>
-<li><code>TouchSlop</code>是系统所能识别出的被认为是滑动的最小距离，换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操作。</li>
+<hr>
+<h3 id="实现序列化的几种方式"><a href="#实现序列化的几种方式" class="headerlink" title="实现序列化的几种方式"></a>实现序列化的几种方式</h3><ul>
+<li><code>Serializable</code>接口<ul>
+<li>首先静态成员属于类不属于对象，所以不会参与序列化过程；</li>
+<li>其次用transient关键字标记的成员变量不会参与序列化过程</li>
+<li>使用简单但是开销大适用于储存或者网络传输</li>
+<li>只需要在类的声明中指定一个类似下面的标识即可自动实现默认的序列化过程</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">8711368828010083044</span>L;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>serialVersionUID工作机制：序列化的时候系统会把当前类的serialVersionUID写入序列化的文件中(或者其他中介中)，当反序列化的时候系统会检测文件中的serialVersionUID，看它是否和当前类的serialVersionUID一致，如果一致就说明序列化的类的版本和当前类的版本是相同的，可以成功序列化，否则说明当前类和序列化的类相比发生了某些变换，无法正常序列化。</li>
+<li><code>Parcelable</code>接口<ul>
+<li>使用麻烦但是效率很高，主要用在内存序列化上</li>
+</ul>
+</li>
+<li>Binder<br><center><img src="http://7xigjz.com1.z0.glb.clouddn.com/binder-work-principle.jpg" alt=""></center><pre><code>- 当客户端发起请求时，由于当前线程会被挂起直至服务端进程返回数据，所以如果一个线程方法是耗时的，那么不能在UI中发起此远程请求
+- 由于服务端的Binder方法运行在Binder的线程池中，所以Binder方法不管是否耗时都应该采用同步的方式去实现，因为它已经运行在一个线程中了。
+- Binder提供了`linkToDeath`和`unlinkToDeath`
+</code></pre></li>
+</ul>
+<hr>
+<h3 id="Android中的IPC方式"><a href="#Android中的IPC方式" class="headerlink" title="Android中的IPC方式"></a>Android中的IPC方式</h3><p>Android中Activity、Service、BroadcastReceiver都支持在Intent中传递Bundle数据。</p>
+<p>Bundle、文件共享、Messenger、AIDL、ContentProvider、Socket、Binder连接池</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+<th style="text-align:center">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Bundle</td>
+<td style="text-align:center">简单易用</td>
+<td style="text-align:center">只能传输Bundle支持的数据类型</td>
+<td style="text-align:center">四大组件间的进程间通信</td>
+</tr>
+<tr>
+<td style="text-align:center">文件共享</td>
+<td style="text-align:center">简单易用</td>
+<td style="text-align:center">不适合高并发场景，并且无法做到进程间的即时通信</td>
+<td style="text-align:center">无并发访问情形，交换简单的数据实时性不高的场景</td>
+</tr>
+<tr>
+<td style="text-align:center">AIDL</td>
+<td style="text-align:center">功能强大，支持一对多并发通信，支持实时通信</td>
+<td style="text-align:center">使用较复杂，需要处理好线程同步</td>
+<td style="text-align:center">一对多通信且有RPC需求</td>
+</tr>
+<tr>
+<td style="text-align:center">Messenger</td>
+<td style="text-align:center">功能一般，支持一对多串行通信，支持实时通信</td>
+<td style="text-align:center">不能很好处理高并发情形，不支持RPC，数据通过Message进行传输，因此只能传输Bundle支持的数据类型</td>
+<td style="text-align:center">低并发的一对多即时通信，无RPC需求，或者无需要返回结果的RPC需求</td>
+</tr>
+<tr>
+<td style="text-align:center">ContntProvider</td>
+<td style="text-align:center">在数据源访问方面功能强大，支持一对多并发数据共享，可通过Call方法扩展其他操作</td>
+<td style="text-align:center">可以理解为受约束的AIDL，主要提供数据源的CRUD操作</td>
+<td style="text-align:center">一对多的进程间的数据共享</td>
+</tr>
+<tr>
+<td style="text-align:center">Socket</td>
+<td style="text-align:center">功能强大，可以通过网络传输字节流，支持一对多并发实时通信</td>
+<td style="text-align:center">实现细节稍微有点繁琐，不支持直接RPC</td>
+<td style="text-align:center">网络数据交换</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="View的事件体系"><a href="#View的事件体系" class="headerlink" title="View的事件体系"></a>View的事件体系</h2><ol>
+<li>View是<code>Android</code>中所有控件的基类，不管是简单的<code>Button</code>和<code>TextView</code>还是复杂的<code>RelativeLayout</code>和<code>ListView</code>,它们共同的基类都是<code>View</code>。</li>
+<li>TouchSlop是系统所能识别出的被认为是滑动的最小距离，换句话说，当手指在屏幕上滑动时，如果两次滑动之间的距离小于这个常量，那么系统就不认为你是在进行滑动操作。</li>
 <li>MotionEvent事件类型<ul>
 <li><code>ACTION_DOWN</code>:手指刚接触屏幕</li>
 <li><code>ACTION_MOVE</code>:手指在屏幕上移动</li>
 <li><code>ACTION_UP</code>:手指从屏幕上松开的一瞬间</li>
 </ul>
 </li>
-<li><p>三种滑动方式</p>
-<ul>
+<li>三种滑动方式<ul>
 <li>使用<code>scrollTo</code>/<code>scrollBy</code>(scrollTo:绝对滑动，scrollBy:相对滑动)</li>
 <li>使用动画(操作View的<code>translationX</code>和<code>translationY</code>)</li>
 <li>改变布局参数(改变LayoutParams)</li>
@@ -455,8 +571,7 @@
 </tbody>
 </table>
 <ol>
-<li><p>弹性滑动</p>
-<ul>
+<li>弹性滑动<ul>
 <li>使用<code>Scroller</code>(调用invalidate方法导致重绘，再去调用computeScoll)<ul>
 <li>Scroller本身并不能实现View的滑动，它需要配合View的computeScroll方法才能完成弹性滑动的效果，它不断地让View重绘，而每一次重绘距滑动起始时间会有一个时间间隔，通过这个时间间隔scroll就可以得出View当前的滑动位置，知道了滑动位置就可以通过scrollTo方法来完成View的滑动。就这样，View的每一次重绘都会导致View进行小幅度的滑动，而多次的小幅度滑动就组成了弹性滑动，这就是Scroller的工作机制。</li>
 </ul>
@@ -465,14 +580,16 @@
 <li>使用延时策略(使用Handler或View的postDelayed方法，也可以使用线程的sleep方法)</li>
 </ul>
 </li>
+</ol>
+<ol>
 <li>View的事件分发机制</li>
 </ol>
 <center><img src="http://p2g00vblr.bkt.clouddn.com/View%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6.png" alt=""></center>
 
 <ul>
-<li><code>dispatchTouchEvent</code>(进行事件分发)</li>
-<li><code>onInterceptTouchEvent</code>(是否拦截某个事件)</li>
-<li><code>onTouchEvent</code>(处理点击事件)</li>
+<li>dispatchTouchEvent(进行事件分发)</li>
+<li>onInterceptTouchEvent(是否拦截某个事件)</li>
+<li>onTouchEvent(处理点击事件)</li>
 </ul>
 <figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">boolean</span> <span class="title">dispatchTouvhEvent</span><span class="params">(MotionEvent ev)</span></span>&#123;</span><br><span class="line">    <span class="keyword">boolean</span> consume = <span class="keyword">false</span>;</span><br><span class="line">    <span class="keyword">if</span>(onInterceptTouchEvent(ev))&#123;</span><br><span class="line">        consume = onTouchEvent(ev);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        consume = child.dispatchTouchEvent(ev);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> consume;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
@@ -481,17 +598,114 @@
 <li>正常情况下一个事件序列只能被一个<code>View</code>拦截且消耗，特殊情况下可以被其他<code>View</code>消耗</li>
 <li>某个<code>View</code>一旦决定拦截，那么这个事件序列只能由它来处理，并且它的<code>onInterceptTouchEvent</code>不会再被调用。</li>
 <li>某个<code>View</code>一旦开始处理事件，如果<code>onTouchEvent</code>返回了<code>false</code>，那么同一个时间序列中的其他事件都不会再交给它来处理，并且事件将重新交给它的父元素来处理，即父元素的<code>onTouchEvent</code>会被调用。</li>
-<li><code>ViewGroup</code>默认不拦截任何事件（<code>onInterceptTouchEvent</code>方法默认返回<code>false</code>）</li>
-<li><code>view</code>没有拦截方法，只有处理方法。</li>
-<li><code>view</code>的<code>onTouchEvent</code>默认返回<code>true</code>,除非它不可点击。</li>
+<li>ViewGroup默认不拦截任何事件（<code>onInterceptTouchEvent</code>方法默认返回<code>false</code>）</li>
+<li>view没有拦截方法，只有处理方法。</li>
+<li>view的<code>onTouchEvent</code>默认返回<code>true</code>,除非它不可点击。</li>
 <li>事件传递过程是由外向内的，即事件总是先传递给父元素，然后再由父元素分发给子View。</li>
 </ul>
 <ol>
-<li><p>View的滑动冲突</p>
-<ul>
+<li>View的滑动冲突<ul>
 <li>解决方式(外部拦截法，内部拦截法)</li>
 </ul>
 </li>
+</ol>
+<hr>
+<h2 id="View的工作原理"><a href="#View的工作原理" class="headerlink" title="View的工作原理"></a>View的工作原理</h2><ol>
+<li>ViewRootImpl,连接<code>WindowManager</code>和<code>DecorView</code>的纽带</li>
+<li>View的三大流程均是通过<code>ViewRoot</code>来完成的</li>
+<li>当<code>Activity</code>对象被创建完毕后，会将<code>DecorView</code>添加到<code>Window</code>中，同时会创建<code>ViewRootImpl</code>对象，并将<code>ViewRootImpl</code>对象和<code>DecorView</code>建立关联<center><img src="http://p2g00vblr.bkt.clouddn.com/performTraversals%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%9B%BE.png" alt=""></center></li>
+<li>理解MeasureSpec(<code>SpecMode</code>+<code>SpecSize</code>)<ul>
+<li>SpecMode:</li>
+<li><code>UNSPECIFIED</code>(不对View有任何限制)；</li>
+<li><code>EXACTL</code>(精确大小)：match_parent/给定大小</li>
+<li><code>AT_MOST</code>(不大于给定大小)：wrap_content</li>
+</ul>
+</li>
+<li>View的工作流程<ul>
+<li>measure过程<br>  <code>View</code>的<code>measure</code>过程–&gt;<code>ViewGroup</code>的<code>measure</code>过程</li>
+<li>layout过程</li>
+<li>draw过程<br>  绘制背景–&gt;绘制自身–&gt;绘制<code>child</code>–&gt;绘制<code>scrollbars</code></li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="Android的Drawable"><a href="#Android的Drawable" class="headerlink" title="Android的Drawable"></a>Android的Drawable</h2><h3 id="Drawable的分类"><a href="#Drawable的分类" class="headerlink" title="Drawable的分类"></a>Drawable的分类</h3><p>BitmapDrawable、ShapeDrawable、LayerDrawable、StateListDrawable、LevelListDrawable、TransitionDrawable、InsertDrawable、ScaleDrawable、ClipDrawble</p>
+<h2 id="Android动画深入分析"><a href="#Android动画深入分析" class="headerlink" title="Android动画深入分析"></a>Android动画深入分析</h2><h3 id="View动画的种类"><a href="#View动画的种类" class="headerlink" title="View动画的种类"></a>View动画的种类</h3><p><code>TranslateAnimation</code>平移动画、<code>ScaleAnimation</code>缩放动画、<code>RotateAnimatoin</code>旋转动画、<code>AlphaAnimation</code>透明度动画</p>
+<h3 id="属性动画"><a href="#属性动画" class="headerlink" title="属性动画"></a>属性动画</h3><h3 id="使用动画的注意事项"><a href="#使用动画的注意事项" class="headerlink" title="使用动画的注意事项"></a>使用动画的注意事项</h3><p>OOM问题(避免使用帧动画)、内存泄漏(退出时及时停止)、兼容性问题、View动画的问题、不要使用px(使用dp)、动画元素的交互、硬件加速</p>
+<hr>
+<h2 id="Android的消息机制"><a href="#Android的消息机制" class="headerlink" title="Android的消息机制"></a>Android的消息机制</h2><ol>
+<li>Android的消息机制主要是指<code>Handler</code>的运行机制，Handler的运行需要底层的<code>MessageQueue</code>和<code>Looper</code>的支撑。</li>
+<li>MessageQueue：内部存储了一组消息，以<em>队列</em>的形式对外提供插入和删除的工作。内部存储结构是采用<em>单链表</em>的数据结构存储消息列表的。</li>
+<li>Looper：消息循环，因为<em>MessageQueue</em>只是一个消息的存储单元，不能处理消息。Looper以无限循环的形式去查找有新的消息，如果有的话就去处理消息，否则就一直等待着。</li>
+<li>ThreadLocal作用是可以在每个线程中存储数据，Handler创建的时候会采用当前线程的Looper来构造消息循环系统，那么Handler内部如何获取到当前线程的Looper？使用ThreadLocal。ThreadLocal可以在不停线程中互不干扰的存储并提供数据，通过ThreadLocal可以轻松地获取每个线程的Looper。</li>
+<li>线程是默认没有Looper的，如果需要使用<code>Handler</code>就必须为线程创建<code>Looper</code>.但是主线程中默认初始化<code>Looper</code>.</li>
+</ol>
+<h3 id="Android的消息机制概述"><a href="#Android的消息机制概述" class="headerlink" title="Android的消息机制概述"></a>Android的消息机制概述</h3><ol>
+<li>Handler的主要作用是将一个任务切换到某个指定的线程中去执行，为了解决子线程中无法访问UI的矛盾。</li>
+<li>UI线程不安全，为什么不加锁？第一，加上锁机制会让UI访问的逻辑变得复杂，第二锁机制会降低UI访问的效率。</li>
+</ol>
+<h3 id="Android的消息机制分析"><a href="#Android的消息机制分析" class="headerlink" title="Android的消息机制分析"></a>Android的消息机制分析</h3><h4 id="ThreadLocal"><a href="#ThreadLocal" class="headerlink" title="ThreadLocal"></a>ThreadLocal</h4><ol>
+<li>ThreadLocal是一个线程内部的数据存储类，通过它可以再指定的线程中存储数据，数据存储以后，只有在指定线程中可以获取到存储的数据，对于其他线程来说是无法获取到数据的。</li>
+<li>一般来说，当某些数据以线程为作用域并且不同线程具有不同数据副本的时候可以考虑采用ThreadLocal</li>
+<li>另一个场景就是复杂逻辑下的对象传递，比如监听器的传递。</li>
+</ol>
+<h4 id="消息队列的工作原理"><a href="#消息队列的工作原理" class="headerlink" title="消息队列的工作原理"></a>消息队列的工作原理</h4><ol>
+<li>MessageQueue主要包含两个操作：插入和读取</li>
+<li>内部实现是通过一个单链表的数据结构来维护消息列表</li>
+</ol>
+<h4 id="Looper的工作原理"><a href="#Looper的工作原理" class="headerlink" title="Looper的工作原理"></a>Looper的工作原理</h4><ol>
+<li>它会不停地从<code>MessageQueue</code>中查看是否有新的消息，如果有新的消息就会立刻处理，否则就一直阻塞在那里。</li>
+<li>Handler的工作需要<code>Looper</code>,没有<code>Looper</code>的线程就会报错，通过<code>Looper.prepare()</code>即可为当前线程创建一个<code>Looper</code>,接着通过<code>Looper.loop()</code>来开启循环</li>
+</ol>
+<h4 id="Handler的工作原理"><a href="#Handler的工作原理" class="headerlink" title="Handler的工作原理"></a>Handler的工作原理</h4><ol>
+<li>主要工作：消息的发送和接收过程(发送：post、send)</li>
+<li>Handler发送消息—&gt;向消息队列中插入了一条消息—&gt;MessageQueue的next方法会返回这条消息给Looper—&gt;Looper收到消息后就开始处理—&gt;最终消息由Looper交由Handler处理，即Handler的dispatchMessage方法会被调用—&gt;Handler进入处理消息的阶段 </li>
+</ol>
+<center><img src="http://upload-images.jianshu.io/upload_images/4334738-4384dcb0598a7502.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/480" alt=""></center>
+
+<h2 id="Bitmap的加载和Cache"><a href="#Bitmap的加载和Cache" class="headerlink" title="Bitmap的加载和Cache"></a>Bitmap的加载和Cache</h2><h3 id="Bitmap的高效加载"><a href="#Bitmap的高效加载" class="headerlink" title="Bitmap的高效加载"></a>Bitmap的高效加载</h3><ol>
+<li>将<code>BitmapFactory.Options</code>的<code>inJustDecodeBounds</code>参数设为<code>true</code>并加载图片(不会真正加载)</li>
+<li>从<code>BitmapFactory.Options</code>中取出图片的原始宽高信息，他们对应于<code>outWidth</code>和<code>outHeight</code>参数</li>
+<li>根据采样率的规则并合并目标<code>View</code>的所需大小计算出采样率<code>inSampleSize</code></li>
+<li>将<code>BitmapFactory.Options</code>的<code>inJustDecodeBounds</code>参数设为<code>false</code>，然后重新加载图片</li>
+</ol>
+<h3 id="Android中的缓存策略"><a href="#Android中的缓存策略" class="headerlink" title="Android中的缓存策略"></a>Android中的缓存策略</h3><p>LruCache、DiskLruCache</p>
+<h2 id="优化技术"><a href="#优化技术" class="headerlink" title="优化技术"></a>优化技术</h2><h3 id="布局优化"><a href="#布局优化" class="headerlink" title="布局优化"></a>布局优化</h3><ol>
+<li>删除无用的控件和层级</li>
+<li>有选择地使用性能较低的ViewGroup(RelativeLayout)</li>
+<li>采用<include>标签、<merge>标签和ViewStub</merge></include></li>
+</ol>
+<h3 id="绘制优化-避免在onDraw方法中执行大量操作"><a href="#绘制优化-避免在onDraw方法中执行大量操作" class="headerlink" title="绘制优化(避免在onDraw方法中执行大量操作)"></a>绘制优化(避免在onDraw方法中执行大量操作)</h3><ol>
+<li><code>onDraw</code>中不要创建新的布局对象</li>
+<li><code>onDraw</code>方法中不要做耗时的任务，也不能执行成千上万次的循环操作</li>
+</ol>
+<h3 id="内存泄漏优化"><a href="#内存泄漏优化" class="headerlink" title="内存泄漏优化"></a>内存泄漏优化</h3><ol>
+<li>开发过程避免写出有内存泄漏的代码<ul>
+<li>静态变量导致的内存泄漏</li>
+<li>单例模式导致的内存泄漏</li>
+<li>属性动画导致的内存泄漏</li>
+</ul>
+</li>
+<li>借助工具</li>
+</ol>
+<h3 id="响应速度优化和ANR日志分析"><a href="#响应速度优化和ANR日志分析" class="headerlink" title="响应速度优化和ANR日志分析"></a>响应速度优化和ANR日志分析</h3><h3 id="ListView和Bitmap优化"><a href="#ListView和Bitmap优化" class="headerlink" title="ListView和Bitmap优化"></a>ListView和Bitmap优化</h3><ol>
+<li>采用<code>ViewHolder</code>并避免在<code>getView</code>中执行耗时操作</li>
+<li>根据列表的滑动状态来控制任务的执行频率</li>
+<li>尝试开启硬件加速来是<code>ListView</code>的滑动更加顺畅</li>
+<li>通过<code>BitmapFactory.Options</code>来根据需要对图片进行采样</li>
+<li>采样过程中主要用到<code>BitmapFactory.Options</code>的<code>inSampleSize</code>参数</li>
+</ol>
+<h3 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h3><ol>
+<li>采用线程池，避免程序中存在大量的<code>Thread</code>.</li>
+</ol>
+<h3 id="优化建议"><a href="#优化建议" class="headerlink" title="优化建议"></a>优化建议</h3><ol>
+<li>避免创建过多地对象</li>
+<li>不要过多使用枚举，枚举占用的内存空间要比整形大</li>
+<li>常量请使用<code>static final</code>来修饰</li>
+<li>使用一些<code>Android</code>特有的数据结构，比如<code>SparseArray</code>和<code>Pair</code>等，它们具有更好的性能</li>
+<li>适当使用软引用和弱引用</li>
+<li>采用内存缓存和磁盘缓存</li>
+<li>尽量采用静态内部类，这样可以避免潜在的由于内部内而导致的内存泄漏</li>
 </ol>
 
       
@@ -533,8 +747,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/01/Android开发艺术探索-读书笔记-2/" rel="prev" title="Android开发艺术探索---读书笔记(2)">
-                Android开发艺术探索---读书笔记(2) <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/04/设计模式-1/" rel="prev" title="设计模式(1)">
+                设计模式(1) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -617,7 +831,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -668,7 +882,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity的生命周期和启动模式"><span class="nav-number">1.</span> <span class="nav-text">Activity的生命周期和启动模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#典型情况下的生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">典型情况下的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建"><span class="nav-number">1.2.1.</span> <span class="nav-text">资源相关的系统配置发生改变导致Activity被杀死并重新创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#资源内存不足导致低优先级的Activity被杀死"><span class="nav-number">1.2.2.</span> <span class="nav-text">资源内存不足导致低优先级的Activity被杀死</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动模式"><span class="nav-number">1.3.</span> <span class="nav-text">启动模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentFilter的匹配规则"><span class="nav-number">1.4.</span> <span class="nav-text">IntentFilter的匹配规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IPC机制-未完全看懂"><span class="nav-number">2.</span> <span class="nav-text">IPC机制(未完全看懂)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#View的事件体系"><span class="nav-number">3.</span> <span class="nav-text">View的事件体系</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Activity"><span class="nav-number">1.</span> <span class="nav-text">Activity</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity的生命周期"><span class="nav-number">1.1.</span> <span class="nav-text">Activity的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#典型情况下的生命周期"><span class="nav-number">1.1.1.</span> <span class="nav-text">典型情况下的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常情况下的生命周期分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">异常情况下的生命周期分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#资源相关的系统配置发生改变导致Activity被杀死并重新创建"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">资源相关的系统配置发生改变导致Activity被杀死并重新创建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#资源内存不足导致低优先级的Activity被杀死"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">资源内存不足导致低优先级的Activity被杀死</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动模式"><span class="nav-number">1.1.3.</span> <span class="nav-text">启动模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Intent"><span class="nav-number">1.2.</span> <span class="nav-text">Intent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentFilter的匹配规则"><span class="nav-number">1.3.</span> <span class="nav-text">IntentFilter的匹配规则</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Service"><span class="nav-number">2.</span> <span class="nav-text">Service</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Service的生命周期"><span class="nav-number">2.1.</span> <span class="nav-text">Service的生命周期</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IntentService"><span class="nav-number">2.2.</span> <span class="nav-text">IntentService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BroadcasrReceiver"><span class="nav-number">2.3.</span> <span class="nav-text">BroadcasrReceiver</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#广播分类"><span class="nav-number">2.3.1.</span> <span class="nav-text">广播分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#广播注册方式"><span class="nav-number">2.3.2.</span> <span class="nav-text">广播注册方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ContentProvider"><span class="nav-number">2.4.</span> <span class="nav-text">ContentProvider</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IPC机制"><span class="nav-number">2.5.</span> <span class="nav-text">IPC机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现序列化的几种方式"><span class="nav-number">2.5.1.</span> <span class="nav-text">实现序列化的几种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的IPC方式"><span class="nav-number">2.5.2.</span> <span class="nav-text">Android中的IPC方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View的事件体系"><span class="nav-number">2.6.</span> <span class="nav-text">View的事件体系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View的工作原理"><span class="nav-number">2.7.</span> <span class="nav-text">View的工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android的Drawable"><span class="nav-number">2.8.</span> <span class="nav-text">Android的Drawable</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Drawable的分类"><span class="nav-number">2.8.1.</span> <span class="nav-text">Drawable的分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android动画深入分析"><span class="nav-number">2.9.</span> <span class="nav-text">Android动画深入分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View动画的种类"><span class="nav-number">2.9.1.</span> <span class="nav-text">View动画的种类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#属性动画"><span class="nav-number">2.9.2.</span> <span class="nav-text">属性动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用动画的注意事项"><span class="nav-number">2.9.3.</span> <span class="nav-text">使用动画的注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Android的消息机制"><span class="nav-number">2.10.</span> <span class="nav-text">Android的消息机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android的消息机制概述"><span class="nav-number">2.10.1.</span> <span class="nav-text">Android的消息机制概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android的消息机制分析"><span class="nav-number">2.10.2.</span> <span class="nav-text">Android的消息机制分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ThreadLocal"><span class="nav-number">2.10.2.1.</span> <span class="nav-text">ThreadLocal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息队列的工作原理"><span class="nav-number">2.10.2.2.</span> <span class="nav-text">消息队列的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Looper的工作原理"><span class="nav-number">2.10.2.3.</span> <span class="nav-text">Looper的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Handler的工作原理"><span class="nav-number">2.10.2.4.</span> <span class="nav-text">Handler的工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bitmap的加载和Cache"><span class="nav-number">2.11.</span> <span class="nav-text">Bitmap的加载和Cache</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bitmap的高效加载"><span class="nav-number">2.11.1.</span> <span class="nav-text">Bitmap的高效加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android中的缓存策略"><span class="nav-number">2.11.2.</span> <span class="nav-text">Android中的缓存策略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化技术"><span class="nav-number">2.12.</span> <span class="nav-text">优化技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#布局优化"><span class="nav-number">2.12.1.</span> <span class="nav-text">布局优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制优化-避免在onDraw方法中执行大量操作"><span class="nav-number">2.12.2.</span> <span class="nav-text">绘制优化(避免在onDraw方法中执行大量操作)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存泄漏优化"><span class="nav-number">2.12.3.</span> <span class="nav-text">内存泄漏优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#响应速度优化和ANR日志分析"><span class="nav-number">2.12.4.</span> <span class="nav-text">响应速度优化和ANR日志分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ListView和Bitmap优化"><span class="nav-number">2.12.5.</span> <span class="nav-text">ListView和Bitmap优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程优化"><span class="nav-number">2.12.6.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化建议"><span class="nav-number">2.12.7.</span> <span class="nav-text">优化建议</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
