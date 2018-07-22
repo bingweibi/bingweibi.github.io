@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="性能优化," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="性能优化的目标 流畅的体验 稳定 省电/流量 安装包小  如何达到目标当然是性能优化啦！ 布局优化 如果父控件有颜色，同时也是自己需要的颜色，那么就不必在子控件加背景颜色 如果每个子控件的颜色不太一样，而且可以完全覆盖父控件，那么就不需要再父控件上加背景颜色 尽量减少不必要的嵌套 能用LinearLayout和FrameLayout，就不要用RelativeLayout，因为RelativeLay">
+<meta name="keywords" content="性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android性能优化">
+<meta property="og:url" content="http://yoursite.com/2018/07/22/Android性能优化/index.html">
+<meta property="og:site_name" content="Wakaka">
+<meta property="og:description" content="性能优化的目标 流畅的体验 稳定 省电/流量 安装包小  如何达到目标当然是性能优化啦！ 布局优化 如果父控件有颜色，同时也是自己需要的颜色，那么就不必在子控件加背景颜色 如果每个子控件的颜色不太一样，而且可以完全覆盖父控件，那么就不需要再父控件上加背景颜色 尽量减少不必要的嵌套 能用LinearLayout和FrameLayout，就不要用RelativeLayout，因为RelativeLay">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-22T08:38:14.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android性能优化">
+<meta name="twitter:description" content="性能优化的目标 流畅的体验 稳定 省电/流量 安装包小  如何达到目标当然是性能优化啦！ 布局优化 如果父控件有颜色，同时也是自己需要的颜色，那么就不必在子控件加背景颜色 如果每个子控件的颜色不太一样，而且可以完全覆盖父控件，那么就不需要再父控件上加背景颜色 尽量减少不必要的嵌套 能用LinearLayout和FrameLayout，就不要用RelativeLayout，因为RelativeLay">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"hide","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/07/22/Android性能优化/"/>
+
+
+
+
+
+  <title>Android性能优化 | Wakaka</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	
+	<a href="https://github.com/bingweibi">
+	<img style="position: absolute; top: 0; right: 0; border: 0;" 
+	src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" 
+	alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Wakaka</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">路漫漫其修远兮，吾将上下而求索</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/22/Android性能优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Wakaka">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Wakaka">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android性能优化</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-22T16:37:15+08:00">
+                2018-07-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="性能优化的目标"><a href="#性能优化的目标" class="headerlink" title="性能优化的目标"></a>性能优化的目标</h1><ul>
+<li>流畅的体验</li>
+<li>稳定</li>
+<li>省电/流量</li>
+<li>安装包小</li>
+</ul>
+<h1 id="如何达到目标"><a href="#如何达到目标" class="headerlink" title="如何达到目标"></a>如何达到目标</h1><p>当然是性能优化啦！</p>
+<h2 id="布局优化"><a href="#布局优化" class="headerlink" title="布局优化"></a>布局优化</h2><ol>
+<li>如果父控件有颜色，同时也是自己需要的颜色，那么就不必在子控件加背景颜色</li>
+<li>如果每个子控件的颜色不太一样，而且可以完全覆盖父控件，那么就不需要再父控件上加背景颜色</li>
+<li>尽量减少不必要的嵌套</li>
+<li>能用LinearLayout和FrameLayout，就不要用RelativeLayout，因为RelativeLayout控件相对比较复杂，测绘也想要耗时</li>
+<li>使用include和merge增加复用，减少层级</li>
+<li>ViewStub按需加载，更加轻便</li>
+<li>复杂界面可选择ConstraintLayout，可有效减少层级</li>
+</ol>
+<a id="more"></a>
+<p>include 可以提高布局的复用性，方便开发，有人说这个没有减少布局的嵌套吧，对，include确实没有，但是include需要和merge搭配</p>
+<p>merge 的布局取决于父控件是哪个布局，使用merge相当于减少了自身的一层布局，直接采用父include的布局，当然直接在父布局里面使用意义不大，所以会和include配合使用，既增加了布局的复用性，也减少了一层布局嵌套。</p>
+<p>ViewStub 它可以按需加载，什么意思？用到时再加载，不用时就想静静。对于一些进度条，提示信息等等长时间才用一次的功能，使用ViewStub是极其合适的。</p>
+<h2 id="绘制优化"><a href="#绘制优化" class="headerlink" title="绘制优化"></a>绘制优化</h2><ol>
+<li>onDraw中不要创建新的局部对象</li>
+<li>onDraw方法中不要做耗时的任务</li>
+</ol>
+<h2 id="内存优化"><a href="#内存优化" class="headerlink" title="内存优化"></a>内存优化</h2><p>内存泄漏指的是程序不再使用的对象无法被GC识别，这样就会导致这个对象一直留在内存当中，占用内存空间。</p>
+<p>造成内存泄漏的对象存在于</p>
+<ol>
+<li>集合类泄漏</li>
+<li>单例/静态变量造成的内存泄漏</li>
+<li>匿名内部类/非静态内部类</li>
+<li>资源未关闭造成的内存泄漏</li>
+</ol>
+<h2 id="启动速度优化"><a href="#启动速度优化" class="headerlink" title="启动速度优化"></a>启动速度优化</h2><p>app启动分为冷启动（Cold start）、热启动（Hot start）和温启动（Warm start）三种。</p>
+<ul>
+<li>冷启动（Cold start）<br>冷启动是指应用程序从头开始：系统的进程在此开始之前没有创建应用程序。冷启动发生在诸如自设备启动以来首次启动应用程序或自系统终止应用程序以来。</li>
+<li>热启动（Hot start）<br>在一个热启动中，系统都会把你的Activity带到前台。如果应用程序的Activity仍然驻留在内存中，那么应用程序可以避免重复对象初始化、布局加载和渲染。</li>
+<li>温启动（Warm start）<br>温启动包含了冷启动时发生的一些操作，与此同时，它表示的开销比热启动少，有许多潜在的状态可以被认为是温暖的开始。</li>
+</ul>
+<p>启动中优化的建议</p>
+<ol>
+<li>利用提前展示出来的Window，快速展示出来一个界面，给用户快速反馈的体验</li>
+<li>避免在启动时做密集沉重的初始化（Heavy app initialization）</li>
+<li>避免I/O操作、反序列化、网络操作、布局嵌套等</li>
+</ol>
+<h2 id="安装包优化"><a href="#安装包优化" class="headerlink" title="安装包优化"></a>安装包优化</h2><ul>
+<li>删除无用的资源</li>
+<li>自己用XML写Drawable，图片占用空间较小</li>
+<li>重用资源</li>
+<li>压缩PNG和JPEG文件</li>
+<li>使用WebP文件格式</li>
+<li>使用矢量图形</li>
+<li>代码混淆</li>
+<li>插件化<br>比如功能模块放在服务器上，按需下载，可以减少安装包大小</li>
+</ul>
+<h2 id="耗电优化"><a href="#耗电优化" class="headerlink" title="耗电优化"></a>耗电优化</h2><p>谷歌的做法，并没什么感觉</p>
+<ul>
+<li>使用JobScheduler调度任务</li>
+<li>懒惰法则</li>
+</ul>
+<p>谷歌推荐使用JobScheduler，来调整任务优先级等策略来达到降低损耗的目的。JobScheduler可以避免频繁的唤醒硬件模块，造成不必要的电量消耗。避免在不合适的时间(例如低电量情况下、弱网络或者移动网络情况下的)执行过多的任务消耗电量。</p>
+<p>具体功能：</p>
+<ol>
+<li>可以推迟的非面向用户的任务(如定期数据库数据更新)；</li>
+<li>当充电时才希望执行的工作(如备份数据)；</li>
+<li>需要访问网络或 Wi-Fi 连接的任务(如向服务器拉取配置数据)；</li>
+<li>零散任务合并到一个批次去定期运行；</li>
+<li>当设备空闲时启动某些任务；</li>
+<li>只有当条件得到满足, 系统才会启动计划中的任务（充电、WIFI…）。</li>
+</ol>
+<p>懒惰法则</p>
+<ul>
+<li>减少<br>你的应用程序可以删除冗余操作吗？例如，它是否可以缓存下载的数据而不是重复唤醒无线电以重新下载数据？</li>
+<li>推迟<br>应用是否需要立即执行操作？例如，它可以等到设备充电才能将数据备份到云端吗？</li>
+<li>合并<br>可以批处理工作，而不是多次将设备置于活动状态吗？例如，几十个应用程序是否真的有必要在不同时间打开收音机发送邮件？在一次唤醒收音机期间，是否可以传输消息？</li>
+</ul>
+<h2 id="ListView-和-Bitmap优化"><a href="#ListView-和-Bitmap优化" class="headerlink" title="ListView 和 Bitmap优化"></a>ListView 和 Bitmap优化</h2><p>ListView优化</p>
+<ul>
+<li>针对ListView优化，主要是合理使用ViewHolder</li>
+<li>对数据进行分段或者分页加载，也可以优化性能</li>
+</ul>
+<p>Bitmap优化</p>
+<ol>
+<li>对图片质量进行压缩 </li>
+<li>对图片尺寸进行压缩 </li>
+<li>使用libjpeg.so库进行压缩</li>
+</ol>
+<h2 id="响应速度优化"><a href="#响应速度优化" class="headerlink" title="响应速度优化"></a>响应速度优化</h2><p>响应速度优化的核心思想是避免在主线程中做耗时操作，把耗时操作异步处理。</p>
+<h2 id="线程优化"><a href="#线程优化" class="headerlink" title="线程优化"></a>线程优化</h2><p>线程优化的思想是采用线程池，避免在程序中存在大量的Thread。</p>
+<h2 id="其它优化"><a href="#其它优化" class="headerlink" title="其它优化"></a>其它优化</h2><ol>
+<li>避免创建不必要的对象</li>
+<li>针对特定场景(不需要访问对象的字段)首选静态</li>
+<li>对常量使用static final</li>
+<li>使用增强的for循环语法</li>
+<li>避免使用浮点数</li>
+</ol>
+<p>参考文章<a href="https://mp.weixin.qq.com/s/SmW2ljasKSXC1zlwTLY-iQ" target="_blank" rel="noopener">大佬大佬</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/20/Glide-3/" rel="next" title="Glide-3">
+                <i class="fa fa-chevron-left"></i> Glide-3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zNzc1OS8xNDI5MA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Wakaka</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">83</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 
+src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></iframe>
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#性能优化的目标"><span class="nav-number">1.</span> <span class="nav-text">性能优化的目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何达到目标"><span class="nav-number">2.</span> <span class="nav-text">如何达到目标</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#布局优化"><span class="nav-number">2.1.</span> <span class="nav-text">布局优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制优化"><span class="nav-number">2.2.</span> <span class="nav-text">绘制优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存优化"><span class="nav-number">2.3.</span> <span class="nav-text">内存优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动速度优化"><span class="nav-number">2.4.</span> <span class="nav-text">启动速度优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装包优化"><span class="nav-number">2.5.</span> <span class="nav-text">安装包优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#耗电优化"><span class="nav-number">2.6.</span> <span class="nav-text">耗电优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ListView-和-Bitmap优化"><span class="nav-number">2.7.</span> <span class="nav-text">ListView 和 Bitmap优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应速度优化"><span class="nav-number">2.8.</span> <span class="nav-text">响应速度优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程优化"><span class="nav-number">2.9.</span> <span class="nav-text">线程优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它优化"><span class="nav-number">2.10.</span> <span class="nav-text">其它优化</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wakaka</span>
+
+  
+</div>
+
+<div class="powered-by">
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+</span>
+ 
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
