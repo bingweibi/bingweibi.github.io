@@ -635,7 +635,7 @@ if (runningAsyncCalls.size() &lt; maxRequests &amp;&amp; runningCallsForHost(cal
 } else {
   readyAsyncCalls.add(call);
 }
-</code></pre><p>  }<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</code></pre><p>  }<br>    …<br>}<br>```</p>
 <p><code>dispatcher</code>在当前执行的时候如果还可以执行一个并发请求，那就立刻执行,否则加入<code>runningAsyncCalls</code>队列，等待当前请求执行完成，然后再执行。</p>
 <p>其他的和同步请求一样。</p>
 <h2 id="获取返回数据"><a href="#获取返回数据" class="headerlink" title="获取返回数据"></a>获取返回数据</h2><p>在发起网络请求之后，我们就可以在<code>Response</code>中获取到返回的数据，包括状态码、状态信息、返回头、<code>responsebody</code>,返回的<code>responsebody</code>可能会非常大，所以必须要用通过数据流的方式进行访问，其他部分可以随意获取。</p>
