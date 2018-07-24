@@ -87,6 +87,7 @@
 <meta property="og:site_name" content="Wakaka">
 <meta property="og:description" content="Java内存模型 Java内存模型的基础 Java内存模型中的顺序一致性 同步原语(synchronized、volatile、final) Java内存模型的设计  Java内存模型的基础并发编程中的两个关键问题：  线程之间如何进行通信 线程之间如何同步  命令式编程中，线程之间的通信机制有两种:共享内存和消息传递">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/7358771-92bfd5817fc00a1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/411">
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-1/zh/resources/22.png">
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-3/zh/resources/1.png">
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-3/zh/resources/2.png">
@@ -97,11 +98,11 @@
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-4/zh/resources/5.png">
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-4/zh/resources/6.png">
 <meta property="og:image" content="https://res.infoq.com/articles/java-memory-model-5/zh/resources/33.png">
-<meta property="og:updated_time" content="2018-07-16T11:14:15.646Z">
+<meta property="og:updated_time" content="2018-07-24T02:40:15.543Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程的艺术(2)">
 <meta name="twitter:description" content="Java内存模型 Java内存模型的基础 Java内存模型中的顺序一致性 同步原语(synchronized、volatile、final) Java内存模型的设计  Java内存模型的基础并发编程中的两个关键问题：  线程之间如何进行通信 线程之间如何同步  命令式编程中，线程之间的通信机制有两种:共享内存和消息传递">
-<meta name="twitter:image" content="https://res.infoq.com/articles/java-memory-model-1/zh/resources/22.png">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/7358771-92bfd5817fc00a1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/411">
 
 
 
@@ -349,9 +350,12 @@
 </ul>
 <p>命令式编程中，线程之间的通信机制有两种:<strong>共享内存</strong>和<strong>消息传递</strong></p>
 <a id="more"></a>
-<p>共享内存的并发模型中，线程之间共享程序的公共状态，通过读-写内存中的公共状态进行隐式通信。<br>消息传递的并发模型中，线程之间没有公共状态，线程之间必须通过发送消息来显示进行通信。</p>
-<p>同步：程序中用于控制不同线程间操作发生相对顺序的机制。共享内存并发模型中，同步显示进行。消息传递的并发模型中，同步是隐式进行的。</p>
+<p>共享内存的并发模型中，线程之间共享程序的公共状态，通过读-写内存中的公共状态进行隐式通信<br>消息传递的并发模型中，线程之间没有公共状态，线程之间必须通过发送消息来显式进行通信</p>
+<p>同步：程序中用于控制不同线程间操作发生相对顺序的机制<br>共享内存并发模型中，同步显式进行<br>消息传递的并发模型中，同步是隐式进行的。</p>
 <p><strong>Java的并发采用的是共享内存模型。</strong></p>
+<p>JMM抽象结构</p>
+<center><img src="https://upload-images.jianshu.io/upload_images/7358771-92bfd5817fc00a1b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/411" alt=""></center>
+
 <p>Java内存模型研究的是<strong>线程共享</strong>–&gt;JVM中的堆内存和方法区，而不是其他内存区域.</p>
 <center><img src="https://res.infoq.com/articles/java-memory-model-1/zh/resources/22.png" alt=""></center>
 
@@ -424,7 +428,8 @@
 <li>一个线程中的所有操作必须按照程序的顺序来执行</li>
 <li>(不管程序是否同步)所有线程都只能看到一个单一的操作执行顺序。在顺序一致性内存模型中，每个操作都必须原子执行且立刻对所有线程可见。</li>
 </ol>
-<center><img src="https://res.infoq.com/articles/java-memory-model-3/zh/resources/1.png" alt="顺序一致性内存模型的视图"></center>
+<p>顺序一致性内存模型的视图</p>
+<center><img src="https://res.infoq.com/articles/java-memory-model-3/zh/resources/1.png" alt=""></center>
 
 <p><strong>同步程序顺序一致性</strong></p>
 <center><img src="https://res.infoq.com/articles/java-memory-model-3/zh/resources/2.png" alt=""></center>
@@ -520,6 +525,21 @@
 <p>进化为安全的懒汉式<br><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class SafeLazyInitialization &#123;</span><br><span class="line">    private static<span class="built_in"> Instance </span>instance;</span><br><span class="line"></span><br><span class="line">    public synchronized static<span class="built_in"> Instance </span>getInstance() &#123;</span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>)</span><br><span class="line">           <span class="built_in"> instance </span>= new Instance();</span><br><span class="line">        return instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><code>synchronized</code>带来的问题就是导致性能开销</p>
 <p>进化为双重锁定<br><figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DoubleCheckedLocking</span> &#123;</span>                      <span class="comment">//1</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Instance instance;                    <span class="comment">//2</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> Instance getInstance() &#123;               <span class="comment">//3</span></span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">null</span>) &#123;                          <span class="comment">//4:第一次检查</span></span><br><span class="line">            <span class="keyword">synchronized</span> (DoubleCheckedLocking.<span class="keyword">class</span>) &#123;  <span class="comment">//5:加锁</span></span><br><span class="line">                <span class="keyword">if</span> (instance == <span class="literal">null</span>)                    <span class="comment">//6:第二次检查</span></span><br><span class="line">                    instance = <span class="keyword">new</span> Instance();           <span class="comment">//7:问题的根源出在这里</span></span><br><span class="line">            &#125;                                            <span class="comment">//8</span></span><br><span class="line">        &#125;                                                <span class="comment">//9</span></span><br><span class="line">        <span class="keyword">return</span> instance;                                 <span class="comment">//10</span></span><br><span class="line">    &#125;                                                    <span class="comment">//11</span></span><br><span class="line">&#125;                                                        <span class="comment">//12</span></span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>多个线程试图在同一时刻创建对象时，会通过加锁来保证只有一个线程能创建对象</li>
+<li>在对象创建好之后，执行getInstance()方法将不需要获取锁，直接返回已创建好的对象</li>
+</ul>
+<p>缺陷：在执行到第4行的时候，代码读取到instance不为null时，instance引用的对象有可能还没有完成初始化</p>
+<p>缺陷根源所在：<br>第7行代码<code>instance = new Instance();</code>可以分解为<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">memory = allocate();   //1：分配对象的内存空间</span><br><span class="line">ctorInstance(memory);  //2：初始化对象</span><br><span class="line">instance = memory;     //3：设置instance指向刚分配的内存地址</span><br></pre></td></tr></table></figure></p>
+<p>可能发生重排序，变为<br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">memory = allocate();   //1：分配对象的内存空间</span><br><span class="line">instance = memory;     //3：设置instance指向刚分配的内存地址</span><br><span class="line">                       //注意，此时对象还没有被初始化！</span><br><span class="line">ctorInstance(memory);  //2：初始化对象</span><br></pre></td></tr></table></figure></p>
+<p>这样就可能还没有完成初始化</p>
+<p>解决方案</p>
+<ol>
+<li>不允许2，3行代码进行重排序</li>
+<li>允许2,3行代码重排序，但不允许其他线程”看到”这个重排序</li>
+</ol>
+<p><strong>基于volatile的解决方案</strong><br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class SafeDoubleCheckedLocking &#123;</span><br><span class="line">   <span class="keyword"> private</span> volatile<span class="keyword"> static</span> Instance instance;</span><br><span class="line"></span><br><span class="line">   <span class="keyword"> public</span><span class="keyword"> static</span> Instance getInstance() &#123;</span><br><span class="line">       <span class="built_in"> if </span>(instance == null) &#123;</span><br><span class="line">            synchronized (SafeDoubleCheckedLocking.class) &#123;</span><br><span class="line">               <span class="built_in"> if </span>(instance == null)</span><br><span class="line">                   <span class="built_in"> instance </span>=<span class="built_in"> new </span>Instance();//instance为volatile，现在没问题了</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">       <span class="built_in"> return </span>instance;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>基于类初始化的解决方案</strong><br><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class InstanceFactory &#123;</span><br><span class="line">   <span class="keyword"> private</span><span class="keyword"> static</span> class InstanceHolder &#123;</span><br><span class="line">       <span class="keyword"> public</span><span class="keyword"> static</span> Instance<span class="built_in"> instance </span>=<span class="built_in"> new </span>Instance();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword"> public</span><span class="keyword"> static</span> Instance getInstance() &#123;</span><br><span class="line">       <span class="built_in"> return </span>InstanceHolder.instance ;  //这里将导致InstanceHolder类被初始化</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">```     <span class="built_in"> if </span>(instance == null) &#123;                          //4:第一次检查</span><br><span class="line">            synchronized (DoubleCheckedLocking.class) &#123;  //5:加锁</span><br><span class="line">               <span class="built_in"> if </span>(instance == null)                    //6:第二次检查</span><br><span class="line">                   <span class="built_in"> instance </span>=<span class="built_in"> new </span>Instance();           //7:问题的根源出在这里</span><br><span class="line">            &#125;                                            //8</span><br><span class="line">        &#125;                                                //9</span><br><span class="line">       <span class="built_in"> return </span>instance;                                 //10</span><br><span class="line">    &#125;                                                    //11</span><br><span class="line">&#125;                                                        //12</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>多个线程试图在同一时刻创建对象时，会通过加锁来保证只有一个线程能创建对象</li>
 <li>在对象创建好之后，执行getInstance()方法将不需要获取锁，直接返回已创建好的对象</li>
