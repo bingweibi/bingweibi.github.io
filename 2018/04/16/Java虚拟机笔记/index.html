@@ -79,18 +79,23 @@
 
 
 
-<meta name="description" content="内存模型程序计数器什么是程序计数器？当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。 作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等) 如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。  特点 线程私有，也就意味着生命周期随着">
+<meta name="description" content="内存模型以及分区">
 <meta name="keywords" content="Java虚拟机">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java虚拟机笔记">
 <meta property="og:url" content="http://yoursite.com/2018/04/16/Java虚拟机笔记/index.html">
 <meta property="og:site_name" content="Wakaka">
-<meta property="og:description" content="内存模型程序计数器什么是程序计数器？当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。 作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等) 如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。  特点 线程私有，也就意味着生命周期随着">
+<meta property="og:description" content="内存模型以及分区">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-06-24T18:23:30.000Z">
+<meta property="og:image" content="http://p2g00vblr.bkt.clouddn.com/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98.png">
+<meta property="og:image" content="http://dl.iteye.com/upload/picture/pic/115268/eebddc63-785b-37cc-bcf1-23aac9144795.jpg">
+<meta property="og:image" content="http://dl.iteye.com/upload/picture/pic/115270/13c2c976-d40d-3e38-9547-3e3dcea077bc.jpg">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/4491294-8edc15f60a58bd0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/468">
+<meta property="og:updated_time" content="2018-07-24T01:54:39.355Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java虚拟机笔记">
-<meta name="twitter:description" content="内存模型程序计数器什么是程序计数器？当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。 作用 字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等) 如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。  特点 线程私有，也就意味着生命周期随着">
+<meta name="twitter:description" content="内存模型以及分区">
+<meta name="twitter:image" content="http://p2g00vblr.bkt.clouddn.com/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98.png">
 
 
 
@@ -325,141 +330,138 @@
       
 
       
-        <h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><h3 id="什么是程序计数器？"><a href="#什么是程序计数器？" class="headerlink" title="什么是程序计数器？"></a>什么是程序计数器？</h3><p>当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。</p>
-<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ol>
-<li>字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等)</li>
-<li>如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。</li>
-</ol>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程私有，也就意味着生命周期随着线程创建而创建，死亡而死亡</li>
-<li>不会出现OOM的内存区域</li>
-</ol>
+        <h1 id="内存模型以及分区"><a href="#内存模型以及分区" class="headerlink" title="内存模型以及分区"></a>内存模型以及分区</h1><p><cneter><img src="http://p2g00vblr.bkt.clouddn.com/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98.png" alt=""></cneter></p>
 <a id="more"></a>
-<h2 id="Java虚拟机栈"><a href="#Java虚拟机栈" class="headerlink" title="Java虚拟机栈"></a>Java虚拟机栈</h2><h3 id="什么是Java虚拟机栈？"><a href="#什么是Java虚拟机栈？" class="headerlink" title="什么是Java虚拟机栈？"></a>什么是Java虚拟机栈？</h3><p>描述Java方法执行过程的内存模型,</p>
-<h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><p>当一个方法即将运行的时候，Java虚拟机就会在Java虚拟机栈上开辟一块”栈帧”,里面包含着局部变量表、操作数栈、动态链接、方法出口等信息。</p>
-<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程私有，也就意味着生命周期随着线程创建而创建，死亡而死亡</li>
-<li>局部变量表的大小在编译的时候就被确定下了，但是局部变量表的创建是在方法执行的时候</li>
-<li>会出现栈溢出(线程请求栈深度超过)和内存溢出情况</li>
+<p>JVM所管理的内存分为以下几个运行时数据区：</p>
+<ul>
+<li><p>程序计数器：当前线程所执行的字节码的行号指示器。作用：为了线程切换后能恢复到正确的执行位置</p>
+</li>
+<li><p>Java虚拟机栈：描述的是Java方法执行的内存模型：每个方法在执行的同时会创建一个栈帧，存储局部变量表、操作数栈、动态链表、方法出口等信息。局部变量表存放编译期可知的各种基本数据类型、对象引用和returnAddress类型。<strong>局部变量表的内存空间大小在编译期间确定，之后不再更改。</strong></p>
+</li>
+<li><p>本地方法栈：为虚拟机使用到的Native方法服务。</p>
+</li>
+<li><p>Java堆：唯一目的：存放对象实例，所有的对象实例以及数组都要在堆上分配。堆可细分为新生代和老年代，进一步细分为Eden区、From Survivor区、To Survivor区，提高效率（TLAB）</p>
+</li>
+<li><p>方法区：存储已被虚拟机加载的类信息、常量、静态变量、即时编译器后的代码等数据</p>
+</li>
+<li><p>运行时常量池：存放编译期生成的各种字面量和符号引用</p>
+</li>
+</ul>
+<h2 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h2><ol>
+<li>虚拟机遇到一条new指令时</li>
+<li>先检查这个指令的参数是否能在常量池中定位到这个类的符号引用，并检查这个符号引用代表的类是否已被加载、解析和初始化过</li>
+<li>如果没有，就先执行类加载过程</li>
+<li>类加载检查通过后，虚拟机将为新生对象分配内存</li>
+<li>分配内存方法：指针碰撞(内存工整)和空闲列表(内存不工整)</li>
+<li>内存分配之后，将分配到的内存空间都初始化为零值</li>
+<li>虚拟机对对象进行必要的设置</li>
+<li>执行&lt; init&gt;方法，把对象按照程序员的意愿进行初始化</li>
 </ol>
-<blockquote>
-<p>StackOverFlowError表示当前线程申请的栈超过了事先定好的栈的最大深度，但内存空间可能还有很多。而OutOfMemoryError是指当线程申请栈时发现栈已经满了，而且内存也全都用光了。</p>
-</blockquote>
-<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><h3 id="什么是本地方法栈？"><a href="#什么是本地方法栈？" class="headerlink" title="什么是本地方法栈？"></a>什么是本地方法栈？</h3><p> 本地方法运行的内存模型</p>
-<h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>本地方法在被执行的时候，会在本地方法栈中创建一个栈帧，用于存放本地方法的局部变量表、操作数栈、动态链接、出口信息等</p>
-<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程私有，随着线程生与死</li>
-<li>会出现内存溢出和栈溢出</li>
+<h2 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h2><p>对象在内存中存储的布局可分为3块区域：对象头、实例数据和对齐填充</p>
+<ul>
+<li>对象头 包括用于存储对象自身的运行时数据、类型指针(对象指向它的类元数据的指针，虚拟机通过这个指针来确定这个对象是那个类的实例)</li>
+<li>实例数据 对象真正储存的有效信息，也是在程序代码中所定义的各种类型的字段内容</li>
+<li>对齐填充(占位符)</li>
+</ul>
+<h2 id="对象的访问定位"><a href="#对象的访问定位" class="headerlink" title="对象的访问定位"></a>对象的访问定位</h2><ol>
+<li>句柄，Java堆中将会划分出一块内存来作为句柄池，reference中储存的就是对象的句柄地址，而句柄中包含了对象实例数据与类型数据各自的具体地址信息</li>
+<li>直接指针，Java堆对象的布局中必须考虑如何放置访问类型数据的相关信息，而reference中存储的直接就是对象地址</li>
 </ol>
-<h2 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h2><h3 id="什么是堆？"><a href="#什么是堆？" class="headerlink" title="什么是堆？"></a>什么是堆？</h3><p>存放对象的内存空间，几乎所有对象都存放在堆中</p>
-<h3 id="特点-3"><a href="#特点-3" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程共享</li>
-<li>在虚拟机启动的时候创建</li>
-<li>垃圾回收的主要场所</li>
-<li>可以分为新生代、老年代</li>
-<li>堆的大小可以固定也可以扩展，当堆满且不可以扩展的时候，就会出现内存溢出的情况</li>
-</ol>
-<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><h3 id="什么是方法区"><a href="#什么是方法区" class="headerlink" title="什么是方法区?"></a>什么是方法区?</h3><p>方法区是堆的一个逻辑部分，存放着已经被虚拟机加载的类信息、常量、静态变量、即时编译器编译后的代码等</p>
-<h3 id="特点-4"><a href="#特点-4" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程共享</li>
-<li>老年代主要区域</li>
-<li>垃圾回收效率低，对方法区回收的主要目标是常量池的回收和类型的卸载</li>
-<li>允许固定大小、也可以不固定还可以允许不垃圾回收</li>
-</ol>
-<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><ol>
-<li>常量储存在运行时常量池中</li>
-<li>一般在一个类中通过public static final 来声明一个长亮，这个类被编译之后会生成一个Class文件，类中的所有信息都被储存在这个class文件中</li>
-<li>当上面的这个类被虚拟机加载之后，class文件中的常量就会存放在方法区中的运行时常量池中，而且在运行期间可以向常量池中添加新的常量。String类中的intern()方法就能在运行期间向常量池中添加字符串常量</li>
-<li>在运行时常量池中的某些敞亮没有被对象引用，同时也没有被变量引用，那么就会被垃圾收集器回收</li>
-</ol>
-<h1 id="Java对象创建的过程"><a href="#Java对象创建的过程" class="headerlink" title="Java对象创建的过程"></a>Java对象创建的过程</h1><h2 id="对象的创建过程"><a href="#对象的创建过程" class="headerlink" title="对象的创建过程"></a>对象的创建过程</h2><p>当虚拟机遇到一条含有new指令的时候，会进行一系列对象创建的过程</p>
+<center><img src="http://dl.iteye.com/upload/picture/pic/115268/eebddc63-785b-37cc-bcf1-23aac9144795.jpg" alt=""></center>
+
+<center><img src="http://dl.iteye.com/upload/picture/pic/115270/13c2c976-d40d-3e38-9547-3e3dcea077bc.jpg" alt=""></center>
+
+<p>区别：<br>使用句柄来访问的最大好处是： reference中储存的是稳定的句柄地址，在对象被移动(垃圾收集时移动对象是非常普遍的行为)时只会改变句柄中的实例数据指针，而reference本身不需要修改<br>使用直接指针访问方式最大的好处是： 速度更快，节省了一次指针定位的时间开销</p>
+<h2 id="对象已死？"><a href="#对象已死？" class="headerlink" title="对象已死？"></a>对象已死？</h2><ul>
+<li><p>引用计数法：给对象添加一个引用计数器，有地方引用就+1，引用失效就-1，为0就不可能被在使用。无法解决对象之间相互循环引用的问题。</p>
+</li>
+<li><p>可达性分析法：对象到 GC Roots没有任何引用链相连时，此对象是不可用的。</p>
+</li>
+</ul>
+<h2 id="四种引用"><a href="#四种引用" class="headerlink" title="四种引用"></a>四种引用</h2><ul>
+<li>强引用：垃圾回收器不会回收</li>
+<li>软引用：描述一些还有用但并非必须的对象，在系统将要发生内存溢出异常之前，将会把这些对象列进回收范围之中进行第二次回收。如果这次回收还没有足够的内存，才会抛出内存溢出异常</li>
+<li>弱引用：描述非必需对象，只能生存到下一次垃圾收集发生之前</li>
+<li>虚引用：能在这个对象被回收器回收时收到一个系统通知</li>
+</ul>
+<h2 id="确定死亡"><a href="#确定死亡" class="headerlink" title="确定死亡"></a>确定死亡</h2><p>两次标记过程</p>
+<ul>
+<li>可达性分析之后确定对象不可用，再进行一次筛选。筛选条件是是否有必要执行finalize()方法(对象没有覆盖finalize或finalize方法以及被调用过，那么就没有必要执行；有必要执行finalize()方法，对象就会放置在F-Queue队列中，然后虚拟机”会去finalize”它) </li>
+</ul>
+<h1 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h1><ul>
+<li><p>标记-清除算法<br>先标记需要回收的对象，标记完成后统一回收所有被标记的对象。<br>不足：效率问题和空间问题</p>
+</li>
+<li><p>复制算法<br>先划分容量相等的两块，每次使用其中一块，当其中一块内存用完，就将还存活的对象复制到另一块上面，然后把使用过的内存清理<br>优点：实现简单、运行高效<br>缺点：内存缩小一半</p>
+</li>
+<li><p>标记-整理算法<br>先标记，然后让所有存活的对象都向一端移动，然后清理掉边界以外的内存 </p>
+</li>
+</ul>
+<h2 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h2><ul>
+<li><p>Serial收集器</p>
+</li>
+<li><p>ParNew 收集器</p>
+</li>
+<li><p>Parallel Scavenge收集器</p>
+</li>
+<li><p>Serial Old收集器</p>
+</li>
+<li><p>Parallel Old收集器</p>
+</li>
+<li><p>CMS收集器</p>
+</li>
+<li><p>G1收集器</p>
+</li>
+</ul>
+<h2 id="堆里面的分区：Eden，survival-from-to，老年代，各自的特点。"><a href="#堆里面的分区：Eden，survival-from-to，老年代，各自的特点。" class="headerlink" title="堆里面的分区：Eden，survival from to，老年代，各自的特点。"></a>堆里面的分区：Eden，survival from to，老年代，各自的特点。</h2><ul>
+<li><p>Eden：Eden区位于Java堆的年轻代，是新对象分配内存的地方，由于堆是所有线程共享的，因此在堆上分配内存需要加锁。<br>而Sun JDK为提升效率，会为每个新建的线程在Eden上分配一块独立的空间由该线程独享，这块空间称为TLAB（Thread Local Allocation Buffer）。<br>在TLAB上分配内存不需要加锁，因此JVM在给线程中的对象分配内存时会尽量在TLAB上分配。如果对象过大或TLAB用完，则仍然在堆上进行分配。如果Eden区内存也用完了，则会进行一次Minor GC（young GC）。</p>
+</li>
+<li><p>Survival from to：在Java堆的年轻代，Survival区有两块，一块称为from区，另一块为to区，这两个区是相对的，<br>在发生一次Minor GC后，from区就会和to区互换。<br>在发生Minor GC时，Eden区和Survival from区会把一些仍然存活的对象复制进Survival to区，并清除内存。<br>Survival to区会把一些存活得足够久的对象移至年老代。</p>
+</li>
+<li><p>老年代：存活时间较久的，大小较大的对象，因此年老代使用标记整理算法。<br>当年老代容量满的时候，会触发一次Major GC（full GC），回收年老代和年轻代中不再被使用的对象资源</p>
+</li>
+</ul>
+<h2 id="空间分配担保"><a href="#空间分配担保" class="headerlink" title="空间分配担保"></a>空间分配担保</h2><p>大意就是发生Minor GC之前先检查老年代最大可用的连续空间是否大于新生代所有对象总空间，成立的话，Minor GC就安全；不然就去检查是否允许担保失败。</p>
+<p>允许的话就会继续检查老年代最大可用的连续空间是否大于历次晋升到老年代对象的平均大小？</p>
+<p>大于的话，将尝试进行一次Minor GC,尽管是有风险的；如果小于就改为进行一次Full GC</p>
+<h1 id="虚拟机类加载机制"><a href="#虚拟机类加载机制" class="headerlink" title="虚拟机类加载机制"></a>虚拟机类加载机制</h1><p>虚拟机的类加载机制：虚拟机把描述类的数据从Class文件加载到内存，并对数据进行校验、转换解析和初始化，最终形成可以被虚拟机直接使用的Java类型。</p>
+<p>五种情况必须立即对类进行”初始化”</p>
 <ol>
-<li>检查<strong>常量池</strong>中是否含有即将要创建的这个对象的类的符号引用<ul>
-<li>如果常量池中没有这个类的符号引用，说明这个类还没有被定义，报ClassNotFoundException</li>
-<li>有的话进行第二步操作</li>
-</ul>
-</li>
-<li>接着检查这个符号引用代表的类有没有被JVM加载<ul>
-<li>没有加载的话，就找到该类的class文件，并加载到方法区</li>
-<li>加载了的话，就准备为对象分配内存</li>
-</ul>
-</li>
-<li>根据方法区中该类的信息确定该类需要的内存大小</li>
-<li>从堆中划分一块对应大小的内存空间分配给新的对象。分配堆中内存有两种方式<ul>
-<li>指针碰撞：如果JVM的垃圾收集器采用的是复制算法或者标记-整理算法，那么堆中的空闲内存会是一片完整的区域，并且空闲内存和已使用的内存之间有一个指针标记。当一个对象分配内存的时候，只需要移动指针就可以了。这种在完整空闲内存区域通过移动指针来分配内存区域的方法就被称之为”指针碰撞”</li>
-<li>空闲列表：如果JVM的垃圾收集器采用的是标记-清除算法，那么在堆中的内存已使用区域和空闲区域就会相互交错，所有这个时候就会需要一个空闲列表来记录堆中那些区域是空闲的。所以创建对象的时候会根据这个空闲列表来进行分配内存</li>
-</ul>
-</li>
-<li>为对象中的成员变量进行赋初值</li>
-<li>设置对象头中的消息</li>
-<li>调用对象的构造函数进行初始化</li>
+<li>遇到 new getstatic putstatic 或 invokestatic 这4条指令时，如果类没有进行过初始化，则需要先触发其初始化。生成这4条指令的场景:使用 new 关键字实例化对象的时候、读取或设置一个类的静态字段(被 final 修饰、已经在编译期把结果放入常量池的静态字段除外)的时候，以及调用一个类的静态方法的时候。</li>
+<li>使用 java.lang.reflect 包的方法对类进行反射调用的时候，如果类没有进行过初始化，则需要先触发其初始化</li>
+<li>当初始化一个类的时候，如果发现其父类还没有进行过初始化，则需要先触发其父类的初始化</li>
+<li>当虚拟机启动时，用户需要指定一个要执行的主类(包含 main 函数的那个类)，虚拟机会先初始化这个主类</li>
+<li>当使用JDK 1.7的动态语言支持时，如果一个java.lang.invoke.MethodHandle 实例最后的解析结果 REF_getStatic REF_putStatic REF_invokeStatic的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化</li>
 </ol>
-<h2 id="访问对象的过程"><a href="#访问对象的过程" class="headerlink" title="访问对象的过程"></a>访问对象的过程</h2><ol>
-<li>句柄访问方式：堆中有一块叫做”句柄池”的内存空间，用来存放所有对象的地址和所有对象所属类的类信息。引用类型的变量存放的是该变量在句柄池中的地址。访问对象的时候，首先需要通过引用类型的变量找到该对象的句柄，然后根据句柄中对象的地址再访问对象。</li>
-<li>直接指针访问方式：引用类型的变量直接存放对象的地址，不需要句柄池，通过引用能够直接访问对象。<em>但是对象所在的内存空间中需要额外的策略存储对象所属的类信息的地址</em></li>
-</ol>
-<h1 id="Java对象内存分配"><a href="#Java对象内存分配" class="headerlink" title="Java对象内存分配"></a>Java对象内存分配</h1><p>Java的内存管理主要是针对于对内存中的对象的分配和回收</p>
-<h2 id="对象优先在Eden区中分配"><a href="#对象优先在Eden区中分配" class="headerlink" title="对象优先在Eden区中分配"></a>对象优先在Eden区中分配</h2><ol>
-<li>堆中内存分为新生代和老年代</li>
-<li>新生代(复制算法)进一步分为Eden+ survior from + survior to</li>
-<li>每次创建对象的时候，首先在Eden区进行分配。Eden区满则在 Survior from中分配，如果Survior from也满了，则启动分配担保，将这两区域的对象转移到老年代，重新再Eden区中分配新的对象</li>
-</ol>
-<h2 id="大对象直接进入老年代"><a href="#大对象直接进入老年代" class="headerlink" title="大对象直接进入老年代"></a>大对象直接进入老年代</h2><p>大对象：占用大量连续存储空间的对象</p>
-<h2 id="生命周期较长的对象进入老年代"><a href="#生命周期较长的对象进入老年代" class="headerlink" title="生命周期较长的对象进入老年代"></a>生命周期较长的对象进入老年代</h2><h2 id="相同年龄的对象内存超过Survior内存一半的对象进入老年代"><a href="#相同年龄的对象内存超过Survior内存一半的对象进入老年代" class="headerlink" title="相同年龄的对象内存超过Survior内存一半的对象进入老年代"></a>相同年龄的对象内存超过Survior内存一半的对象进入老年代</h2><h2 id="Minor-GC"><a href="#Minor-GC" class="headerlink" title="Minor GC"></a>Minor GC</h2><p>当Eden内存区域满了的时候，将Eden区域的内存碎片和Survior from区域的转移到Survior to 中</p>
-<h2 id="Full-GC"><a href="#Full-GC" class="headerlink" title="Full GC"></a>Full GC</h2><p>老年代的内存区域满了之后，全部的内存区域都进行GC</p>
-<h1 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h1><h2 id="判断哪些对象需要回收"><a href="#判断哪些对象需要回收" class="headerlink" title="判断哪些对象需要回收"></a>判断哪些对象需要回收</h2><ol>
-<li>引用计数法：每个对象都有一个计数器，当这个对象被一个变量或者另一个对象引用的时候，计数器加一；若该引用失效便计数器减一。当计数器为0的时候，就认为该对象是无效对象(无法解决循环引用的问题)</li>
-<li>可达性分析：所有和GC Roots直接或间接关联的对象都是有效对象，和GC Roots没有关联的对象就是无效对象</li>
-</ol>
-<h2 id="回收无效对象的过程"><a href="#回收无效对象的过程" class="headerlink" title="回收无效对象的过程"></a>回收无效对象的过程</h2><ol>
-<li>判断对象是否覆盖了finalize()方法<ul>
-<li>覆盖，且该方法的finalize()方法没有执行，就会将finalize()方法扔到F-Queue队列中</li>
-<li>没有覆盖，直接释放对象内存</li>
-</ul>
-</li>
-<li>执行F-Queue队列中的finalize（）方法。如果出现耗时操作就会直接停止执行，将该对象清除</li>
-<li>对象重生或者死亡，在执行finalize的过程中，若有引用则重生，没有则清除</li>
-</ol>
-<h2 id="垃圾收集算法-1"><a href="#垃圾收集算法-1" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h2><ol>
-<li>标记-清除算法</li>
-<li>复制算法</li>
-<li>标记-整理算法</li>
-<li>分代收集算法</li>
-</ol>
-<h2 id="Java引用的种类"><a href="#Java引用的种类" class="headerlink" title="Java引用的种类"></a>Java引用的种类</h2><ol>
-<li>强引用<br>我们平时所使用的引用就是强引用。 A a = new A(); 也就是通过关键字new创建的对象所关联的引用就是强引用。 只要强引用存在，该对象永远也不会被回收。</li>
-<li>软引用<br>只有当堆即将发生OOM异常时，JVM才会回收软引用所指向的对象。 软引用通过SoftReference类实现。 软引用的生命周期比强引用短一些。</li>
-<li>弱引用<br>只要垃圾收集器运行，软引用所指向的对象就会被回收。 弱引用通过WeakReference类实现。 弱引用的生命周期比软引用短。</li>
-<li>虚引用<br>虚引用也叫幽灵引用，它和没有引用没有区别，无法通过虚引用访问对象的任何属性或函数。 一个对象关联虚引用唯一的作用就是在该对象被垃圾收集器回收之前会受到一条系统通知。 虚引用通过PhantomReference类来实现。 </li>
-</ol>
-<h1 id="class文件结构"><a href="#class文件结构" class="headerlink" title="class文件结构"></a>class文件结构</h1><h1 id="Java类加载的过程"><a href="#Java类加载的过程" class="headerlink" title="Java类加载的过程"></a>Java类加载的过程</h1><ol>
-<li>类从加载内存到卸载内存一共会经历7个阶段:加载–&gt;验证–&gt;准备–&gt;解析–&gt;初始化–&gt;使用–&gt;卸载</li>
-<li>类加载经历的阶段：加载–&gt;验证–&gt;准备–&gt;解析–&gt;初始化</li>
-<li>类加载是在程序的运行期完成的</li>
-</ol>
-<h2 id="类加载过程中的初始化时机"><a href="#类加载过程中的初始化时机" class="headerlink" title="类加载过程中的初始化时机"></a>类加载过程中的初始化时机</h2><ol>
-<li>在运行过程中遇到以下字节码指令时，如果类没有初始化，那就要进行初始化：new getstatic putstatic invokestatic<ul>
-<li>通过new创建对象</li>
-<li>读取一个类的静态成员变量（不包含final修饰）</li>
-<li>设置一个类的静态成员变量（不包含final修饰）</li>
-<li>调用一个类的静态成员函数</li>
-</ul>
+<ul>
+<li><p>加载<br>完成三件事情：</p>
 <ol>
-<li>进行反射调用的时候，没有类初始化就，那就需要初始化</li>
-<li>初始化一个类的时候，如果父类没有初始化就先初始化父类，再初始化本类</li>
-<li>虚拟机启动时，虚拟机先初始化主类</li>
+<li>通过一个类的全限定名来获取定义此类的二进制字节流</li>
+<li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构</li>
+<li>在内存中生成一个代表这个类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口</li>
 </ol>
 </li>
-</ol>
-<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><p>准备阶段完成两件事情</p>
+<li><p>验证<br>目的：为了确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全<br>完成四个阶段的校验:文件格式验证、元数据验证、字节码验证和符号引用验证</p>
+</li>
+<li><p>准备<br>正式为变量分配内存并设置类变量初始值的阶段，这些变量所使用的的内存都将在方法区中<br>注意</p>
 <ol>
-<li>为已经在方法区中的类中的静态成员变量分配内存，类的静态成员变量也存储在方法区中</li>
-<li>为静态成员变量设置初始值，初始值为0，false，null等</li>
+<li>这个时候进行内存分配的仅包括类变量(被 static 修饰的变量)，而不包括实例变量，实例变量将会在对象实例化时随着对象一起分配在Java堆中</li>
+<li>这里所说的初始值”通常情况”下是数据类型的零值。但是如果类字段的字段属性表中存在 ConstantValue 属性，那么在准备阶段变量 value 就会被初始化为 ConstantValue 属性指定的值。例 <code>public static final int value  = 123</code> </li>
 </ol>
-<p>例：<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">String</span> name = <span class="string">"柴毛毛"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>在准备阶段，JVM会在方法区中为name分配内存空间，并赋上初始值null。 给name赋上”柴毛毛”是在初始化阶段完成的。</p>
-<p>例：<br><figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">String</span> name = <span class="string">"柴毛毛"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>被final修饰的常量如果有初始值，那么在编译阶段就会将初始值存入constantValue属性中，在准备阶段就将constantValue的值赋给该字段。</p>
+</li>
+<li><p>解析<br>解析阶段就是虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
+</li>
+<li><p>初始化<br>初始化阶段真正开始执行类中定义的Java程序代码<br>在准备阶段，变量已经赋过一次系统要求的初始值，在初始化阶段，则根据程序员通过程序制定的主观计划去初始化类变量和其他资源。<br>父类中定义的静态语句块要优先于子类的变量赋值操作</p>
+</li>
+</ul>
+<h1 id="分派：静态分派与动态分派"><a href="#分派：静态分派与动态分派" class="headerlink" title="分派：静态分派与动态分派"></a>分派：静态分派与动态分派</h1><ul>
+<li><p>静态分派与重载有关，虚拟机在重载时是通过参数的静态类型，而不是运行时的实际类型作为判定依据的；静态类型在编译期是可知的；</p>
+</li>
+<li><p>动态分派与重写（Override）相关，invokevirtual(调用实例方法)指令执行的第一步就是在运行期确定接收者的实际类型，根据实际类型进行方法调用</p>
+</li>
+</ul>
+<h1 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h1><center><img src="https://upload-images.jianshu.io/upload_images/4491294-8edc15f60a58bd0b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/468" alt=""></center>
+
+<p>工作过程<br>如果一个类加载器收到了类加载的请求，首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都应该传送到顶层的启动类加载器中，只有当父加载器反馈自己无法完成这个加载请求时(它的搜索范围中没有找到所需的类)，子加载器才会尝试自己去加载。</p>
 
       
     </div>
@@ -635,7 +637,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存模型"><span class="nav-number">1.</span> <span class="nav-text">内存模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序计数器"><span class="nav-number">1.1.</span> <span class="nav-text">程序计数器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是程序计数器？"><span class="nav-number">1.1.1.</span> <span class="nav-text">什么是程序计数器？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用"><span class="nav-number">1.1.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.1.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java虚拟机栈"><span class="nav-number">1.2.</span> <span class="nav-text">Java虚拟机栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Java虚拟机栈？"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是Java虚拟机栈？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.3.</span> <span class="nav-text">本地方法栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是本地方法栈？"><span class="nav-number">1.3.1.</span> <span class="nav-text">什么是本地方法栈？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#作用-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆"><span class="nav-number">1.4.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是堆？"><span class="nav-number">1.4.1.</span> <span class="nav-text">什么是堆？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-3"><span class="nav-number">1.4.2.</span> <span class="nav-text">特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方法区"><span class="nav-number">1.5.</span> <span class="nav-text">方法区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是方法区"><span class="nav-number">1.5.1.</span> <span class="nav-text">什么是方法区?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特点-4"><span class="nav-number">1.5.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.5.3.</span> <span class="nav-text">运行时常量池</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java对象创建的过程"><span class="nav-number">2.</span> <span class="nav-text">Java对象创建的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的创建过程"><span class="nav-number">2.1.</span> <span class="nav-text">对象的创建过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问对象的过程"><span class="nav-number">2.2.</span> <span class="nav-text">访问对象的过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java对象内存分配"><span class="nav-number">3.</span> <span class="nav-text">Java对象内存分配</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象优先在Eden区中分配"><span class="nav-number">3.1.</span> <span class="nav-text">对象优先在Eden区中分配</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大对象直接进入老年代"><span class="nav-number">3.2.</span> <span class="nav-text">大对象直接进入老年代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#生命周期较长的对象进入老年代"><span class="nav-number">3.3.</span> <span class="nav-text">生命周期较长的对象进入老年代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相同年龄的对象内存超过Survior内存一半的对象进入老年代"><span class="nav-number">3.4.</span> <span class="nav-text">相同年龄的对象内存超过Survior内存一半的对象进入老年代</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Minor-GC"><span class="nav-number">3.5.</span> <span class="nav-text">Minor GC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Full-GC"><span class="nav-number">3.6.</span> <span class="nav-text">Full GC</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">4.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#判断哪些对象需要回收"><span class="nav-number">4.1.</span> <span class="nav-text">判断哪些对象需要回收</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#回收无效对象的过程"><span class="nav-number">4.2.</span> <span class="nav-text">回收无效对象的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集算法-1"><span class="nav-number">4.3.</span> <span class="nav-text">垃圾收集算法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java引用的种类"><span class="nav-number">4.4.</span> <span class="nav-text">Java引用的种类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#class文件结构"><span class="nav-number">5.</span> <span class="nav-text">class文件结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java类加载的过程"><span class="nav-number">6.</span> <span class="nav-text">Java类加载的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#类加载过程中的初始化时机"><span class="nav-number">6.1.</span> <span class="nav-text">类加载过程中的初始化时机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#准备"><span class="nav-number">6.2.</span> <span class="nav-text">准备</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内存模型以及分区"><span class="nav-number">1.</span> <span class="nav-text">内存模型以及分区</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的创建"><span class="nav-number">1.1.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的内存布局"><span class="nav-number">1.2.</span> <span class="nav-text">对象的内存布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象的访问定位"><span class="nav-number">1.3.</span> <span class="nav-text">对象的访问定位</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象已死？"><span class="nav-number">1.4.</span> <span class="nav-text">对象已死？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四种引用"><span class="nav-number">1.5.</span> <span class="nav-text">四种引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定死亡"><span class="nav-number">1.6.</span> <span class="nav-text">确定死亡</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#垃圾收集算法"><span class="nav-number">2.</span> <span class="nav-text">垃圾收集算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">2.1.</span> <span class="nav-text">垃圾收集器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#堆里面的分区：Eden，survival-from-to，老年代，各自的特点。"><span class="nav-number">2.2.</span> <span class="nav-text">堆里面的分区：Eden，survival from to，老年代，各自的特点。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#空间分配担保"><span class="nav-number">2.3.</span> <span class="nav-text">空间分配担保</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟机类加载机制"><span class="nav-number">3.</span> <span class="nav-text">虚拟机类加载机制</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分派：静态分派与动态分派"><span class="nav-number">4.</span> <span class="nav-text">分派：静态分派与动态分派</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#双亲委派模型"><span class="nav-number">5.</span> <span class="nav-text">双亲委派模型</span></a></li></ol></div>
             
 
           </div>

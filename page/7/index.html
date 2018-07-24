@@ -1343,15 +1343,7 @@
 
       
         
-          <h1 id="内存模型"><a href="#内存模型" class="headerlink" title="内存模型"></a>内存模型</h1><h2 id="程序计数器"><a href="#程序计数器" class="headerlink" title="程序计数器"></a>程序计数器</h2><h3 id="什么是程序计数器？"><a href="#什么是程序计数器？" class="headerlink" title="什么是程序计数器？"></a>什么是程序计数器？</h3><p>当前线程正在执行字节码的行号指示器，就是说记录着当前线程正在执行的是哪一条字节码指令的地址。</p>
-<h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><ol>
-<li>字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制(顺序执行，选择，循环等等)</li>
-<li>如果是在多线程的情形下，程序计数器会记录下当前线程执行到什么位置，当线程切换回来的时候就可以知道之前的线程执行到什么地方了。</li>
-</ol>
-<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
-<li>线程私有，也就意味着生命周期随着线程创建而创建，死亡而死亡</li>
-<li>不会出现OOM的内存区域</li>
-</ol>
+          <h1 id="内存模型以及分区"><a href="#内存模型以及分区" class="headerlink" title="内存模型以及分区"></a>内存模型以及分区</h1><p><cneter><img src="http://p2g00vblr.bkt.clouddn.com/%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98.png" alt=""></cneter></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/04/16/Java虚拟机笔记/#more" rel="contents">
