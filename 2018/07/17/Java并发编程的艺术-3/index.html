@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://ifeve.com/wp-content/uploads/2015/10/1.png">
 <meta property="og:image" content="https://res.infoq.com/articles/ConcurrentHashMap/zh/resources/2.jpg">
 <meta property="og:image" content="https://res.infoq.com/articles/java-threadPool/zh/resources/threadpool.jpg">
-<meta property="og:updated_time" content="2018-07-19T07:57:23.223Z">
+<meta property="og:updated_time" content="2018-07-26T13:46:03.773Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java并发编程的艺术(3)">
 <meta name="twitter:description" content="Java并发编程基础线程：现在操作系统调度的最小单元，在一个进程里可以创建多个线程，这些线程都拥有各自的计数器、堆栈和局部变量等属性，并且能够访问共享的内存变量。 线程的状态    状态名称 说明     NEW 初始状态，线程被构建，但是还没有调用start()方法   RUNNABLE 运行状态，Java线程将操作系统中的就绪和运行状态合并称为”运行中”   BLOCKED 阻塞状态，表示线程">
@@ -375,6 +375,7 @@
 <p>Java线程状态变迁</p>
 <center><img src="http://ifeve.com/wp-content/uploads/2014/08/threads2.gif" alt=""></center>
 
+<p>上图中sleep-&gt;ready to run 有错误，只能sleep结束或者通过调用 Thread.interrupt()</p>
 <p>Daemon线程：一种支持型线程，主要被用作程序中后台调度以及支持性工作。这就意味着，当一个Java虚拟机中不存在非Daemon线程的时候，Java虚拟机将会退出。</p>
 <h2 id="启动线程"><a href="#启动线程" class="headerlink" title="启动线程"></a>启动线程</h2><p>线程对象在初始化完成之后，调用start()方法就可以启动这个线程。</p>
 <h2 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h2><p>中断可被理解为一个标志位属性，它表示为一个运行中的线程是否被其他线程进行了中断操作。</p>
