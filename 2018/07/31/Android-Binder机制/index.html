@@ -87,10 +87,12 @@
 <meta property="og:site_name" content="Wakaka">
 <meta property="og:description" content="什么是Binder Binder 是 Android 的一个子类，继承于IBinder接口 Binder是Android 中的一种IPC方式，可以将Binder理解为一种虚拟的物理设备，设备的驱动是 /dev/binder 从Android Framework 角度来讲，Binder 是 ServiceManager 连接各种 Manager 和相应的 ManagerService 的桥梁 从应用">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-31T01:59:27.682Z">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3985563-5ff2c4816543c433.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-08-21T12:19:54.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android-Binder机制">
 <meta name="twitter:description" content="什么是Binder Binder 是 Android 的一个子类，继承于IBinder接口 Binder是Android 中的一种IPC方式，可以将Binder理解为一种虚拟的物理设备，设备的驱动是 /dev/binder 从Android Framework 角度来讲，Binder 是 ServiceManager 连接各种 Manager 和相应的 ManagerService 的桥梁 从应用">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3985563-5ff2c4816543c433.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -333,6 +335,18 @@
 </ol>
 <h1 id="为什么要是用Binder"><a href="#为什么要是用Binder" class="headerlink" title="为什么要是用Binder"></a>为什么要是用Binder</h1><p>目前linux支持的IPC包括传统的管道，System V IPC(消息队列/共享内存/信号量)，以及socket。但是Android有大量的服务端/客户端的方式，这个时候就只有 Socket 可以被采用，但是由于 Socket 这种通信方式传输的效率低下而且需要很大的开销。</p>
 <p>同时 Android 在安全性方面有较高的要求，传统的 IPC 方式并没有提供任何安全措施。所以 Android 提供了 Binder 这种进程间通信的方式。Binder基于 Client-Server 通信模式，传输过程只需一次拷贝，为发送发添加 UID/PID 身份，既支持实名 Binder 也支持匿名 Binder，安全性高。</p>
+<a id="more"></a>
+<h1 id="Binder-原理简述"><a href="#Binder-原理简述" class="headerlink" title="Binder 原理简述"></a>Binder 原理简述</h1><center><img src="http://upload-images.jianshu.io/upload_images/3985563-5ff2c4816543c433.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></center>
+
+<ol>
+<li>Server 创建了 Binder 实体，为其取一个字符形式，易读好记的名字</li>
+<li>将这个 Binder 连同名字以数据包的形式通知 Binder 驱动发送给 ServiceManager， 通知 ServiceManager 注册一个名字为xx的Binder，地址在 Server 中</li>
+<li>驱动为这个穿过进程边界的 Binder 创建位于内核中的实体结点以及 ServiceManager 对试题的引用，将名字以及新建的引用打包给 ServiceManager</li>
+<li>ServiceManager 收到数据包之后，从中取出名字和引用填入一张查找表中。但是一个 Server 若向 ServiceManager 注册自己 Binder 就必须通过这个引用和 ServiceManager 的 Binder 通信</li>
+<li>Server 向 ServiceManager 注册了 Binder 实体及名字之后， client 就可以通过名字获得该 Binder 的引用了。client也利用保留的引用向 ServiceManager 请求访问某个 Binder：我申请一个名字叫做 xx 的Binder的引用</li>
+<li>ServiceManager 收到这个连接请求之后，从请求数据包里获得 Binder 的名字，在查找表中找到该名字对应的条目，从条目中取出 Binder 引用，将引用作为回复发送给发起请求的 client</li>
+</ol>
+<p>当然，不是所有的 Binder 都需要注册给 ServiceManager 广而告之的。Server 端可以通过已经建立的 Binder 连接将创建的 Binder 实体传给 Client，当然这条已经建立的 Binder 连接必须是通过实名 Binder 实现。由于这个 Binder 没有向 ServiceManager 注册名字，所以是 匿名 Binder。Client 将会收到这个匿名 Binder 的引用，通过这个引用向位于 Server 中的实体发送请求。匿名 Binder 为通信双方建立一条私密通道，只要 Server 没有把匿名 Binder 发给别的进程，别的进程就无法通过穷举或猜测等任何方式获得该 Binder 的引用，向该 Binder 发送请求。</p>
 <p><a href="https://blog.csdn.net/singwhatiwanna/article/details/19756201" target="_blank" rel="noopener">原地址，请点击</a>，对原文有所删减。</p>
 
       
@@ -505,7 +519,7 @@ src="//music.163.com/outchain/player?type=2&id=428423168&auto=1&height=66"></ifr
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Binder"><span class="nav-number">1.</span> <span class="nav-text">什么是Binder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要是用Binder"><span class="nav-number">2.</span> <span class="nav-text">为什么要是用Binder</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Binder"><span class="nav-number">1.</span> <span class="nav-text">什么是Binder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要是用Binder"><span class="nav-number">2.</span> <span class="nav-text">为什么要是用Binder</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Binder-原理简述"><span class="nav-number">3.</span> <span class="nav-text">Binder 原理简述</span></a></li></ol></div>
             
 
           </div>

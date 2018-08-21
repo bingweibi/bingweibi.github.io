@@ -324,8 +324,7 @@
 
       
         
-          
-            <h1 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h1><ol>
+          <h1 id="什么是Binder"><a href="#什么是Binder" class="headerlink" title="什么是Binder"></a>什么是Binder</h1><ol>
 <li>Binder 是 Android 的一个子类，继承于IBinder接口</li>
 <li>Binder是Android 中的一种IPC方式，可以将Binder理解为一种虚拟的物理设备，设备的驱动是 /dev/binder</li>
 <li>从Android Framework 角度来讲，Binder 是 ServiceManager 连接各种 Manager 和相应的 ManagerService 的桥梁</li>
@@ -333,9 +332,13 @@
 </ol>
 <h1 id="为什么要是用Binder"><a href="#为什么要是用Binder" class="headerlink" title="为什么要是用Binder"></a>为什么要是用Binder</h1><p>目前linux支持的IPC包括传统的管道，System V IPC(消息队列/共享内存/信号量)，以及socket。但是Android有大量的服务端/客户端的方式，这个时候就只有 Socket 可以被采用，但是由于 Socket 这种通信方式传输的效率低下而且需要很大的开销。</p>
 <p>同时 Android 在安全性方面有较高的要求，传统的 IPC 方式并没有提供任何安全措施。所以 Android 提供了 Binder 这种进程间通信的方式。Binder基于 Client-Server 通信模式，传输过程只需一次拷贝，为发送发添加 UID/PID 身份，既支持实名 Binder 也支持匿名 Binder，安全性高。</p>
-<p><a href="https://blog.csdn.net/singwhatiwanna/article/details/19756201" target="_blank" rel="noopener">原地址，请点击</a>，对原文有所删减。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/31/Android-Binder机制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
